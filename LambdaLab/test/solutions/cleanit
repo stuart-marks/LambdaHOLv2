@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+
+open($inf, '<', "Exercises.java") or die "Can't open Exercises.java\n";
+open($outf, '>', "../exercises/Exercises.java") or die "Can't open output file\n";
+
+$removing = 0;
+while (<$inf>) {
+    if (m,//BEGINREMOVE,) {
+        $removing = 1;
+    }
+
+    if (not $removing) {
+        s/package solutions;/package exercises;/;
+        s/\@Test/\@Test \@Ignore/;
+        s,//UNCOMMENT//,,;
+        print $outf $_;
+    }
+
+    if (m,//ENDREMOVE,) {
+        $removing = 0;
+    }
+}

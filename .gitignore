@@ -1,0 +1,16 @@
+# Generated Files #
+*.class
+*~
+*.orig
+*.rej
+*#
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# NetBeans Files #
+/LambdaLab/build/
+/LambdaLab/dist/
+/LambdaLab/nbproject/private/
