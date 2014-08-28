@@ -242,8 +242,8 @@ public class Exercises {
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-        // Use Collectors.joining().
-        // </editor-fold>
+    // Use Collectors.joining().
+    // </editor-fold>
 
 
     /**
@@ -300,8 +300,8 @@ public class Exercises {
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-        // Look at java.util.OptionalInt to get the result.
-        // </editor-fold>
+    // Look at java.util.OptionalInt to get the result.
+    // </editor-fold>
 
 
     /**
@@ -343,7 +343,7 @@ public class Exercises {
      */
     @Test
     public void listOfAllWords() throws IOException {
-        //UNCOMMENT//List<String> output = null;
+        //UNCOMMENT//List<String> output = null; // TODO
         //BEGINREMOVE
         List<String> output =
             reader.lines()
@@ -383,7 +383,7 @@ public class Exercises {
      */
     @Test
     public void getLastWord() throws IOException {
-        //UNCOMMENT//List<String> result = null;
+        //UNCOMMENT//List<String> result = null; // TODO
         //BEGINREMOVE
         String result =
             reader.lines()
@@ -705,7 +705,7 @@ public class Exercises {
             @Override public String toString() { return String.format("(%s,%d)", name, legs); }
         }
         
-        //UNCOMMENT//List<Animal> result = null; //TODO
+        //UNCOMMENT//List<Animal> result = null; // TODO
         //BEGINREMOVE
         
 //        List<Animal> result =
@@ -815,7 +815,7 @@ public class Exercises {
      */
     @Test
     public void bigFactorial() {
-        //UNCOMMENT//BigInteger result = BigInteger.ONE;
+        //UNCOMMENT//BigInteger result = BigInteger.ONE; // TODO
         //BEGINREMOVE
         BigInteger result =
             LongStream.rangeClosed(1L, 21L)

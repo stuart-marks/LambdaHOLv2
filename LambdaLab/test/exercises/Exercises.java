@@ -186,8 +186,8 @@ public class Exercises {
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-        // Use Collectors.joining().
-        // </editor-fold>
+    // Use Collectors.joining().
+    // </editor-fold>
 
 
     /**
@@ -232,8 +232,8 @@ public class Exercises {
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-        // Look at java.util.OptionalInt to get the result.
-        // </editor-fold>
+    // Look at java.util.OptionalInt to get the result.
+    // </editor-fold>
 
 
     /**
@@ -266,7 +266,7 @@ public class Exercises {
      */
     @Test @Ignore
     public void listOfAllWords() throws IOException {
-        List<String> output = null;
+        List<String> output = null; // TODO
         
         assertEquals(
             Arrays.asList(
@@ -299,7 +299,7 @@ public class Exercises {
      */
     @Test @Ignore
     public void getLastWord() throws IOException {
-        List<String> result = null;
+        List<String> result = null; // TODO
         
         assertEquals("thee", result);
     }
@@ -551,7 +551,7 @@ public class Exercises {
             @Override public String toString() { return String.format("(%s,%d)", name, legs); }
         }
         
-        List<Animal> result = null; //TODO
+        List<Animal> result = null; // TODO
         
         assertEquals(13, result.size());
         assertTrue(result.contains(new Animal("ibex", 4)));
@@ -628,7 +628,7 @@ public class Exercises {
      */
     @Test @Ignore
     public void bigFactorial() {
-        BigInteger result = BigInteger.ONE;
+        BigInteger result = BigInteger.ONE; // TODO
                         
         assertEquals(new BigInteger("51090942171709440000"), result);
     }
