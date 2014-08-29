@@ -25,6 +25,9 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.IntConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.junit.After;
@@ -190,6 +193,27 @@ public class Exercises {
     // </editor-fold>
 
 
+    /**
+     * Convert a list of strings into a list of characters.
+     */
+    @Test @Ignore
+    public void stringsToCharacters() {
+        List<String> input = Arrays.asList("alfa", "bravo", "charlie");
+        
+        List<Character> result = null; // TODO
+        
+        assertEquals("[a, l, f, a, b, r, a, v, o, c, h, a, r, l, i, e]", result.toString());
+        assertTrue(result.stream().allMatch(x -> x instanceof Character));
+    }
+    // Hint 1:
+    // <editor-fold defaultstate="collapsed">
+    // Use Stream.flatMap().
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // Pay attention to the return type of String.chars() and boxing conversion.
+    // </editor-fold>
+    
     /**
      * Count the number of lines in a file. The field *reader*
      * is a BufferedReader which will be opened for you on the text file.
@@ -389,6 +413,28 @@ public class Exercises {
     // Use Comparator.theComparing().
     // </editor-fold>
 
+    
+    /**
+     * Count the total number of words and the number of (distinct) lower case
+     * words in the file, in one pass.
+     */
+    @Test @Ignore
+    public void countTotalAndDistinctWords() {
+        long distinctCount = 0; // TODO
+        long totalCount = 0; // TODO
+        
+        assertEquals("distinct count", 81, distinctCount);
+        assertEquals("total count", 107, totalCount);
+    }
+    // Hint 1:
+    // <editor-fold defaultstate="collapsed">
+    // Use Stream.peek().
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // Use LongAdder or AtomicLong/AtomicInteger to allow peek() to have side effects.
+    // </editor-fold>
+    
     
     /**
      * Categorize the words into a map, where the map's key is
@@ -661,13 +707,63 @@ public class Exercises {
     // The combiner function must take its second argument and merge
     // it into the first argument, mutating the first argument.
     // </editor-fold>
-    // Hint:
+    // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // The second argument to the combiner function happens AFTER the first
     // argument in encounter order, so the second argument needs to be split
     // in half and prepended/appended to the first argument.
     // </editor-fold>
+
     
+    /**
+     * Provide lambda expressions for the peek() operations that enable you to detect
+     * whether the stream is running in parallel, and using this information, provide
+     * expressions for the stream1isParallel and stream2isParallel booleans to make
+     * the assertions correct. You may also provide additional declarations
+     * and statements anywhere before assertions. (There are an open-ended number of
+     * solutions for this; the solutions file contains only one example.) Race conditions
+     * may be tolerated if you're clever.
+     */
+    @Test @Ignore
+    public void parallelVsSequential() {
+        IntConsumer ic1 = i -> { }; // TODO
+        IntConsumer ic2 = i -> { }; // TODO
+        
+        List<Integer> result1 = IntStream.range(0, 100)
+                                         .peek(ic1)
+                                         .boxed()
+                                         .collect(Collectors.toList());
+        
+        List<Integer> result2 = IntStream.range(0, 100)
+                                         .parallel()
+                                         .peek(ic2)
+                                         .boxed()
+                                         .collect(Collectors.toList());
+        
+        boolean stream1isParallel = false; // TODO
+        boolean stream2isParallel = false; // TODO
+        
+        assertEquals(result1, result2);
+        assertFalse(stream1isParallel);
+        assertTrue(stream2isParallel);
+    }
+    // Hint 1:
+    // <editor-fold defaultstate="collapsed">
+    // By its very nature, you need to do something with side-effects within Stream.peek().
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // The sequential and parallel streams have the same contents, but they will
+    // probably end up processing the elements in a different order, even though
+    // the output list is collected in the proper order (encounter order).
+    // </editor-fold>
+    // Hint 3:
+    // <editor-fold defaultstate="collapsed">
+    // Consider a thread-safe side-effect-supporting structure such as LongAdder.
+    // Note that LongAdder's accumulation function must be order-dependent for it
+    // to detect parallelism.
+    // </editor-fold>
+
     
 // ===== TEST INFRASTRUCTURE ==================================================
 
