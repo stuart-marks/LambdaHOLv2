@@ -262,11 +262,11 @@ public class Exercises {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // Use Stream.mapToInt() to convert to IntStream.
+    // Use Stream.max() with a Comparator.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-    // Look at java.util.OptionalInt to get the result.
+    // Use static methods on Comparator to help create a Comparator instance.
     // </editor-fold>
 
 
