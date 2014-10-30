@@ -756,7 +756,7 @@ public class Exercises {
      */
     @Test
     public void ex23_wordFrequencies() throws IOException {
-        //UNCOMMENT//Map<Integer, Long> result = null; // TODO
+        //UNCOMMENT//Map<String, Long> result = null; // TODO
         //BEGINREMOVE
         Map<String, Long> result =
             reader.lines()
