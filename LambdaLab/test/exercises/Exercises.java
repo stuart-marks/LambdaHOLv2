@@ -591,7 +591,7 @@ public class Exercises {
      */
     @Test @Ignore
     public void ex23_wordFrequencies() throws IOException {
-        Map<Integer, Long> result = null; // TODO
+        Map<String, Long> result = null; // TODO
         
         assertEquals(2L, (long)result.get("tender"));
         assertEquals(6L, (long)result.get("the"));
