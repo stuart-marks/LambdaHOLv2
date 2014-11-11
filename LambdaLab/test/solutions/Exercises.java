@@ -633,7 +633,7 @@ public class Exercises {
         //UNCOMMENT//BigInteger result = BigInteger.ONE; // TODO
         //BEGINREMOVE
         BigInteger result =
-            LongStream.rangeClosed(1L, 21L)
+            IntStream.rangeClosed(1, 21)
                 .mapToObj(n -> BigInteger.valueOf(n))
                 .reduce(BigInteger.ONE, (m, n) -> m.multiply(n));
         //ENDREMOVE
