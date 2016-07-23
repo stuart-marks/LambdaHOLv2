@@ -27,11 +27,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
@@ -49,10 +52,13 @@ import static org.junit.Assert.assertTrue;
 
 //BEGINREMOVE
 
+import java.util.ArrayDeque;
 import java.util.concurrent.atomic.LongAdder;
-import java.util.concurrent.atomic.LongAccumulator;
 import java.util.function.Function;
-import java.util.stream.LongStream;
+import java.util.stream.Collector;
+
+import static java.util.Map.Entry;
+import static java.util.AbstractMap.SimpleEntry;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.naturalOrder;
@@ -61,18 +67,21 @@ import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 //ENDREMOVE
 
 public class Exercises {
 
-    
+
 // ========================================================
 // DEFAULT METHODS
 // ========================================================
 
-    
+
     /**
      * Create a string that consists of the first letters of each
      * word in the input list.
@@ -81,22 +90,22 @@ public class Exercises {
     public void ex01_accumulateFirstLetters() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
-        
+
         //UNCOMMENT//String result = ""; // TODO
         //BEGINREMOVE
         StringBuilder sb = new StringBuilder();
         input.forEach(s -> sb.append(s.charAt(0)));
         String result = sb.toString();
         //ENDREMOVE
-        
+
         assertEquals("abcdef", result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Use Iterable.forEach().
     // </editor-fold>
-    
-    
+
+
     /**
      * Remove the words that have odd lengths from the list.
      */
@@ -104,20 +113,20 @@ public class Exercises {
     public void ex02_removeOddLengthWords() {
         List<String> list = new ArrayList<>(Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
-        
+
         //UNCOMMENT//// TODO code to modify list
         //BEGINREMOVE
         list.removeIf(s -> (s.length() & 1) == 1);
         //ENDREMOVE
-        
+
         assertEquals("[alfa, echo]", list.toString());
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Use Collection.removeIf().
     // </editor-fold>
-    
-    
+
+
     /**
      * Replace every word in the list with its upper case equivalent.
      */
@@ -125,12 +134,12 @@ public class Exercises {
     public void ex03_upcaseAllWords() {
         List<String> list = new ArrayList<>(Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
-        
+
         //UNCOMMENT////TODO code to modify list
         //BEGINREMOVE
         list.replaceAll(s -> s.toUpperCase());
         //ENDREMOVE
-        
+
         assertEquals("[ALFA, BRAVO, CHARLIE, DELTA, ECHO, FOXTROT]", list.toString());
     }
     // Hint:
@@ -138,7 +147,7 @@ public class Exercises {
     // Use List.replaceAll().
     // </editor-fold>
 
-    
+
     /**
      * Convert every key-value pair of a map into a string and append them all
      * into a single string, in iteration order.
@@ -149,14 +158,14 @@ public class Exercises {
         input.put("c", 3);
         input.put("b", 2);
         input.put("a", 1);
-        
+
         //UNCOMMENT//String result = ""; // TODO
         //BEGINREMOVE
         StringBuilder sb = new StringBuilder();
         input.forEach((k, v) -> sb.append(String.format("%s%s", k, v)));
         String result = sb.toString();
         //ENDREMOVE
-        
+
         assertEquals("a1b2c3", result);
     }
     // Hint:
@@ -164,7 +173,7 @@ public class Exercises {
     // Use Map.forEach().
     // </editor-fold>
 
-    
+
     /**
      * Given a list of words, create a map whose keys are the first letters of
      * each words, and whose values are the sum of the lengths of those words.
@@ -182,7 +191,7 @@ public class Exercises {
         list.forEach(s -> result.merge(s.substring(0, 1), s.length(), Integer::sum));
         // Instead of Integer::sum, something like (a, b) -> a + b may be used.
         //ENDREMOVE
-        
+
         assertEquals("{a=23, b=20, c=26}", result.toString());
     }
     // Hint:
@@ -190,12 +199,12 @@ public class Exercises {
     // Use Map.merge() within Iterable.forEach().
     // </editor-fold>
 
-    
+
 // ========================================================
 // SIMPLE STREAM PIPELINES
 // ========================================================
 
-    
+
     /**
      * Given a list of words, create an output list that contains
      * only the odd-length words, converted to upper case.
@@ -204,7 +213,7 @@ public class Exercises {
     public void ex06_upcaseOddLengthWords() {
         List<String> input = new ArrayList<>(Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
-        
+
         //UNCOMMENT//List<String> result = null; // TODO
         //BEGINREMOVE
         List<String> result =
@@ -215,7 +224,7 @@ public class Exercises {
             // Alternative:
             // Instead of Integer::sum, something like (a, b) -> a + b may be used.
         //ENDREMOVE
-        
+
         assertEquals("[BRAVO, CHARLIE, DELTA, FOXTROT]", result.toString());
     }
     // Hint 1:
@@ -246,7 +255,7 @@ public class Exercises {
                 .map(word -> word.substring(1, 2))
                 .collect(joining(","));
         //ENDREMOVE
-        
+
         assertEquals("r,h,e,c", result);
     }
     // Hint 1:
@@ -263,9 +272,9 @@ public class Exercises {
      * Count the number of lines in the text file. (Remember to
      * use the BufferedReader named "reader" that has already been
      * opened for you.)
-     * 
+     *
      * @throws IOException
-     */ 
+     */
     @Test
     public void ex08_countLinesInFile() throws IOException {
         //UNCOMMENT//long count = 0; // TODO
@@ -274,7 +283,7 @@ public class Exercises {
             reader.lines()
                   .count();
         //ENDREMOVE
-        
+
         assertEquals(14, count);
     }
     // Hint 1:
@@ -289,8 +298,8 @@ public class Exercises {
 
     /**
      * Find the length of the longest line in the text file.
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void ex09_findLengthOfLongestLine() throws IOException {
@@ -302,7 +311,7 @@ public class Exercises {
                   .max()
                   .getAsInt();
         //ENDREMOVE
-        
+
         assertEquals(53, longestLength);
     }
     // Hint 1:
@@ -317,8 +326,8 @@ public class Exercises {
 
     /**
      * Find the longest line in the text file.
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void ex10_findLongestLine() throws IOException {
@@ -332,7 +341,7 @@ public class Exercises {
             // Instead of comparingInt(String::length), one could use something like
             //     (s1, s2) -> Integer.compare(s1.length(), s2.length())
         //ENDREMOVE
-        
+
         assertEquals("Feed'st thy light's flame with self-substantial fuel,", longest);
     }
     // Hint 1:
@@ -347,13 +356,13 @@ public class Exercises {
 
     /**
      * Select the set of words from the input list whose length is greater than
-     * to the word's position (starting from zero) in the list.
+     * the word's position in the list (starting from zero) .
      */
     @Test
     public void ex11_selectByLengthAndPosition() {
         List<String> input = new ArrayList<>(Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel"));
-        
+
         //UNCOMMENT//List<String> result = null; // TODO
         //BEGINREMOVE
         List<String> result =
@@ -362,15 +371,15 @@ public class Exercises {
                 .mapToObj(pos -> input.get(pos))
                 .collect(toList());
         //ENDREMOVE
-        
+
         assertEquals("[alfa, bravo, charlie, delta, foxtrot]", result.toString());
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Instead of a stream of words (Strings), run an IntStream of positions.
     // </editor-fold>
-    
-    
+
+
     /**
      * Given two lists of Integer, compute a third list where each element is the
      * difference between the corresponding elements of the two input lists
@@ -380,7 +389,7 @@ public class Exercises {
     public void ex12_listDifference() {
         List<Integer> one = Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6, 5, 3);
         List<Integer> two = Arrays.asList(2, 7, 1, 8, 2, 8, 1, 8, 2, 8);
-        
+
         //UNCOMMENT//List<Integer> result = null; // TODO
         //BEGINREMOVE
         List<Integer> result =
@@ -388,7 +397,7 @@ public class Exercises {
                 .mapToObj(i -> one.get(i) - two.get(i))
                 .collect(toList());
         //ENDREMOVE
-        
+
         assertEquals("[1, -6, 3, -7, 3, 1, 1, -2, 3, -5]", result.toString());
     }
     // Hint 1:
@@ -399,20 +408,20 @@ public class Exercises {
     // <editor-fold defaultstate="collapsed">
     // Deal with boxed Integers either by casting or by using mapToObj().
     // </editor-fold>
-    
+
 
 // ========================================================
 // INTERMEDIATE STREAM PIPELINES
 // ========================================================
-    
-    
+
+
     /**
      * Convert a list of strings into a list of characters.
      */
     @Test
     public void ex13_stringsToCharacters() {
         List<String> input = Arrays.asList("alfa", "bravo", "charlie");
-        
+
         //UNCOMMENT//List<Character> result = null; // TODO
         //BEGINREMOVE
         List<Character> result =
@@ -420,7 +429,7 @@ public class Exercises {
                 .flatMap(word -> word.chars().mapToObj(i -> (char)i))
                 .collect(toList());
         //ENDREMOVE
-        
+
         assertEquals("[a, l, f, a, b, r, a, v, o, c, h, a, r, l, i, e]", result.toString());
         assertTrue(result.stream().allMatch(x -> x instanceof Character));
     }
@@ -432,13 +441,13 @@ public class Exercises {
     // <editor-fold defaultstate="collapsed">
     // Pay attention to the return type of String.chars() and boxing conversion.
     // </editor-fold>
-    
+
 
     /**
      * Collect all the words from the text file into a list.
      * Use String.split(REGEXP) to split a string into words.
      * REGEXP is defined at the bottom of this file.
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -451,7 +460,7 @@ public class Exercises {
                   .collect(toList());
         // Note: Arrays.stream() is acceptable instead of Stream.of().
         //ENDREMOVE
-        
+
         assertEquals(
             Arrays.asList(
                 "From", "fairest", "creatures", "we", "desire", "increase",
@@ -474,13 +483,13 @@ public class Exercises {
     // <editor-fold defaultstate="collapsed">
     // Use Stream.flatMap().
     // </editor-fold>
-    
+
 
     /**
      * Read the words from the text file, and create a list containing the words
      * of length 8 or longer, converted to lower case, and sorted alphabetically.
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void ex15_longLowerCaseSortedWords() throws IOException {
@@ -494,7 +503,7 @@ public class Exercises {
                   .sorted()
                   .collect(toList());
         //ENDREMOVE
-        
+
         assertEquals(
             Arrays.asList(
                 "abundance", "beauty's", "contracted", "creatures",
@@ -505,14 +514,14 @@ public class Exercises {
     // <editor-fold defaultstate="collapsed">
     // Use Stream.sorted().
     // </editor-fold>
-    
-    
+
+
     /**
      * Read the words from the text file, and create a list containing the words
      * of length 8 or longer, converted to lower case, and sorted reverse alphabetically.
      * (Same as above except for reversed sort order.)
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void ex16_longLowerCaseReverseSortedWords() throws IOException {
@@ -526,7 +535,7 @@ public class Exercises {
                   .sorted(reverseOrder())
                   .collect(toList());
         //ENDREMOVE
-        
+
         assertEquals(
             Arrays.asList(
                 "substantial", "ornament", "niggarding", "increase",
@@ -538,12 +547,12 @@ public class Exercises {
     // Use Comparator.reverseOrder().
     // </editor-fold>
 
-    
+
     /**
      * Read words from the text file, and sort unique, lower-cased words by length,
      * then alphabetically within length, and place the result into an output list.
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void ex17_sortedLowerCaseDistinctByLengthThenAlphabetically() throws IOException {
@@ -558,7 +567,7 @@ public class Exercises {
                           .thenComparing(naturalOrder()))
                   .collect(toList());
         //ENDREMOVE
-        
+
         assertEquals(
             Arrays.asList(
                 "a", "as", "be", "by", "in", "or", "to", "we",
@@ -585,7 +594,7 @@ public class Exercises {
     // Use Comparator.theComparing().
     // </editor-fold>
 
-    
+
     /**
      * Count the total number of words and the number of distinct, lower case
      * words in the text file, in one pass.
@@ -605,7 +614,7 @@ public class Exercises {
                   .count();
         long totalCount = adder.longValue();
         //ENDREMOVE
-        
+
         assertEquals("distinct count", 81, distinctCount);
         assertEquals("total count", 107, totalCount);
     }
@@ -617,13 +626,13 @@ public class Exercises {
     // <editor-fold defaultstate="collapsed">
     // Use LongAdder or AtomicLong/AtomicInteger to allow peek() to have side effects.
     // </editor-fold>
-    
-    
+
+
 // ========================================================
 // ADVANCED STREAMS: REDUCTION, COLLECTORS, AND GROUPING
 // ========================================================
 
-    
+
     /**
      * Compute the value of 21!, that is, 21 factorial. This value is larger than
      * Long.MAX_VALUE, so you must use BigInteger.
@@ -637,18 +646,18 @@ public class Exercises {
                 .mapToObj(n -> BigInteger.valueOf(n))
                 .reduce(BigInteger.ONE, (m, n) -> m.multiply(n));
         //ENDREMOVE
-                        
+
         assertEquals(new BigInteger("51090942171709440000"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Use LongStream and reduction.
     // </editor-fold>
-    
-    
+
+
     /**
      * Get the last word in the text file.
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -661,21 +670,21 @@ public class Exercises {
                   .reduce((a, b) -> b)
                   .get();
         //ENDREMOVE
-        
+
         assertEquals("thee", result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Use Stream.reduce().
     // </editor-fold>
-    
+
 
     /**
      * Categorize the words from the text file into a map, where the map's key
      * is the length of each word, and the value corresponding to a key is a
      * list of words of that length. Don't bother with uniqueness or lower-
      * casing the words.
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -687,7 +696,7 @@ public class Exercises {
                   .flatMap(line -> Stream.of(line.split(REGEXP)))
                   .collect(groupingBy(String::length));
         //ENDREMOVE
-        
+
         assertEquals(10, result.get(7).size());
         assertEquals(new HashSet<>(Arrays.asList("beauty's", "increase", "ornament")), new HashSet<>(result.get(8)));
         assertEquals(new HashSet<>(Arrays.asList("abundance", "creatures")), new HashSet<>(result.get(9)));
@@ -700,14 +709,14 @@ public class Exercises {
     // Use Collectors.groupingBy().
     // </editor-fold>
 
-    
+
     /**
      * Categorize the words from the text file into a map, where the map's key
      * is the length of each word, and the value corresponding to a key is a
      * count of words of that length. Don't bother with uniqueness or lower-
      * casing the words. This is the same as the previous exercise except
      * the map values are the count of words instead of a list of words.
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -731,7 +740,7 @@ public class Exercises {
         assertEquals( 2L, (long)result.get(9));
         assertEquals( 2L, (long)result.get(10));
         assertEquals( 1L, (long)result.get(11));
-        
+
         IntSummaryStatistics stats = result.keySet().stream().mapToInt(i -> i).summaryStatistics();
         assertEquals("min key",  1, stats.getMin());
         assertEquals("max key", 11, stats.getMax());
@@ -745,13 +754,13 @@ public class Exercises {
     // Use Collectors.counting().
     // </editor-fold>
 
-    
+
     /**
      * Gather the words from the text file into a map, accumulating a count of
      * the number of occurrences of each word. Don't worry about upper case and
      * lower case. Extra challenge: implement two solutions, one that uses
      * groupingBy() and the other that uses toMap().
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -764,7 +773,7 @@ public class Exercises {
                   .collect(groupingBy(Function.identity(), counting()));
                       // or use word -> word instead of Function.identity()
 
-            // Alternative solution using toMap(): 
+            // Alternative solution using toMap():
 
             // Map<String, Long> map =
             //     reader.lines()
@@ -773,7 +782,7 @@ public class Exercises {
             //                          w -> 1L,
             //                          Long::sum));
         //ENDREMOVE
-        
+
         assertEquals(2L, (long)result.get("tender"));
         assertEquals(6L, (long)result.get("the"));
         assertEquals(1L, (long)result.get("churl"));
@@ -793,7 +802,7 @@ public class Exercises {
     // For Collectors.toMap(), the first occurrence of a word should be mapped to 1.
     // </editor-fold>
 
-    
+
     /**
      * From the words in the text file, create nested maps, where the outer map is a
      * map from the first letter of the word to an inner map. (Use a string of length
@@ -804,7 +813,7 @@ public class Exercises {
      * For example, given the words "foo bar baz bazz foo" the string
      * representation of the result would be:
      *     {b={3=[bar, baz], 4=[bazz]}, f={3=[foo, foo]}}
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -817,7 +826,7 @@ public class Exercises {
                   .collect(groupingBy(word -> word.substring(0,1),
                                       groupingBy(String::length)));
         //ENDREMOVE
-        
+
         assertEquals("[abundance]", result.get("a").get(9).toString());
         assertEquals("[by, be, by]", result.get("b").get(2).toString());
         assertEquals("[flame, fresh]", result.get("f").get(5).toString());
@@ -838,7 +847,7 @@ public class Exercises {
     // Both collection operations are Collectors.groupingBy().
     // </editor-fold>
 
-    
+
     /**
      * Given a stream of strings, accumulate (collect) them into the result string
      * by inserting the input string at both the beginning and end. For example, given
@@ -852,7 +861,7 @@ public class Exercises {
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m", "n", "o", "p", "q", "r", "s", "t")
             .parallelStream();
-        
+
         //UNCOMMENT//String result = input.collect(null, null, null); // TODO
         //BEGINREMOVE
         String result =
@@ -865,7 +874,7 @@ public class Exercises {
                           })
                  .toString();
         //ENDREMOVE
-        
+
         assertEquals("tsrqponmlkjihgfedcbaabcdefghijklmnopqrst", result);
     }
     // Hint 1:
@@ -880,17 +889,35 @@ public class Exercises {
     // in half and prepended/appended to the first argument.
     // </editor-fold>
 
-    
+
 // ========================================================
 // ADVANCED STREAMS: POTPOURRI
 // ========================================================
 
-    
+
     /**
      * Denormalize this map. The input is a map whose keys are the number of legs of an animal
      * and whose values are lists of names of animals. Run through the map and generate a
-     * "denormalized" list of Animal objects using the provided Animal class, where 
+     * "denormalized" list of Animal objects using the provided Animal class, where
      * each Animal instance contains the name of the animal and the number of legs.
+     * A simple Animal data class is provided. The ordering in the output list is not
+     * considered significant.
+     *
+     * Input is Map<Integer, List<String>>:
+     *   { 4=["ibex", "hedgehog", "wombat"],
+     *     6=["ant", "beetle", "cricket"],
+     *     ...
+     *   }
+     *
+     * Output should be a List<Animal>:
+     *   [ Animal("ibex", 4),
+     *     Animal("hedgehog", 4),
+     *     Animal("wombat", 4),
+     *     Animal("ant", 6),
+     *     Animal("beetle", 6),
+     *     Animal("cricket", 6),
+     *     ...
+     *   ]
      */
     @Test
     public void ex26_denormalizeMap() {
@@ -900,10 +927,10 @@ public class Exercises {
         input.put(8, Arrays.asList("octopus", "spider", "squid"));
         input.put(10, Arrays.asList("crab", "lobster", "scorpion"));
         input.put(750, Arrays.asList("millipede"));
-        
+
         class Animal {
             final String name; final int legs;
-            Animal(String s, int i) { name = s; this.legs = i; }
+            public Animal(String s, int i) { name = s; this.legs = i; }
             @Override public boolean equals(Object obj) {
                 if (! (obj instanceof Animal)) return false;
                 Animal other = (Animal)obj;
@@ -912,29 +939,31 @@ public class Exercises {
             @Override public int hashCode() { return name.hashCode() ^ legs; }
             @Override public String toString() { return String.format("(%s,%d)", name, legs); }
         }
-        
+
         //UNCOMMENT//List<Animal> result = null; // TODO
         //BEGINREMOVE
-        
-//        List<Animal> result =
-//            input.keySet().stream()
-//                .flatMap(legs -> input.get(legs).stream()
-//                                     .map(name -> new Animal(name, legs)))
-//                .collect(toList());
-        
-        // Alternative solution: stream over map entries instead of map keys
 
-        //List<Animal> result =
-        //    input.entrySet().stream()
-        //        .flatMap(entry -> entry.getValue().stream()
-        //                              .map(name -> new Animal(name, entry.getKey())))
-        //        .collect(toList());
-        
+        // Simple solution: use Map.forEach to iterate over each entry,
+        // and use a nested List.forEach to iterate over each list entry,
+        // and accumulate values into the result list.
+
         List<Animal> result = new ArrayList<>();
         input.forEach((legs, names) ->
                           names.forEach(name -> result.add(new Animal(name, legs))));
+
+        // Alternative solution: stream over map entries, and use flatMap to generate
+        // Animal instances for each animal name with the given number of legs. This
+        // is more complicated, but it's a more general technique, and it can be run
+        // in parallel.
+
+//        List<Animal> result =
+//            input.entrySet().stream()
+//                 .flatMap(entry -> entry.getValue().stream()
+//                                        .map(name -> new Animal(name, entry.getKey())))
+//                 .collect(toList());
+
         //ENDREMOVE
-        
+
         assertEquals(13, result.size());
         assertTrue(result.contains(new Animal("ibex", 4)));
         assertTrue(result.contains(new Animal("hedgehog", 4)));
@@ -959,68 +988,319 @@ public class Exercises {
     // <editor-fold defaultstate="collapsed">
     // If you use streams, consider using Stream.flatMap().
     // </editor-fold>
-    
-    
+
+
+// ========================================================
+// NEW FOR 2016
+// ========================================================
+
     /**
-     * Provide lambda expressions for the peek() operations that enable you to detect
-     * whether the stream is running in parallel, and using this information, provide
-     * expressions for the stream1isParallel and stream2isParallel booleans to make
-     * the assertions correct. You may also provide additional declarations
-     * and statements anywhere before assertions. (There are an open-ended number of
-     * solutions for this; the solutions file contains only one example.) Race conditions
-     * will be tolerated if you're clever.
+     * Invert a "multi-map". (P. Sandoz)
+     *
+     * Given a Map<X, Set<Y>>, convert it to Map<Y, Set<X>>.
      */
     @Test
-    public void ex27_parallelVsSequential() {
-        //UNCOMMENT//IntConsumer ic1 = i -> { }; // TODO
-        //UNCOMMENT//IntConsumer ic2 = i -> { }; // TODO
+    public void ex27_invertMultiMap() {
+        Map<String, List<Integer>> input = new HashMap<>();
+        input.put("a", Arrays.asList(1, 2));
+        input.put("b", Arrays.asList(2, 3));
+        input.put("c", Arrays.asList(1, 3));
+        input.put("d", Arrays.asList(1, 4));
+        input.put("e", Arrays.asList(2, 4));
+        input.put("f", Arrays.asList(3, 4));
+
+        //UNCOMMENT//Map<Integer, List<String>> result = null; // TODO
         //BEGINREMOVE
-        LongAccumulator adder1 = new LongAccumulator((x, y) -> (x << 1) + y, 0L);
-        LongAccumulator adder2 = new LongAccumulator((x, y) -> (x << 1) + y, 0L);
-        IntConsumer ic1 = i -> adder1.accumulate(i);
-        IntConsumer ic2 = i -> adder2.accumulate(i);
+        Map<Integer, Set<String>> result =
+            input.entrySet().stream()
+                 .flatMap(e -> e.getValue().stream()
+                                .map(v -> new SimpleEntry<>(e.getKey(), v)))
+                 .collect(groupingBy(Entry::getValue, mapping(Entry::getKey, toSet())));
         //ENDREMOVE
-        
-        List<Integer> result1 = IntStream.range(0, 100)
-                                         .peek(ic1)
-                                         .boxed()
-                                         .collect(Collectors.toList());
-        
-        List<Integer> result2 = IntStream.range(0, 100)
-                                         .parallel()
-                                         .peek(ic2)
-                                         .boxed()
-                                         .collect(Collectors.toList());
-        
-        //UNCOMMENT//boolean stream1isParallel = false; // TODO
-        //UNCOMMENT//boolean stream2isParallel = false; // TODO
-        //BEGINREMOVE
-        boolean stream1isParallel = adder1.longValue() != -101L;
-        boolean stream2isParallel = adder2.longValue() != -101L;
-        //ENDREMOVE
-        
-        assertEquals(result1, result2);
-        assertFalse(stream1isParallel);
-        assertTrue(stream2isParallel);
+
+        assertEquals(new HashSet<>(Arrays.asList("a", "c", "d")), result.get(1));
+        assertEquals(new HashSet<>(Arrays.asList("a", "b", "e")), result.get(2));
+        assertEquals(new HashSet<>(Arrays.asList("b", "c", "f")), result.get(3));
+        assertEquals(new HashSet<>(Arrays.asList("d", "e", "f")), result.get(4));
+        assertEquals(4, result.size());
     }
-    // Hint 1:
+
+
+    /**
+     * Select from the input list each word that longer than the immediately
+     * preceding word. Include the first word, since it is longer than the
+     * (nonexistent) word that precedes it.
+     *
+     * XXX - compare to ex11
+     */
+    @Test
+    public void ex28_selectLongerThanPreceding() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+
+        //UNCOMMENT//List<String> result = null; // TODO
+        //BEGINREMOVE
+        List<String> result =
+            IntStream.range(0, input.size())
+                .filter(pos -> pos == 0 || input.get(pos-1).length() < input.get(pos).length())
+                .mapToObj(pos -> input.get(pos))
+                .collect(toList());
+        //ENDREMOVE
+
+        assertEquals("[alfa, bravo, charlie, foxtrot, hotel]", result.toString());
+    }
+    // Hint:
     // <editor-fold defaultstate="collapsed">
-    // By its very nature, you need to do something with side-effects within Stream.peek().
-    // </editor-fold>
-    // Hint 2:
-    // <editor-fold defaultstate="collapsed">
-    // The sequential and parallel streams have the same contents, but they will
-    // probably end up processing the elements in a different order, even though
-    // the output list is collected in the proper order (encounter order).
-    // </editor-fold>
-    // Hint 3:
-    // <editor-fold defaultstate="collapsed">
-    // Consider a thread-safe side-effect-supporting structure such as LongAdder.
-    // Note that LongAdder's accumulation function must be order-dependent for it
-    // to detect parallelism.
+    // Instead of a stream of words (Strings), run an IntStream of positions.
     // </editor-fold>
 
-    
+
+    /**
+     * Generate a list of words that is the concatenation of each adjacent
+     * pair of words in the input list. For example, if the input is
+     *     [x, y, z]
+     * the output should be
+     *     [xy, yz]
+     *
+     * XXX - compare to ex11
+     */
+    @Test
+    public void ex29_concatenateAdjacent() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
+
+        //UNCOMMENT//List<String> result = null; // TODO
+        //BEGINREMOVE
+        List<String> result =
+            IntStream.range(1, input.size())
+                .mapToObj(pos -> input.get(pos-1) + input.get(pos))
+                .collect(toList());
+        //ENDREMOVE
+
+        assertEquals("[alfabravo, bravocharlie, charliedelta, deltaecho, echofoxtrot]",
+                     result.toString());
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Instead of a stream of words (Strings), run an IntStream of positions.
+    // </editor-fold>
+
+    /**
+     * Select the longest words from the input list. That is, select the words
+     * whose lengths are equal to the maximum word length. For this exercise,
+     * it's easiest to perform two passes over the input list.
+     *
+     * XXX - compare to ex09 and ex10
+     */
+    @Test
+    public void ex30_selectLongestWords() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+
+        //UNCOMMENT//List<String> result = null; // TODO
+        //BEGINREMOVE
+        int max = input.stream()
+                       .mapToInt(String::length)
+                       .max()
+                       .getAsInt();
+
+        List<String> result = input.stream()
+                                   .filter(s -> s.length() == max)
+                                   .collect(toList());
+        //ENDREMOVE
+
+        assertEquals("[charlie, foxtrot]", result.toString());
+    }
+
+    /**
+     * Select the longest words from the input stream. That is, select the words
+     * whose lengths are equal to the maximum word length. For this exercise,
+     * you must compute the result in a single pass over the input stream.
+     *
+     * XXX - compare to ex30
+     */
+    @Test
+    public void ex31_selectLongestWordsOnePass() {
+        Stream<String> input = Stream.of(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+
+        //UNCOMMENT//List<String> result = null; // TODO
+        //BEGINREMOVE
+
+        List<String> result = new ArrayList<>();
+        input.forEachOrdered(s -> {
+            if (result.isEmpty()) {
+                result.add(s);
+            } else {
+                int reslen = result.get(0).length();
+                int curlen = s.length();
+                if (curlen > reslen) {
+                    result.clear();
+                    result.add(s);
+                } else if (curlen == reslen) {
+                    result.add(s);
+                }
+            }
+        });
+        //ENDREMOVE
+
+        assertEquals("[charlie, foxtrot]", result.toString());
+    }
+
+    /**
+     * Create a list of non-overlapping sublists of the input list, where each
+     * sublist (except for the first one) starts with a word whose first character is a ":".
+     * For example, given the input list
+     *     [w, x, :y, z]
+     * the output should be
+     *     [[w, x], [:y, z]]
+     */
+    @Test
+    public void ex32_partitionIntoSublists() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", ":charlie", "delta", ":echo", ":foxtrot", "golf", "hotel");
+
+        //UNCOMMENT//List<List<String>> result = null; // TODO
+        //BEGINREMOVE
+
+        List<Integer> bounds =
+            IntStream.rangeClosed(0, input.size())
+                     .filter(i -> i == 0 || i == input.size() || input.get(i).startsWith(":"))
+                     .boxed()
+                     .collect(toList());
+
+        List<List<String>> result =
+            IntStream.range(1, bounds.size())
+                     .mapToObj(i -> input.subList(bounds.get(i-1), bounds.get(i)))
+                     .collect(toList());
+
+        //ENDREMOVE
+
+        assertEquals("[[alfa, bravo], [:charlie, delta], [:echo], [:foxtrot, golf, hotel]]",
+                     result.toString());
+    }
+
+    /**
+     * Given a stream of integers, compute separate sums of the even and odd values
+     * in this stream. Since the input is a stream, this necessitates making a single
+     * pass over the input.
+     */
+    @Test
+    public void ex33_separateOddEvenSums() {
+        IntStream input = new Random(987523).ints(20, 0, 100);
+
+        //UNCOMMENT//int sumEvens = 0; // TODO
+        //UNCOMMENT//int sumOdds  = 0; // TODO
+        //BEGINREMOVE
+
+        Map<Boolean, Integer> sums =
+            input.boxed()
+                 .collect(partitioningBy(i -> (i & 1) == 1, Collectors.summingInt(i -> i)));
+        int sumEvens = sums.get(false);
+        int sumOdds  = sums.get(true);
+        //ENDREMOVE
+
+        assertEquals(516, sumEvens);
+        assertEquals(614, sumOdds);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use Collectors.partitioningBy().
+    // </editor-fold>
+
+    /**
+     * Given a string, split it into a list of strings consisting of
+     * consecutive characters from the original string. Note: this is
+     * similar to Python's itertools.groupby function, but it differs
+     * from Java's Collectors.groupingBy() collector.
+     *
+     * XXX - compare to ex32
+     */
+    @Test
+    public void ex34_splitCharacterRuns() {
+        String input = "aaaaabbccccdeeeeeeaaafff";
+
+        //UNCOMMENT//List<String> result = null; // TODO
+        //BEGINREMOVE
+
+        List<Integer> bounds =
+            IntStream.rangeClosed(0, input.length())
+                     .filter(i -> i == 0 || i == input.length() ||
+                                  input.charAt(i-1) != input.charAt(i))
+                     .boxed()
+                     .collect(toList());
+
+        List<String> result =
+            IntStream.range(1, bounds.size())
+                     .mapToObj(i -> input.substring(bounds.get(i-1), bounds.get(i)))
+                     .collect(toList());
+
+        //ENDREMOVE
+
+        assertEquals("[aaaaa, bb, cccc, d, eeeeee, aaa, fff]", result.toString());
+    }
+
+    /**
+     * Given a string, find the substring containing the longest run of consecutive,
+     * equal characters.
+     *
+     * XXX - compare to ex34
+     */
+    @Test
+    public void ex35_longestCharacterRuns() {
+        String input = "aaaaabbccccdeeeeeeaaafff";
+
+        //UNCOMMENT//int result = null; // TODO
+        //BEGINREMOVE
+
+        List<Integer> bounds =
+            IntStream.rangeClosed(0, input.length())
+                     .filter(i -> i == 0 || i == input.length() ||
+                                  input.charAt(i-1) != input.charAt(i))
+                     .boxed()
+                     .collect(toList());
+
+        String result =
+            IntStream.range(1, bounds.size())
+                     .boxed()
+                     .max((i, j) -> Integer.compare(bounds.get(i) - bounds.get(i-1),
+                                                    bounds.get(j) - bounds.get(j-1)))
+                     .map(i -> input.substring(bounds.get(i-1), bounds.get(i)))
+                     .get();
+
+        //ENDREMOVE
+
+        assertEquals("eeeeee", result);
+    }
+
+    /**
+     * Given a parallel stream of strings, collect them into a collection in reverse order.
+     * Since the stream is parallel, you MUST write a proper combiner function in order to get
+     * the correct result.
+     */
+    @Test
+    public void ex36_reversingCollector() {
+        Stream<String> input =
+            IntStream.range(0, 100).mapToObj(String::valueOf).parallel();
+
+        //UNCOMMENT//Collection<String> result =
+        //UNCOMMENT//    input.collect(Collectors.of(null, null, null)); // TODO
+
+        //BEGINREMOVE
+
+        Collection<String> result =
+            input.collect(Collector.of(ArrayDeque::new,
+                                       ArrayDeque::addFirst,
+                                       (d1, d2) -> { d2.addAll(d1); return d2; }));
+
+        //ENDREMOVE
+
+        assertEquals(
+            IntStream.range(0, 100).map(i -> 99 - i).mapToObj(String::valueOf).collect(toList()),
+            new ArrayList<>(result));
+    }
+
+
 // ========================================================
 // END OF EXERCISES -- CONGRATULATIONS!
 // TEST INFRASTRUCTURE IS BELOW

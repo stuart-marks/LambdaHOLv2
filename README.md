@@ -1,6 +1,6 @@
 Java 8 Lambdas Hands-on Lab Materials
 
-(version 2 for late 2014 conferences)
+(version for late 2016 conferences)
 
 Open LambdaLab in your favorite IDE. (Currently NetBeans is
 supported.) Then open Test Packages / exercises / Exercises.java.
