@@ -898,9 +898,8 @@ public class Exercises {
     /**
      * Denormalize this map. The input is a map whose keys are the number of legs of an animal
      * and whose values are lists of names of animals. Run through the map and generate a
-     * "denormalized" list of Animal objects using the provided Animal class, where
-     * each Animal instance contains the name of the animal and the number of legs.
-     * A simple Animal data class is provided. The ordering in the output list is not
+     * "denormalized" list of strings describing the animal, with the animal's name separated
+     * by a comma from the number of legs it has. The ordering in the output list is not
      * considered significant.
      *
      * Input is Map<Integer, List<String>>:
@@ -909,13 +908,13 @@ public class Exercises {
      *     ...
      *   }
      *
-     * Output should be a List<Animal>:
-     *   [ Animal("ibex", 4),
-     *     Animal("hedgehog", 4),
-     *     Animal("wombat", 4),
-     *     Animal("ant", 6),
-     *     Animal("beetle", 6),
-     *     Animal("cricket", 6),
+     * Output should be a List<String>:
+     *   [ "ibex,4",
+     *     "hedgehog,4",
+     *     "wombat,4",
+     *     "ant,6",
+     *     "beetle,6",
+     *     "cricket,6",
      *     ...
      *   ]
      */
@@ -928,56 +927,44 @@ public class Exercises {
         input.put(10, Arrays.asList("crab", "lobster", "scorpion"));
         input.put(750, Arrays.asList("millipede"));
 
-        class Animal {
-            final String name; final int legs;
-            public Animal(String s, int i) { name = s; this.legs = i; }
-            @Override public boolean equals(Object obj) {
-                if (! (obj instanceof Animal)) return false;
-                Animal other = (Animal)obj;
-                return this.name.equals(other.name) && this.legs == other.legs;
-            }
-            @Override public int hashCode() { return name.hashCode() ^ legs; }
-            @Override public String toString() { return String.format("(%s,%d)", name, legs); }
-        }
-
-        //UNCOMMENT//List<Animal> result = null; // TODO
+        //UNCOMMENT//List<String> result = null; // TODO
         //BEGINREMOVE
 
         // Simple solution: use Map.forEach to iterate over each entry,
         // and use a nested List.forEach to iterate over each list entry,
         // and accumulate values into the result list.
 
-        List<Animal> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         input.forEach((legs, names) ->
-                          names.forEach(name -> result.add(new Animal(name, legs))));
+                          names.forEach(name -> result.add(name + "," + legs)));
 
         // Alternative solution: stream over map entries, and use flatMap to generate
         // Animal instances for each animal name with the given number of legs. This
         // is more complicated, but it's a more general technique, and it can be run
         // in parallel.
 
-//        List<Animal> result =
+//        List<String> result =
 //            input.entrySet().stream()
 //                 .flatMap(entry -> entry.getValue().stream()
-//                                        .map(name -> new Animal(name, entry.getKey())))
+//                                        .map(name -> name + "," + entry.getKey()))
 //                 .collect(toList());
 
         //ENDREMOVE
 
         assertEquals(13, result.size());
-        assertTrue(result.contains(new Animal("ibex", 4)));
-        assertTrue(result.contains(new Animal("hedgehog", 4)));
-        assertTrue(result.contains(new Animal("wombat", 4)));
-        assertTrue(result.contains(new Animal("ant", 6)));
-        assertTrue(result.contains(new Animal("beetle", 6)));
-        assertTrue(result.contains(new Animal("cricket", 6)));
-        assertTrue(result.contains(new Animal("octopus", 8)));
-        assertTrue(result.contains(new Animal("spider", 8)));
-        assertTrue(result.contains(new Animal("squid", 8)));
-        assertTrue(result.contains(new Animal("crab", 10)));
-        assertTrue(result.contains(new Animal("lobster", 10)));
-        assertTrue(result.contains(new Animal("scorpion", 10)));
-        assertTrue(result.contains(new Animal("millipede", 750)));
+        assertTrue(result.contains("ibex,4"));
+        assertTrue(result.contains("hedgehog,4"));
+        assertTrue(result.contains("wombat,4"));
+        assertTrue(result.contains("ant,6"));
+        assertTrue(result.contains("beetle,6"));
+        assertTrue(result.contains("cricket,6"));
+        assertTrue(result.contains("octopus,8"));
+        assertTrue(result.contains("spider,8"));
+        assertTrue(result.contains("squid,8"));
+        assertTrue(result.contains("crab,10"));
+        assertTrue(result.contains("lobster,10"));
+        assertTrue(result.contains("scorpion,10"));
+        assertTrue(result.contains("millipede,750"));
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
