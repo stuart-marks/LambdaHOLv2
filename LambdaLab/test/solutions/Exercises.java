@@ -899,7 +899,7 @@ public class Exercises {
      * Denormalize this map. The input is a map whose keys are the number of legs of an animal
      * and whose values are lists of names of animals. Run through the map and generate a
      * "denormalized" list of strings describing the animal, with the animal's name separated
-     * by a comma from the number of legs it has. The ordering in the output list is not
+     * by a colon from the number of legs it has. The ordering in the output list is not
      * considered significant.
      *
      * Input is Map<Integer, List<String>>:
@@ -909,12 +909,12 @@ public class Exercises {
      *   }
      *
      * Output should be a List<String>:
-     *   [ "ibex,4",
-     *     "hedgehog,4",
-     *     "wombat,4",
-     *     "ant,6",
-     *     "beetle,6",
-     *     "cricket,6",
+     *   [ "ibex:4",
+     *     "hedgehog:4",
+     *     "wombat:4",
+     *     "ant:6",
+     *     "beetle:6",
+     *     "cricket:6",
      *     ...
      *   ]
      */
@@ -936,7 +936,7 @@ public class Exercises {
 
         List<String> result = new ArrayList<>();
         input.forEach((legs, names) ->
-                          names.forEach(name -> result.add(name + "," + legs)));
+                          names.forEach(name -> result.add(name + ":" + legs)));
 
         // Alternative solution: stream over map entries, and use flatMap to generate
         // Animal instances for each animal name with the given number of legs. This
@@ -946,25 +946,25 @@ public class Exercises {
 //        List<String> result =
 //            input.entrySet().stream()
 //                 .flatMap(entry -> entry.getValue().stream()
-//                                        .map(name -> name + "," + entry.getKey()))
+//                                        .map(name -> name + ":" + entry.getKey()))
 //                 .collect(toList());
 
         //ENDREMOVE
 
         assertEquals(13, result.size());
-        assertTrue(result.contains("ibex,4"));
-        assertTrue(result.contains("hedgehog,4"));
-        assertTrue(result.contains("wombat,4"));
-        assertTrue(result.contains("ant,6"));
-        assertTrue(result.contains("beetle,6"));
-        assertTrue(result.contains("cricket,6"));
-        assertTrue(result.contains("octopus,8"));
-        assertTrue(result.contains("spider,8"));
-        assertTrue(result.contains("squid,8"));
-        assertTrue(result.contains("crab,10"));
-        assertTrue(result.contains("lobster,10"));
-        assertTrue(result.contains("scorpion,10"));
-        assertTrue(result.contains("millipede,750"));
+        assertTrue(result.contains("ibex:4"));
+        assertTrue(result.contains("hedgehog:4"));
+        assertTrue(result.contains("wombat:4"));
+        assertTrue(result.contains("ant:6"));
+        assertTrue(result.contains("beetle:6"));
+        assertTrue(result.contains("cricket:6"));
+        assertTrue(result.contains("octopus:8"));
+        assertTrue(result.contains("spider:8"));
+        assertTrue(result.contains("squid:8"));
+        assertTrue(result.contains("crab:10"));
+        assertTrue(result.contains("lobster:10"));
+        assertTrue(result.contains("scorpion:10"));
+        assertTrue(result.contains("millipede:750"));
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
