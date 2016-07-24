@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -1285,6 +1286,40 @@ public class Exercises {
         assertEquals(
             IntStream.range(0, 100).map(i -> 99 - i).mapToObj(String::valueOf).collect(toList()),
             new ArrayList<>(result));
+    }
+
+    /**
+     * Given an array of int, find the int value that occurs a majority
+     * of times in the array (that is, strictly more than half of the
+     * elements are that value), and return it in an OptionalInt. If there
+     * is no majority value, return an empty OptionalInt.
+     */
+
+    OptionalInt majority(int[] array) {
+        //UNCOMMENT//return null; // TODO
+        //BEGINREMOVE
+        Map<Integer, Long> map =
+            Arrays.stream(array)
+                  .boxed()
+                  .collect(groupingBy(x -> x, counting()));
+
+        return map.entrySet().stream()
+                  .filter(e -> e.getValue() > array.length / 2)
+                  .mapToInt(Entry::getKey)
+                  .findAny();
+        //ENDREMOVE
+    }
+
+    @Test
+    public void ex37_majority() {
+        int[] array1 = { 3, 3, 4, 2, 4, 4, 2, 4, 4 };
+        int[] array2 = { 3, 3, 4, 2, 4, 4, 2, 4 };
+
+        OptionalInt result1 = majority(array1);
+        OptionalInt result2 = majority(array2);
+
+        assertTrue(result1.isPresent() && result1.getAsInt() == 4);
+        assertFalse(result2.isPresent());
     }
 
 
