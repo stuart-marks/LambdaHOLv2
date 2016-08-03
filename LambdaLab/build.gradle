@@ -35,4 +35,12 @@ task testSolutions(type:Test){
     testClassesDir = sourceSets.solutions.output.classesDir
 }
 
+tasks.withType(Test){
+    testLogging {
+        // set options for log level LIFECYCLE
+        events "started", "passed", "skipped", "failed" 
+        exceptionFormat "short"
+    }
+}
+
 check.dependsOn testExercises, testSolutions
