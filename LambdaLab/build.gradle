@@ -1,0 +1,38 @@
+apply plugin:'java-base'
+apply plugin:'idea'
+apply plugin:'eclipse'
+
+sourceSets {
+    exercises {
+        java.srcDirs = ['test/exercises']
+    }
+    solutions {
+        java.srcDirs = ['test/solutions']
+    }
+}
+
+configurations {
+    testCompile
+    exercisesCompile.extendsFrom testCompile
+    solutionsCompile.extendsFrom testCompile
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+task testExercises(type:Test){
+    classpath = sourceSets.exercises.runtimeClasspath
+    testClassesDir = sourceSets.exercises.output.classesDir
+}
+
+task testSolutions(type:Test){
+    classpath = sourceSets.solutions.runtimeClasspath
+    testClassesDir = sourceSets.solutions.output.classesDir
+}
+
+check.dependsOn testExercises, testSolutions
