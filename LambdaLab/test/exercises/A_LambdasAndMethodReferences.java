@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.DoublePredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -139,69 +137,7 @@ public class A_LambdasAndMethodReferences {
     }
 
     @Test @Ignore
-    public void a13doublepredicate() {
-        // TODO: write a lambda expression that tests whether a double value
-        // is greater than 10.0.
-        DoublePredicate pred = d -> d > 10.0;
-
-        assertTrue(pred.test(15.0));
-        assertFalse(pred.test(5.0));
-    }
-
-    @Test @Ignore
-    public void a14doublepredicate() {
-        // TODO: write a lambda expression that tests whether a double value
-        // is finite.
-        DoublePredicate pred = d -> Double.isFinite(d);
-
-        assertTrue(pred.test(0.0));
-        assertFalse(pred.test(Double.POSITIVE_INFINITY));
-    }
-
-    @Test @Ignore
-    public void a15doublepredicate() {
-        // TODO: write a method reference that tests whether a double value
-        // is finite.
-        DoublePredicate pred = Double::isFinite;
-
-        assertTrue(pred.test(0.0));
-        assertFalse(pred.test(Double.POSITIVE_INFINITY));
-    }
-
-    @Test @Ignore
-    public void a16bifunction() {
-        // TODO: write a lambda expression, given two strings, returns the result
-        // of concatenating the first, followed by the second, followed by the
-        // first again.
-        BiFunction<String, String, String> bifunc = (s1, s2) -> s1 + s2 + s1;
-
-        assertEquals("abcdefabc", bifunc.apply("abc", "def"));
-    }
-
-    @Test @Ignore
-    public void a17bifunction() {
-        // TODO: write a lambda expression that returns the index of
-        // the first occurrence the second string within the first string,
-        // or -1 if the second string doesn't occur within the first string.
-        BiFunction<String, String, Integer> bifunc = (s1, s2) -> s1.indexOf(s2);
-
-        assertTrue(bifunc.apply("abcdefghi", "def") == 3);
-        assertTrue(bifunc.apply("abcdefghi", "xyz") == -1);
-    }
-
-    @Test @Ignore
-    public void a18bifunction() {
-        // TODO: write a method reference that returns the index of
-        // the first occurrence the second string within the first string,
-        // or -1 if the second string doesn't occur within the first string.
-        BiFunction<String, String, Integer> bifunc = String::indexOf;
-
-        assertTrue(bifunc.apply("abcdefghi", "def") == 3);
-        assertTrue(bifunc.apply("abcdefghi", "xyz") == -1);
-    }
-
-    @Test @Ignore
-    public void a19runnable() {
+    public void a13runnable() {
         StringBuilder sb = new StringBuilder("abc");
         String suffix = "xyz";
 
