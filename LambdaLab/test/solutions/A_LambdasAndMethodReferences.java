@@ -117,7 +117,7 @@ public class A_LambdasAndMethodReferences {
     @Test
     public void a08consumer() {
         // TODO: write a lambda expression that clears the given list.
-        //UNCOMMENT//Consumer<StringBuilder> cons = null;
+        //UNCOMMENT//Consumer<List<String>> cons = null;
         //BEGINREMOVE
         Consumer<List<String>> cons = list -> list.clear();
         //ENDREMOVE
@@ -130,7 +130,7 @@ public class A_LambdasAndMethodReferences {
     @Test
     public void a09consumer() {
         // TODO: write a method reference that clears the given list.
-        //UNCOMMENT//Consumer<StringBuilder> cons = null;
+        //UNCOMMENT//Consumer<List<String>> cons = null;
         //BEGINREMOVE
         Consumer<List<String>> cons = List::clear;
         //ENDREMOVE

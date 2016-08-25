@@ -96,7 +96,7 @@ public class A_LambdasAndMethodReferences {
     @Test @Ignore
     public void a08consumer() {
         // TODO: write a lambda expression that clears the given list.
-        Consumer<StringBuilder> cons = null;
+        Consumer<List<String>> cons = null;
 
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         cons.accept(list);
@@ -106,7 +106,7 @@ public class A_LambdasAndMethodReferences {
     @Test @Ignore
     public void a09consumer() {
         // TODO: write a method reference that clears the given list.
-        Consumer<StringBuilder> cons = null;
+        Consumer<List<String>> cons = null;
 
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         cons.accept(list);
