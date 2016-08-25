@@ -3,15 +3,16 @@ package solutions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import static org.junit.Assert.assertEquals;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -70,7 +71,7 @@ public class A_LambdasAndMethodReferences {
         //BEGINREMOVE
         Function<String, String> func = s -> "(" + s + ")";
         //ENDREMOVE
-        
+
         assertEquals("(abc)", func.apply("abc"));
     }
 
@@ -170,13 +171,57 @@ public class A_LambdasAndMethodReferences {
     }
 
     @Test
-    public void a13runnable() {
+    public void a13bifunction() {
+        // TODO: write a lambda expression, given two strings, returns the result
+        // of concatenating the first, followed by the second, followed by the
+        // first again.
+        //UNCOMMENT//BiFunction<String, String, String> bifunc = null;
+        //BEGINREMOVE
+        BiFunction<String, String, String> bifunc = (s1, s2) -> s1 + s2 + s1;
+        //ENDREMOVE
+
+        assertEquals("abcdefabc", bifunc.apply("abc", "def"));
+    }
+
+    @Test
+    public void a14bifunction() {
+        // TODO: write a lambda expression that returns the index of
+        // the first occurrence the second string within the first string,
+        // or -1 if the second string doesn't occur within the first string.
+        //UNCOMMENT//BiFunction<String, String, Integer> bifunc = null;
+        //BEGINREMOVE
+        BiFunction<String, String, Integer> bifunc = (s1, s2) -> s1.indexOf(s2);
+        //ENDREMOVE
+
+        assertTrue(bifunc.apply("abcdefghi", "def") == 3);
+        assertTrue(bifunc.apply("abcdefghi", "xyz") == -1);
+    }
+
+    @Test
+    public void a15bifunction() {
+        // TODO: write a method reference that returns the index of
+        // the first occurrence the second string within the first string,
+        // or -1 if the second string doesn't occur within the first string.
+        //UNCOMMENT//BiFunction<String, String, Integer> bifunc = null;
+        //BEGINREMOVE
+        BiFunction<String, String, Integer> bifunc = String::indexOf;
+        //ENDREMOVE
+
+        assertTrue(bifunc.apply("abcdefghi", "def") == 3);
+        assertTrue(bifunc.apply("abcdefghi", "xyz") == -1);
+    }
+
+    @Test
+    public void a16runnable() {
         StringBuilder sb = new StringBuilder("abc");
         String suffix = "xyz";
 
         // TODO: write a lambda expression that appends the 'suffix'
         // variable (a String) to the sb variable (a StringBuilder).
+        //UNCOMMENT//Runnable r = null;
+        //BEGINREMOVE
         Runnable r = () -> sb.append(suffix);
+        //ENDREMOVE
 
         r.run();
         r.run();
