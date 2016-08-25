@@ -38,6 +38,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.IntConsumer;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -926,7 +927,7 @@ public class Exercises {
     public void ex35_longestCharacterRuns() {
         String input = "aaaaabbccccdeeeeeeaaafff";
 
-        int result = null; // TODO
+        String result = null; // TODO
 
         assertEquals("eeeeee", result);
     }
@@ -942,11 +943,14 @@ public class Exercises {
             IntStream.range(0, 100).mapToObj(String::valueOf).parallel();
 
         Collection<String> result =
-            input.collect(Collectors.of(null, null, null)); // TODO
+            input.collect(Collector.of(null, null, null)); // TODO
 
 
         assertEquals(
-            IntStream.range(0, 100).map(i -> 99 - i).mapToObj(String::valueOf).collect(toList()),
+            IntStream.range(0, 100)
+                     .map(i -> 99 - i)
+                     .mapToObj(String::valueOf)
+                     .collect(Collectors.toList()),
             new ArrayList<>(result));
     }
 
