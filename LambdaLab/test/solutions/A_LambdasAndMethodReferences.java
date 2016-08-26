@@ -172,7 +172,7 @@ public class A_LambdasAndMethodReferences {
 
     @Test
     public void a13bifunction() {
-        // TODO: write a lambda expression, given two strings, returns the result
+        // TODO: write a lambda expression that, given two strings, returns the result
         // of concatenating the first, followed by the second, followed by the
         // first again.
         //UNCOMMENT//BiFunction<String, String, String> bifunc = null;
@@ -186,7 +186,7 @@ public class A_LambdasAndMethodReferences {
     @Test
     public void a14bifunction() {
         // TODO: write a lambda expression that returns the index of
-        // the first occurrence the second string within the first string,
+        // the first occurrence of the second string within the first string,
         // or -1 if the second string doesn't occur within the first string.
         //UNCOMMENT//BiFunction<String, String, Integer> bifunc = null;
         //BEGINREMOVE
@@ -200,7 +200,7 @@ public class A_LambdasAndMethodReferences {
     @Test
     public void a15bifunction() {
         // TODO: write a method reference that returns the index of
-        // the first occurrence the second string within the first string,
+        // the first occurrence of the second string within the first string,
         // or -1 if the second string doesn't occur within the first string.
         //UNCOMMENT//BiFunction<String, String, Integer> bifunc = null;
         //BEGINREMOVE
