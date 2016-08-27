@@ -7,7 +7,11 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses(value={
     exercises.A_Lambdas.class,
     exercises.B_Comparators.class,
-    exercises.Exercises.class
+    exercises.C_DefaultMethods.class,
+    exercises.D_SimpleStreams.class,
+    exercises.E_IntermediateStreams.class,
+    exercises.F_AdvancedStreams.class,
+    exercises.G_Challenges.class
 })
 public class JUnit4TestSuite {
 }

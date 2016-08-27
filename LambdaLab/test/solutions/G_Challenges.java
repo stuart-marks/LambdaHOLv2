@@ -1,4 +1,4 @@
-package exercises;
+package solutions;
 
 /*
  * LAMBDA PROGRAMMING LABORATORY
@@ -19,25 +19,18 @@ package exercises;
  * is located at the root of this NetBeans project.
  */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.AbstractMap;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.function.IntConsumer;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -52,14 +45,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
-public class Exercises {
-
-
-// ========================================================
-// ADVANCED STREAMS: POTPOURRI
-// ========================================================
-
+public class G_Challenges {
 
     /**
      * Denormalize this map. The input is a map whose keys are the number of legs of an animal
@@ -84,7 +70,7 @@ public class Exercises {
      *     ...
      *   ]
      */
-    @Test @Ignore
+    @Test
     public void ex26_denormalizeMap() {
         Map<Integer, List<String>> input = new HashMap<>();
         input.put(4, Arrays.asList("ibex", "hedgehog", "wombat"));
@@ -93,7 +79,29 @@ public class Exercises {
         input.put(10, Arrays.asList("crab", "lobster", "scorpion"));
         input.put(750, Arrays.asList("millipede"));
 
-        List<String> result = null; // TODO
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+
+        // Simple solution: use Map.forEach to iterate over each entry,
+        // and use a nested List.forEach to iterate over each list entry,
+        // and accumulate values into the result list.
+
+        List<String> result = new ArrayList<>();
+        input.forEach((legs, names) ->
+                          names.forEach(name -> result.add(name + ":" + legs)));
+
+        // Alternative solution: stream over map entries, and use flatMap to generate
+        // Animal instances for each animal name with the given number of legs. This
+        // is more complicated, but it's a more general technique, and it can be run
+        // in parallel.
+
+//        List<String> result =
+//            input.entrySet().stream()
+//                 .flatMap(entry -> entry.getValue().stream()
+//                                        .map(name -> name + ":" + entry.getKey()))
+//                 .collect(toList());
+
+        //ENDREMOVE
 
         assertEquals(13, result.size());
         assertTrue(result.contains("ibex:4"));
@@ -130,7 +138,7 @@ public class Exercises {
      *
      * Given a Map<X, Set<Y>>, convert it to Map<Y, Set<X>>.
      */
-    @Test @Ignore
+    @Test
     public void ex27_invertMultiMap() {
         Map<String, List<Integer>> input = new HashMap<>();
         input.put("a", Arrays.asList(1, 2));
@@ -140,7 +148,16 @@ public class Exercises {
         input.put("e", Arrays.asList(2, 4));
         input.put("f", Arrays.asList(3, 4));
 
-        Map<Integer, List<String>> result = null; // TODO
+        //TODO//Map<Integer, List<String>> result = null;
+        //BEGINREMOVE
+        Map<Integer, Set<String>> result =
+            input.entrySet().stream()
+                 .flatMap(e -> e.getValue().stream()
+                                .map(v -> new AbstractMap.SimpleEntry<>(e.getKey(), v)))
+                 .collect(Collectors.groupingBy(Map.Entry::getValue, 
+                                                Collectors.mapping(Map.Entry::getKey,
+                                                                   Collectors.toSet())));
+        //ENDREMOVE
 
         assertEquals(new HashSet<>(Arrays.asList("a", "c", "d")), result.get(1));
         assertEquals(new HashSet<>(Arrays.asList("a", "b", "e")), result.get(2));
@@ -157,12 +174,19 @@ public class Exercises {
      *
      * XXX - compare to ex11
      */
-    @Test @Ignore
+    @Test
     public void ex28_selectLongerThanPreceding() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
-        List<String> result = null; // TODO
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+        List<String> result =
+            IntStream.range(0, input.size())
+                .filter(pos -> pos == 0 || input.get(pos-1).length() < input.get(pos).length())
+                .mapToObj(pos -> input.get(pos))
+                .collect(Collectors.toList());
+        //ENDREMOVE
 
         assertEquals("[alfa, bravo, charlie, foxtrot, hotel]", result.toString());
     }
@@ -181,12 +205,18 @@ public class Exercises {
      *
      * XXX - compare to ex11
      */
-    @Test @Ignore
+    @Test
     public void ex29_concatenateAdjacent() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
-        List<String> result = null; // TODO
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+        List<String> result =
+            IntStream.range(1, input.size())
+                .mapToObj(pos -> input.get(pos-1) + input.get(pos))
+                .collect(Collectors.toList());
+        //ENDREMOVE
 
         assertEquals("[alfabravo, bravocharlie, charliedelta, deltaecho, echofoxtrot]",
                      result.toString());
@@ -203,12 +233,22 @@ public class Exercises {
      *
      * XXX - compare to ex09 and ex10
      */
-    @Test @Ignore
+    @Test
     public void ex30_selectLongestWords() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
-        List<String> result = null; // TODO
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+        int max = input.stream()
+                       .mapToInt(String::length)
+                       .max()
+                       .getAsInt();
+
+        List<String> result = input.stream()
+                                   .filter(s -> s.length() == max)
+                                   .collect(Collectors.toList());
+        //ENDREMOVE
 
         assertEquals("[charlie, foxtrot]", result.toString());
     }
@@ -220,12 +260,30 @@ public class Exercises {
      *
      * XXX - compare to ex30
      */
-    @Test @Ignore
+    @Test
     public void ex31_selectLongestWordsOnePass() {
         Stream<String> input = Stream.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
-        List<String> result = null; // TODO
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+
+        List<String> result = new ArrayList<>();
+        input.forEachOrdered(s -> {
+            if (result.isEmpty()) {
+                result.add(s);
+            } else {
+                int reslen = result.get(0).length();
+                int curlen = s.length();
+                if (curlen > reslen) {
+                    result.clear();
+                    result.add(s);
+                } else if (curlen == reslen) {
+                    result.add(s);
+                }
+            }
+        });
+        //ENDREMOVE
 
         assertEquals("[charlie, foxtrot]", result.toString());
     }
@@ -238,12 +296,26 @@ public class Exercises {
      * the output should be
      *     [[w, x], [:y, z]]
      */
-    @Test @Ignore
+    @Test
     public void ex32_partitionIntoSublists() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", ":charlie", "delta", ":echo", ":foxtrot", "golf", "hotel");
 
-        List<List<String>> result = null; // TODO
+        //TODO//List<List<String>> result = null;
+        //BEGINREMOVE
+
+        List<Integer> bounds =
+            IntStream.rangeClosed(0, input.size())
+                     .filter(i -> i == 0 || i == input.size() || input.get(i).startsWith(":"))
+                     .boxed()
+                     .collect(Collectors.toList());
+
+        List<List<String>> result =
+            IntStream.range(1, bounds.size())
+                     .mapToObj(i -> input.subList(bounds.get(i-1), bounds.get(i)))
+                     .collect(Collectors.toList());
+
+        //ENDREMOVE
 
         assertEquals("[[alfa, bravo], [:charlie, delta], [:echo], [:foxtrot, golf, hotel]]",
                      result.toString());
@@ -254,12 +326,21 @@ public class Exercises {
      * in this stream. Since the input is a stream, this necessitates making a single
      * pass over the input.
      */
-    @Test @Ignore
+    @Test
     public void ex33_separateOddEvenSums() {
         IntStream input = new Random(987523).ints(20, 0, 100);
 
-        int sumEvens = 0; // TODO
-        int sumOdds  = 0; // TODO
+        //TODO//int sumEvens = 0;
+        //TODO//int sumOdds  = 0;
+        //BEGINREMOVE
+
+        Map<Boolean, Integer> sums =
+            input.boxed()
+                 .collect(Collectors.partitioningBy(i -> (i & 1) == 1,
+                                                    Collectors.summingInt(i -> i)));
+        int sumEvens = sums.get(false);
+        int sumOdds  = sums.get(true);
+        //ENDREMOVE
 
         assertEquals(516, sumEvens);
         assertEquals(614, sumOdds);
@@ -277,11 +358,26 @@ public class Exercises {
      *
      * XXX - compare to ex32
      */
-    @Test @Ignore
+    @Test
     public void ex34_splitCharacterRuns() {
         String input = "aaaaabbccccdeeeeeeaaafff";
 
-        List<String> result = null; // TODO
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+
+        List<Integer> bounds =
+            IntStream.rangeClosed(0, input.length())
+                     .filter(i -> i == 0 || i == input.length() ||
+                                  input.charAt(i-1) != input.charAt(i))
+                     .boxed()
+                     .collect(Collectors.toList());
+
+        List<String> result =
+            IntStream.range(1, bounds.size())
+                     .mapToObj(i -> input.substring(bounds.get(i-1), bounds.get(i)))
+                     .collect(Collectors.toList());
+
+        //ENDREMOVE
 
         assertEquals("[aaaaa, bb, cccc, d, eeeeee, aaa, fff]", result.toString());
     }
@@ -292,11 +388,29 @@ public class Exercises {
      *
      * XXX - compare to ex34
      */
-    @Test @Ignore
+    @Test
     public void ex35_longestCharacterRuns() {
         String input = "aaaaabbccccdeeeeeeaaafff";
 
-        String result = null; // TODO
+        //TODO//String result = null;
+        //BEGINREMOVE
+
+        List<Integer> bounds =
+            IntStream.rangeClosed(0, input.length())
+                     .filter(i -> i == 0 || i == input.length() ||
+                                  input.charAt(i-1) != input.charAt(i))
+                     .boxed()
+                     .collect(Collectors.toList());
+
+        String result =
+            IntStream.range(1, bounds.size())
+                     .boxed()
+                     .max((i, j) -> Integer.compare(bounds.get(i) - bounds.get(i-1),
+                                                    bounds.get(j) - bounds.get(j-1)))
+                     .map(i -> input.substring(bounds.get(i-1), bounds.get(i)))
+                     .get();
+
+        //ENDREMOVE
 
         assertEquals("eeeeee", result);
     }
@@ -306,14 +420,23 @@ public class Exercises {
      * Since the stream is parallel, you MUST write a proper combiner function in order to get
      * the correct result.
      */
-    @Test @Ignore
+    @Test
     public void ex36_reversingCollector() {
         Stream<String> input =
             IntStream.range(0, 100).mapToObj(String::valueOf).parallel();
 
-        Collection<String> result =
-            input.collect(Collector.of(null, null, null)); // TODO
+        //UNCOMMENT//Collection<String> result =
+        //UNCOMMENT//    input.collect(Collector.of(null, null, null));
+        //UNCOMMENT//    // TODO fill in collector functions above
 
+        //BEGINREMOVE
+
+        Collection<String> result =
+            input.collect(Collector.of(ArrayDeque::new,
+                                       ArrayDeque::addFirst,
+                                       (d1, d2) -> { d2.addAll(d1); return d2; }));
+
+        //ENDREMOVE
 
         assertEquals(
             IntStream.range(0, 100)
@@ -331,10 +454,22 @@ public class Exercises {
      */
 
     OptionalInt majority(int[] array) {
-        return null; // TODO
+        //TODO//return null;
+        //BEGINREMOVE
+        Map<Integer, Long> map =
+            Arrays.stream(array)
+                  .boxed()
+                  .collect(Collectors.groupingBy(x -> x,
+                                                 Collectors.counting()));
+
+        return map.entrySet().stream()
+                  .filter(e -> e.getValue() > array.length / 2)
+                  .mapToInt(Map.Entry::getKey)
+                  .findAny();
+        //ENDREMOVE
     }
 
-    @Test @Ignore
+    @Test
     public void ex37_majority() {
         int[] array1 = { 3, 3, 4, 2, 4, 4, 2, 4, 4 };
         int[] array2 = { 3, 3, 4, 2, 4, 4, 2, 4 };
@@ -345,26 +480,4 @@ public class Exercises {
         assertEquals(OptionalInt.of(4), result1);
         assertFalse(result2.isPresent());
     }
-
-
-// ========================================================
-// END OF EXERCISES -- CONGRATULATIONS!
-// TEST INFRASTRUCTURE IS BELOW
-// ========================================================
-
-    static final String REGEXP = "[- .:,]+"; // for splitting into words
-
-    private BufferedReader reader;
-
-    @Before
-    public void z_setUpBufferedReader() throws IOException {
-        reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8);
-    }
-
-    @After
-    public void z_closeBufferedReader() throws IOException {
-        reader.close();
-    }
 }
-
