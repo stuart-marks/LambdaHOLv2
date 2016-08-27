@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  * the Collections and related APIs.
  */
 public class C_DefaultMethods {
-    
+
     /**
      * Given a list of StringBuilders, modify each StringBuilder
      * in-place by appending the string "new" to each one.
@@ -130,7 +130,7 @@ public class C_DefaultMethods {
             "avocet", "bustard", "capuchin");
         Map<String, Integer> result = new TreeMap<>();
 
-        //UNCOMMENT////TODO code to populate result
+        //UNCOMMENT////TODO write code to populate result
         //BEGINREMOVE
         list.forEach(s -> result.merge(s.substring(0, 1), s.length(), Integer::sum));
         // Instead of Integer::sum, something like (a, b) -> a + b may be used.
@@ -142,7 +142,4 @@ public class C_DefaultMethods {
     // <editor-fold defaultstate="collapsed">
     // Use Map.merge() within Iterable.forEach().
     // </editor-fold>
-
-
-
 }
