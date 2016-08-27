@@ -32,7 +32,8 @@ public class Grind {
     String subst(String line) {
         return line.replace("package solutions;", "package exercises;")
                    .replace("@Test", "@Test @Ignore")
-                   .replace("//UNCOMMENT//", "");
+                   .replace("//UNCOMMENT//", "")
+                   .replaceFirst("^(.*)//TODO//(.*)$", "$1$2 // TODO");
     }
     
     void processFile(Path input) {

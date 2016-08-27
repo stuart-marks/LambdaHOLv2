@@ -24,11 +24,14 @@ import static org.junit.Assert.assertTrue;
  * as the solution.
  */
 public class A_LambdasAndMethodReferences {
+
+    /**
+     * Write a lambda expression that is a predicate
+     * that tests whether a string is longer than four characters.
+     */
     @Test
-    public void a01predicate() {
-        // TODO: write a lambda expression that is a predicate
-        // that tests whether a string is longer than four characters.
-        //UNCOMMENT//Predicate<String> pred = null;
+    public void a_predicate1() {
+        //TODO//Predicate<String> pred = null;
         //BEGINREMOVE
         Predicate<String> pred = s -> s.length() > 4;
         //ENDREMOVE
@@ -37,11 +40,13 @@ public class A_LambdasAndMethodReferences {
         assertFalse(pred.test("abcd"));
     }
 
+    /**
+     * Write a lambda expression that is a predicate
+     * that tests whether a string is empty.
+     */
     @Test
-    public void a02predicate() {
-        // TODO: write a lambda expression that is a predicate
-        // that tests whether a string is empty
-        //UNCOMMENT//Predicate<String> pred = null;
+    public void a_predicate2() {
+        //TODO//Predicate<String> pred = null;
         //BEGINREMOVE
         Predicate<String> pred = s -> s.isEmpty();
         //ENDREMOVE
@@ -50,11 +55,13 @@ public class A_LambdasAndMethodReferences {
         assertFalse(pred.test("a"));
     }
 
+    /**
+     * Write a method reference that is a predicate
+     * that tests whether a string is empty.
+     */
     @Test
-    public void a03predicate() {
-        // TODO: write a method reference that is a predicate
-        // that tests whether a string is empty
-        //UNCOMMENT//Predicate<String> pred = null;
+    public void a_predicate3() {
+        //TODO//Predicate<String> pred = null;
         //BEGINREMOVE
         Predicate<String> pred = String::isEmpty;
         //ENDREMOVE
@@ -63,16 +70,16 @@ public class A_LambdasAndMethodReferences {
         assertFalse(pred.test("a"));
     }
 
-    /*
-     * Create a Predicate that returns true if both predicates
+    /**
+     * Create a predicate that returns true if both predicates
      * startsWithJ and lengthIs7 hold.
      */
     @Test
-    public void a04predicate() {
+    public void a_predicate4() {
         Predicate<String> startsWithJ = s -> s.startsWith("J");
         Predicate<String> lengthIs7 = s -> s.length() == 7;
 
-        //UNCOMMENT//Predicate<String> startsWithJAndLengthIs7 = null; // TODO
+        //TODO//Predicate<String> startsWithJAndLengthIs7 = null;
         //BEGINREMOVE
         Predicate<String> startsWithJAndLengthIs7 = startsWithJ.and(lengthIs7);
         //ENDREMOVE
@@ -82,33 +89,42 @@ public class A_LambdasAndMethodReferences {
         assertFalse(startsWithJAndLengthIs7.test("Java1"));
         assertTrue(startsWithJAndLengthIs7.test("JavaOne"));
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // see java.util.function.Predicate.and()
+    // </editor-fold>
 
-    /*
-     * Create a Predicate is true if the length of the provided string
-     * is 9 or the provided String equals ERROR.
+    /**
+     * Create a predicate that is true if the length of the provided string
+     * is 9 or the provided string equals ERROR.
      */
     @Test
-    public void a05predicate() {
+    public void a_predicate5() {
         Predicate<String> lengthIs9 = s -> s.length() == 9;
         Predicate<String> equalsError = "ERROR"::equals;
 
-        //UNCOMMENT//Predicate<String> lengthIs9OrERROR = null; // TODO
+        //TODO//Predicate<String> lengthIs9orError = null;
         //BEGINREMOVE
-        Predicate<String> lengthIs9OrERROR = lengthIs9.or(equalsError);
+        Predicate<String> lengthIs9orError = lengthIs9.or(equalsError);
         //ENDREMOVE
 
-        assertFalse(lengthIs9OrERROR.test("Hello"));
-        assertTrue(lengthIs9OrERROR.test("Hello J1!"));
-        assertTrue(lengthIs9OrERROR.test("ERROR"));
-        assertFalse(lengthIs9OrERROR.test("Error"));
+        assertFalse(lengthIs9orError.test("Hello"));
+        assertTrue(lengthIs9orError.test("Hello J1!"));
+        assertTrue(lengthIs9orError.test("ERROR"));
+        assertFalse(lengthIs9orError.test("Error"));
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // see java.util.function.Predicate.or()
+    // </editor-fold>
 
-
+    /**
+     * Write a lambda expression that wraps the given
+     * string in parentheses.
+     */
     @Test
-    public void a04function() {
-        // TODO: write a lambda expression that wraps the given
-        // string in parentheses.
-        //UNCOMMENT//Function<String, String> func = null;
+    public void b_function1() {
+        //TODO//Function<String, String> func = null;
         //BEGINREMOVE
         Function<String, String> func = s -> "(" + s + ")";
         //ENDREMOVE
@@ -116,11 +132,13 @@ public class A_LambdasAndMethodReferences {
         assertEquals("(abc)", func.apply("abc"));
     }
 
+    /**
+     * Write a lambda expression that converts the
+     * given string to upper case.
+     */
     @Test
-    public void a05function() {
-        // TODO: write a lambda expression that converts the
-        // given string to upper case.
-        //UNCOMMENT//Function<String, String> func = null;
+    public void b_function2() {
+        //TODO//Function<String, String> func = null;
         //BEGINREMOVE
         Function<String, String> func = s -> s.toUpperCase();
         //ENDREMOVE
@@ -128,11 +146,13 @@ public class A_LambdasAndMethodReferences {
         assertEquals("ABC", func.apply("abc"));
     }
 
+    /**
+     * Write a method reference that converts the
+     * given string to upper case.
+     */
     @Test
-    public void a06function() {
-        // TODO: write a method reference that converts the
-        // given string to upper case.
-        //UNCOMMENT//Function<String, String> func = null;
+    public void b_function3() {
+        //TODO//Function<String, String> func = null;
         //BEGINREMOVE
         Function<String, String> func = String::toUpperCase;
         //ENDREMOVE
@@ -140,11 +160,13 @@ public class A_LambdasAndMethodReferences {
         assertEquals("ABC", func.apply("abc"));
     }
 
+    /**
+     * Write a lambda expression that appends the
+     * string "abc" to the given StringBuilder.
+     */
     @Test
-    public void a07consumer() {
-        // TODO: write a lambda expression that appends the
-        // string "abc" to the given StringBuilder.
-        //UNCOMMENT//Consumer<StringBuilder> cons = null;
+    public void c_consumer1() {
+        //TODO//Consumer<StringBuilder> cons = null;
         //BEGINREMOVE
         Consumer<StringBuilder> cons = sb -> sb.append("abc");
         //ENDREMOVE
@@ -154,10 +176,12 @@ public class A_LambdasAndMethodReferences {
         assertEquals("xyzabc", sb.toString());
     }
 
+    /**
+     * Write a lambda expression that clears the given list.
+     */
     @Test
-    public void a08consumer() {
-        // TODO: write a lambda expression that clears the given list.
-        //UNCOMMENT//Consumer<List<String>> cons = null;
+    public void c_consumer2() {
+        //TODO//Consumer<List<String>> cons = null;
         //BEGINREMOVE
         Consumer<List<String>> cons = list -> list.clear();
         //ENDREMOVE
@@ -167,10 +191,12 @@ public class A_LambdasAndMethodReferences {
         assertTrue(list.isEmpty());
     }
 
+    /**
+     * Write a method reference that clears the given list.
+     */
     @Test
-    public void a09consumer() {
-        // TODO: write a method reference that clears the given list.
-        //UNCOMMENT//Consumer<List<String>> cons = null;
+    public void c_consumer3() {
+        //TODO//Consumer<List<String>> cons = null;
         //BEGINREMOVE
         Consumer<List<String>> cons = List::clear;
         //ENDREMOVE
@@ -180,37 +206,49 @@ public class A_LambdasAndMethodReferences {
         assertTrue(list.isEmpty());
     }
 
+    /**
+     * Given two consumers, create a consumer that passes the String to the
+     * first consumer, then to the second.
+     */
     @Test
-    public void a10consumer() {
-        // TODO: Given two consumers, create a consumer that passes the String to the
-        // first consumer, then to the second
-
+    public void c_consumer4() {
         Consumer<List<String>> c1 = list -> list.add("first");
         Consumer<List<String>> c2 = list -> list.add("second");
 
-        //UNCOMMENT//Consumer<List<String>> consumer = null; // TODO
+        //TODO//Consumer<List<String>> consumer = null;
         //BEGINREMOVE
         Consumer<List<String>> consumer = c1.andThen(c2);
         //ENDREMOVE
 
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         consumer.accept(list);
-        assertEquals(list, Arrays.asList("a", "b", "c", "first", "second"));
+        assertEquals(Arrays.asList("a", "b", "c", "first", "second"), list);
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // see java.util.function.Consumer.andThen()
+    // </editor-fold>
 
+    /**
+     * Write a lambda expression that returns a new StringBuilder
+     * containing the string "abc".
+     */
     @Test
-    public void a10supplier() {
-        // TODO: write a lambda expression that returns a new StringBuilder
-        // containing the string "abc".
+    public void d_supplier1() {
+        //TODO//Supplier<StringBuilder> sup = null;
+        //BEGINREMOVE
         Supplier<StringBuilder> sup = () -> new StringBuilder("abc");
+        //ENDREMOVE
 
         assertEquals("abc", sup.get().toString());
     }
 
+    /**
+     * Write a lambda expression that returns a new, empty StringBuilder.
+     */
     @Test
-    public void a11supplier() {
-        // TODO: write a lambda expression that returns a new, empty StringBuilder
-        //UNCOMMENT//Supplier<StringBuilder> sup = null;
+    public void d_supplier2() {
+        //TODO//Supplier<StringBuilder> sup = null;
         //BEGINREMOVE
         Supplier<StringBuilder> sup = () -> new StringBuilder();
         //ENDREMOVE
@@ -218,10 +256,12 @@ public class A_LambdasAndMethodReferences {
         assertEquals("", sup.get().toString());
     }
 
+    /**
+     * Write a method reference that returns a new, empty StringBuilder.
+     */
     @Test
-    public void a12supplier() {
-        // TODO: write a method reference that returns a new, empty StringBuilder
-        //UNCOMMENT//Supplier<StringBuilder> sup = null;
+    public void d_supplier3() {
+        //TODO//Supplier<StringBuilder> sup = null;
         //BEGINREMOVE
         Supplier<StringBuilder> sup = StringBuilder::new;
         //ENDREMOVE
@@ -229,12 +269,14 @@ public class A_LambdasAndMethodReferences {
         assertEquals("", sup.get().toString());
     }
 
+    /**
+     * Write a lambda expression that, given two strings, returns the result
+     * of concatenating the first with the second, followed by the
+     * first again.
+     */
     @Test
-    public void a13bifunction() {
-        // TODO: write a lambda expression that, given two strings, returns the result
-        // of concatenating the first, followed by the second, followed by the
-        // first again.
-        //UNCOMMENT//BiFunction<String, String, String> bifunc = null;
+    public void e_bifunction1() {
+        //TODO//BiFunction<String, String, String> bifunc = null;
         //BEGINREMOVE
         BiFunction<String, String, String> bifunc = (s1, s2) -> s1 + s2 + s1;
         //ENDREMOVE
@@ -242,42 +284,48 @@ public class A_LambdasAndMethodReferences {
         assertEquals("abcdefabc", bifunc.apply("abc", "def"));
     }
 
+    /**
+     * Write a lambda expression that returns the index of
+     * the first occurrence of the second string within the first string,
+     * or -1 if the second string doesn't occur within the first string.
+     */
     @Test
-    public void a14bifunction() {
-        // TODO: write a lambda expression that returns the index of
-        // the first occurrence of the second string within the first string,
-        // or -1 if the second string doesn't occur within the first string.
-        //UNCOMMENT//BiFunction<String, String, Integer> bifunc = null;
+    public void e_bifunction2() {
+        //TODO//BiFunction<String, String, Integer> bifunc = null;
         //BEGINREMOVE
         BiFunction<String, String, Integer> bifunc = (s1, s2) -> s1.indexOf(s2);
         //ENDREMOVE
 
-        assertTrue(bifunc.apply("abcdefghi", "def") == 3);
-        assertTrue(bifunc.apply("abcdefghi", "xyz") == -1);
+        assertEquals((Integer)3, bifunc.apply("abcdefghi", "def"));
+        assertEquals((Integer)(-1), bifunc.apply("abcdefghi", "xyz"));
     }
 
+    /**
+     * Write a method reference that returns the index of
+     * the first occurrence of the second string within the first string,
+     * or -1 if the second string doesn't occur within the first string.
+     */
     @Test
-    public void a15bifunction() {
-        // TODO: write a method reference that returns the index of
-        // the first occurrence of the second string within the first string,
-        // or -1 if the second string doesn't occur within the first string.
-        //UNCOMMENT//BiFunction<String, String, Integer> bifunc = null;
+    public void e_bifunction3() {
+        //TODO//BiFunction<String, String, Integer> bifunc = null;
         //BEGINREMOVE
         BiFunction<String, String, Integer> bifunc = String::indexOf;
         //ENDREMOVE
 
-        assertTrue(bifunc.apply("abcdefghi", "def") == 3);
-        assertTrue(bifunc.apply("abcdefghi", "xyz") == -1);
+        assertEquals((Integer)3, bifunc.apply("abcdefghij", "def"));
+        assertEquals((Integer)(-1), bifunc.apply("abcdefghij", "xyz"));
     }
 
+    /**
+     * Write a lambda expression that appends the 'suffix'
+     * variable (a String) to the sb variable (a StringBuilder).
+     */
     @Test
-    public void a16runnable() {
+    public void f_runnable1() {
         StringBuilder sb = new StringBuilder("abc");
         String suffix = "xyz";
 
-        // TODO: write a lambda expression that appends the 'suffix'
-        // variable (a String) to the sb variable (a StringBuilder).
-        //UNCOMMENT//Runnable r = null;
+        //TODO//Runnable r = null;
         //BEGINREMOVE
         Runnable r = () -> sb.append(suffix);
         //ENDREMOVE
@@ -287,4 +335,48 @@ public class A_LambdasAndMethodReferences {
         r.run();
         assertEquals("abcxyzxyzxyz", sb.toString());
     }
+
+    /**
+     * Write a lambda expression that takes a string argument
+     * and returns the index of that argument into the string
+     * "abcdefghij", or that returns -1 if the string argument
+     * doesn't occur.
+     */
+    @Test
+    public void g_boundMethodRef1() {
+        //TODO//Function<String, Integer> func = null;
+        //BEGINREMOVE
+        Function<String, Integer> func = s -> "abcdefghij".indexOf(s);
+        //ENDREMOVE
+
+        assertEquals((Integer)2, func.apply("cde"));
+        assertEquals((Integer)4, func.apply("efg"));
+        assertEquals((Integer)(-1), func.apply("xyz"));
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Call the indexOf() method on a string literal.
+    // </editor-fold>
+
+    /**
+     * Write a bound method reference that takes a string argument
+     * and returns the index of that argument into the string
+     * "abcdefghij", or that returns -1 if the string argument
+     * doesn't occur.
+     */
+    @Test
+    public void g_boundMethodRef2() {
+        //TODO//Function<String, Integer> func = null;
+        //BEGINREMOVE
+        Function<String, Integer> func = "abcdefghij"::indexOf;
+        //ENDREMOVE
+
+        assertEquals((Integer)2, func.apply("cde"));
+        assertEquals((Integer)4, func.apply("efg"));
+        assertEquals((Integer)(-1), func.apply("xyz"));
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Place a string literal on the left-hand side of the :: operator.
+    // </editor-fold>
 }
