@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(value={
-    exercises.A_LambdasAndMethodReferences.class,
+    exercises.A_Lambdas.class,
     exercises.B_Comparators.class,
     exercises.Exercises.class
 })

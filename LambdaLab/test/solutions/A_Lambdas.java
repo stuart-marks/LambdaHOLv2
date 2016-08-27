@@ -15,6 +15,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This set of exercises is about lambdas and method references.
@@ -23,7 +26,7 @@ import static org.junit.Assert.assertTrue;
  * is named after the functional interface intended to be used
  * as the solution.
  */
-public class A_LambdasAndMethodReferences {
+public class A_Lambdas {
 
     /**
      * Write a lambda expression that is a predicate
