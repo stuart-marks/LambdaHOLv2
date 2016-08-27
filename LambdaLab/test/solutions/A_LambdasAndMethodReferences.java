@@ -63,6 +63,47 @@ public class A_LambdasAndMethodReferences {
         assertFalse(pred.test("a"));
     }
 
+    /*
+     * Create a Predicate that returns true if both predicates
+     * startsWithJ and lengthIs7 hold.
+     */
+    @Test
+    public void a04predicate() {
+        Predicate<String> startsWithJ = s -> s.startsWith("J");
+        Predicate<String> lengthIs7 = s -> s.length() == 7;
+
+        //UNCOMMENT//Predicate<String> startsWithJAndLengthIs7 = null; // TODO
+        //BEGINREMOVE
+        Predicate<String> startsWithJAndLengthIs7 = startsWithJ.and(lengthIs7);
+        //ENDREMOVE
+
+        assertFalse(startsWithJAndLengthIs7.test("Hello"));
+        assertFalse(startsWithJAndLengthIs7.test("HelloJ1"));
+        assertFalse(startsWithJAndLengthIs7.test("Java1"));
+        assertTrue(startsWithJAndLengthIs7.test("JavaOne"));
+    }
+
+    /*
+     * Create a Predicate is true if the length of the provided string
+     * is 9 or the provided String equals ERROR.
+     */
+    @Test
+    public void a05predicate() {
+        Predicate<String> lengthIs9 = s -> s.length() == 9;
+        Predicate<String> equalsError = "ERROR"::equals;
+
+        //UNCOMMENT//Predicate<String> lengthIs9OrERROR = null; // TODO
+        //BEGINREMOVE
+        Predicate<String> lengthIs9OrERROR = lengthIs9.or(equalsError);
+        //ENDREMOVE
+
+        assertFalse(lengthIs9OrERROR.test("Hello"));
+        assertTrue(lengthIs9OrERROR.test("Hello J1!"));
+        assertTrue(lengthIs9OrERROR.test("ERROR"));
+        assertFalse(lengthIs9OrERROR.test("Error"));
+    }
+
+
     @Test
     public void a04function() {
         // TODO: write a lambda expression that wraps the given
@@ -137,6 +178,24 @@ public class A_LambdasAndMethodReferences {
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         cons.accept(list);
         assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void a10consumer() {
+        // TODO: Given two consumers, create a consumer that passes the String to the
+        // first consumer, then to the second
+
+        Consumer<List<String>> c1 = list -> list.add("first");
+        Consumer<List<String>> c2 = list -> list.add("second");
+
+        //UNCOMMENT//Consumer<List<String>> consumer = null; // TODO
+        //BEGINREMOVE
+        Consumer<List<String>> consumer = c1.andThen(c2);
+        //ENDREMOVE
+
+        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        consumer.accept(list);
+        assertEquals(list, Arrays.asList("a", "b", "c", "first", "second"));
     }
 
     @Test
