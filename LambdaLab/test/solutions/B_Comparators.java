@@ -20,7 +20,7 @@ import model.Person;
  * getters.
  */
 public class B_Comparators {
-    
+
     final Person michael = new Person("Michael", "Jackson", 51);
     final Person rod = new Person("Rod", "Stewart", 71);
     final Person paul = new Person("Paul", "McCartney", 74);
@@ -118,7 +118,7 @@ public class B_Comparators {
     // <editor-fold defaultstate="collapsed">
     // Use the previous comparator and check the static methods of the Comparator interface.
     // </editor-fold>
-    
+
     /**
      * Write a Comparator that compares two people by age.
      * Try to write the comparator so as to avoid boxing of primitives.
@@ -129,7 +129,7 @@ public class B_Comparators {
         //BEGINREMOVE
         Comparator<Person> comparebyAge = Comparator.comparingInt(Person::getAge);
         //ENDREMOVE
-        
+
         assertTrue(comparebyAge.compare(michael, rod) < 0);
         assertTrue(comparebyAge.compare(paul, paul) == 0);
         assertTrue(comparebyAge.compare(mick, jermaine) > 0);
@@ -139,7 +139,7 @@ public class B_Comparators {
     // Look for static methods on the Comparator interface that
     // have primitive specializations.
     // </editor-fold>
-    
+
     /**
      * Write a lambda expression that compares two int values and returns an
      * int result that is less than, equal to, or greater than zero, like
@@ -155,7 +155,7 @@ public class B_Comparators {
         // Avoid the following as it is susceptible to overflow:
         // IntBinaryOperator intCompare = (a, b) -> a - b;
         //ENDREMOVE
-        
+
         assertTrue(intCompare.applyAsInt(0, 1) < 0);
         assertTrue(intCompare.applyAsInt(1, 1) == 0);
         assertTrue(intCompare.applyAsInt(2, 1) > 0);
@@ -178,7 +178,7 @@ public class B_Comparators {
         //BEGINREMOVE
         IntBinaryOperator intCompare = Integer::compare;
         //ENDREMOVE
-        
+
         assertTrue(intCompare.applyAsInt(0, 1) < 0);
         assertTrue(intCompare.applyAsInt(1, 1) == 0);
         assertTrue(intCompare.applyAsInt(2, 1) > 0);
@@ -193,7 +193,7 @@ public class B_Comparators {
     interface DoubleToIntBiFunction {
         int applyAsInt(double a, double b);
     }
-    
+
     /**
      * Write a method reference that compares two double values and returns an
      * int result that is less than, equal to, or greater than zero, like
@@ -208,7 +208,7 @@ public class B_Comparators {
         //BEGINREMOVE
         DoubleToIntBiFunction doubleCompare = Double::compare;
         //ENDREMOVE
-        
+
         assertTrue(doubleCompare.applyAsInt(0.0, 1.0) < 0);
         assertTrue(doubleCompare.applyAsInt(1.0, 1.0) == 0);
         assertTrue(doubleCompare.applyAsInt(2.0, 1.0) > 0);

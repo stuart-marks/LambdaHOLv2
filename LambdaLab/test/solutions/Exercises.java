@@ -587,11 +587,11 @@ public class Exercises {
                 "substantial"),
             result);
     }
-    // Hint:
+    // Hint 1:
     // <editor-fold defaultstate="collapsed">
     // Use Stream.distinct().
     // </editor-fold>
-    // Hint:
+    // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // Use Comparator.theComparing().
     // </editor-fold>
