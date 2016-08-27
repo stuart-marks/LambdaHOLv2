@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(value={
     exercises.A_LambdasAndMethodReferences.class,
+    exercises.B_Comparators.class,
     exercises.Exercises.class
 })
 public class JUnit4TestSuite {

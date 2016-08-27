@@ -161,6 +161,33 @@ public class A_LambdasAndMethodReferences {
     }
 
     /**
+     * Given two Functions, one that converts a null reference to an
+     * empty string, and another that gets the length of a string,
+     * create a single function converts nulls and then gets the
+     * string's length.
+     */
+    @Test
+    public void b_function4() {
+        Function<String, String> unNullify = s -> s == null ? "" : s;
+        Function<String, Integer> length = String::length;
+
+        //TODO//Function<String, Integer> lengthBis = null;
+        //BEGINREMOVE
+        Function<String, Integer> lengthBis = unNullify.andThen(length);
+        // Alternatively:
+        // Function<String, Integer> lengthBis = length.compose(unNullify);
+        //ENDREMOVE
+
+        assertEquals((Integer)14, lengthBis.apply("Hello JavaOne!"));
+        assertEquals((Integer)0, lengthBis.apply(""));
+        assertEquals((Integer)0, lengthBis.apply(null));
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // See java.util.Function.compose() or java.util.Function.andThen()
+    // </editor-fold>
+
+    /**
      * Write a lambda expression that appends the
      * string "abc" to the given StringBuilder.
      */
