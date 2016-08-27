@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import static org.junit.Assert.assertEquals;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -53,8 +53,12 @@ public class A_Lambdas {
     }
 
     /**
-     * Write a method reference that is a predicate
-     * that tests whether a string is empty.
+     * Write an unbound method reference that is a predicate
+     * that tests whether a string is empty. An unbound method
+     * reference has a class name on the left-hand side of the ::
+     * operator:
+     *
+     *     classname::methodname
      */
     @Test @Ignore
     public void a_predicate3() {
@@ -129,7 +133,7 @@ public class A_Lambdas {
     }
 
     /**
-     * Write a method reference that converts the
+     * Write an unbound method reference that converts the
      * given string to upper case.
      */
     @Test @Ignore
@@ -187,7 +191,7 @@ public class A_Lambdas {
     }
 
     /**
-     * Write a method reference that clears the given list.
+     * Write an unbound method reference that clears the given list.
      */
     @Test @Ignore
     public void c_consumer3() {
@@ -240,7 +244,7 @@ public class A_Lambdas {
     }
 
     /**
-     * Write a method reference that returns a new, empty StringBuilder.
+     * Write an unbound method reference that returns a new, empty StringBuilder.
      */
     @Test @Ignore
     public void d_supplier3() {
@@ -258,7 +262,7 @@ public class A_Lambdas {
     public void e_bifunction1() {
         BiFunction<String, String, String> bifunc = null; // TODO
 
-        assertEquals("abcdefabc", bifunc.apply("abc", "def"));
+        assertEquals("FirstSecondFirst", bifunc.apply("First", "Second"));
     }
 
     /**
@@ -270,12 +274,12 @@ public class A_Lambdas {
     public void e_bifunction2() {
         BiFunction<String, String, Integer> bifunc = null; // TODO
 
-        assertEquals((Integer)3, bifunc.apply("abcdefghi", "def"));
-        assertEquals((Integer)(-1), bifunc.apply("abcdefghi", "xyz"));
+        assertEquals(3, bifunc.apply("abcdefghi", "def").intValue());
+        assertEquals(-1, bifunc.apply("abcdefghi", "xyz").intValue());
     }
 
     /**
-     * Write a method reference that returns the index of
+     * Write an unbound method reference that returns the index of
      * the first occurrence of the second string within the first string,
      * or -1 if the second string doesn't occur within the first string.
      */
@@ -283,9 +287,18 @@ public class A_Lambdas {
     public void e_bifunction3() {
         BiFunction<String, String, Integer> bifunc = null; // TODO
 
-        assertEquals((Integer)3, bifunc.apply("abcdefghij", "def"));
-        assertEquals((Integer)(-1), bifunc.apply("abcdefghij", "xyz"));
+        assertEquals(3, bifunc.apply("abcdefghij", "def").intValue());
+        assertEquals(-1, bifunc.apply("abcdefghij", "xyz").intValue());
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // The String.indexOf() method is called on the receiver and passes
+    // a single argument. This is like a method that has two arguments.
+    // The receiver becomes the first argument to the BiFunction, and
+    // the argument to indexOf() becomes the second argument to the
+    // BiFunction.
+    // </editor-fold>
+
 
     /**
      * Write a lambda expression that appends the 'suffix'
@@ -314,9 +327,9 @@ public class A_Lambdas {
     public void g_boundMethodRef1() {
         Function<String, Integer> func = null; // TODO
 
-        assertEquals((Integer)2, func.apply("cde"));
-        assertEquals((Integer)4, func.apply("efg"));
-        assertEquals((Integer)(-1), func.apply("xyz"));
+        assertEquals(2, func.apply("cde").intValue());
+        assertEquals(4, func.apply("efg").intValue());
+        assertEquals(-1, func.apply("xyz").intValue());
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -327,15 +340,22 @@ public class A_Lambdas {
      * Write a bound method reference that takes a string argument
      * and returns the index of that argument into the string
      * "abcdefghij", or that returns -1 if the string argument
-     * doesn't occur.
+     * doesn't occur. A bound method reference has an instance,
+     * or an expression that evaluates to an instance, on the left-hand
+     * side of the :: operator:
+     *
+     *     myObject::methodname
+     *
+     * This is in contrast to an unbound method reference, which has
+     * a classname on the left-hand side of the :: operator.
      */
     @Test @Ignore
     public void g_boundMethodRef2() {
         Function<String, Integer> func = null; // TODO
 
-        assertEquals((Integer)2, func.apply("cde"));
-        assertEquals((Integer)4, func.apply("efg"));
-        assertEquals((Integer)(-1), func.apply("xyz"));
+        assertEquals(2, func.apply("cde").intValue());
+        assertEquals(4, func.apply("efg").intValue());
+        assertEquals(-1, func.apply("xyz").intValue());
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
