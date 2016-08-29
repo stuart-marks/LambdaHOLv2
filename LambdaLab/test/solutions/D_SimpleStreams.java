@@ -35,8 +35,8 @@ public class D_SimpleStreams {
      */
     @Test
     public void ex06_upcaseOddLengthWords() {
-        List<String> input = new ArrayList<>(Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         //TODO//List<String> result = null;
         //BEGINREMOVE
@@ -182,7 +182,7 @@ public class D_SimpleStreams {
 
 
     /**
-     * Select the set of words from the input list whose length is greater than
+     * Select the list of words from the input list whose length is greater than
      * the word's position in the list (starting from zero) .
      */
     @Test
@@ -199,7 +199,7 @@ public class D_SimpleStreams {
                 .collect(Collectors.toList());
         //ENDREMOVE
 
-        assertEquals("[alfa, bravo, charlie, delta, foxtrot]", result.toString());
+        assertEquals(Arrays.asList("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -225,7 +225,7 @@ public class D_SimpleStreams {
                 .collect(Collectors.toList());
         //ENDREMOVE
 
-        assertEquals("[1, -6, 3, -7, 3, 1, 1, -2, 3, -5]", result.toString());
+        assertEquals(Arrays.asList(1, -6, 3, -7, 3, 1, 1, -2, 3, -5), result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">

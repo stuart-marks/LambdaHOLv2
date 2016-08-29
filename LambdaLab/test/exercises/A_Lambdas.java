@@ -65,6 +65,13 @@ public class A_Lambdas {
         assertTrue(pred.test(""));
         assertFalse(pred.test("a"));
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Copy the lambda expression from the previous exercise and then pop
+    // up the menu over the "light bulb" icon in the left margin. This menu
+    // has an option to convert the lambda to a method reference. (The exact
+    // gesture will vary among IDEs.)
+    // </editor-fold>
 
     /**
      * Create a predicate that returns true if both predicates
@@ -95,6 +102,7 @@ public class A_Lambdas {
     public void a_predicate5() {
         Predicate<String> lengthIs9 = s -> s.length() == 9;
         Predicate<String> equalsError = "ERROR"::equals;
+        // Note: this could also be: Predicate.isEqual("ERROR")
 
         Predicate<String> lengthIs9orError = null; // TODO
 
@@ -160,7 +168,7 @@ public class A_Lambdas {
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // See java.util.Function.compose() or java.util.Function.andThen()
+    // See java.util.Function.andThen() or java.util.Function.compose()
     // </editor-fold>
 
     /**
@@ -275,6 +283,14 @@ public class A_Lambdas {
         assertEquals(3, bifunc.apply("abcdefghi", "def").intValue());
         assertEquals(-1, bifunc.apply("abcdefghi", "xyz").intValue());
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // The String method
+    //     public int indexOf(String)
+    // works as a BiFunction, because the receiver (a String instance)
+    // counts as the first argument. The argument to indexOf() becomes
+    // the second argument to the BiFunction.
+    // </editor-fold>
 
     /**
      * Write an unbound method reference that returns the index of
@@ -288,13 +304,17 @@ public class A_Lambdas {
         assertEquals(3, bifunc.apply("abcdefghij", "def").intValue());
         assertEquals(-1, bifunc.apply("abcdefghij", "xyz").intValue());
     }
-    // Hint:
+    // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // The String.indexOf() method is called on the receiver and passes
-    // a single argument. This is like a method that has two arguments.
-    // The receiver becomes the first argument to the BiFunction, and
-    // the argument to indexOf() becomes the second argument to the
-    // BiFunction.
+    // Try using the IDE command to convert the lambda from the previous
+    // exercise into a method reference.
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // This is just like the example above with the argument shifting.
+    // The only difference is that arguments aren't specified in a
+    // method reference, so overload resolution has to do more work
+    // to find the overloaded method that matches.
     // </editor-fold>
 
 

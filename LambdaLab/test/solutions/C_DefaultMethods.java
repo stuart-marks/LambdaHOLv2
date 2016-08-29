@@ -75,8 +75,8 @@ public class C_DefaultMethods {
      */
     @Test
     public void ex03_upcaseAllWords() {
-        List<String> list = new ArrayList<>(Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
+        List<String> list = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         //UNCOMMENT//// TODO code to modify list
         //BEGINREMOVE
@@ -98,7 +98,7 @@ public class C_DefaultMethods {
      * into a single string, in iteration order.
      */
     @Test
-    public void ex04_stringifyMap() {
+    public void ex04_appendToMapValues() {
         Map<Integer, StringBuilder> map = new TreeMap<>();
         map.put(1, new StringBuilder("alfa"));
         map.put(2, new StringBuilder("bravo"));
@@ -109,7 +109,6 @@ public class C_DefaultMethods {
         map.forEach((k, v) -> v.append(k));
         //ENDREMOVE
 
-        System.out.println(map);
         assertEquals("{1=alfa1, 2=bravo2, 3=charlie3}", map.toString());
     }
     // Hint:
@@ -119,24 +118,57 @@ public class C_DefaultMethods {
 
 
     /**
-     * Given a list of words, create a map whose keys are the first letters of
-     * each words, and whose values are the sum of the lengths of those words.
+     * Given a list of words, create a map whose keys are the lengths of
+     * each word, and whose values are list of words with that length.
      */
     @Test
-    public void ex05_mapOfStringLengths() {
+    public void ex05_mapOfListOfStringsByLength() {
         List<String> list = Arrays.asList(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",
             "avocet", "bustard", "capuchin");
-        Map<String, Integer> result = new TreeMap<>();
+        Map<Integer, List<String>> result = new TreeMap<>();
 
         //UNCOMMENT////TODO write code to populate result
         //BEGINREMOVE
-        list.forEach(s -> result.merge(s.substring(0, 1), s.length(), Integer::sum));
-        // Instead of Integer::sum, something like (a, b) -> a + b may be used.
+        list.forEach(s -> result.computeIfAbsent(s.length(), key -> new ArrayList<>()).add(s));
         //ENDREMOVE
 
-        assertEquals("{a=23, b=20, c=26}", result.toString());
+        assertEquals(Arrays.asList(5, 6, 7, 8, 9, 10), new ArrayList<>(result.keySet()));
+        assertEquals(Arrays.asList("bison"), result.get(5));
+        assertEquals(Arrays.asList("avocet"), result.get(6));
+        assertEquals(Arrays.asList("bustard"), result.get(7));
+        assertEquals(Arrays.asList("aardvark", "capybara", "bushbaby", "capuchin"), result.get(8));
+        assertEquals(Arrays.asList("alligator"), result.get(9));
+        assertEquals(Arrays.asList("chimpanzee"), result.get(10));
+    }
+    // <editor-fold defaultstate="collapsed">
+    // Use Map.computeIfAbsent() within Iterable.forEach().
+    // </editor-fold>
+
+    /**
+     * Given a list of words, create a map whose keys are the initial characters of
+     * each word, and whose values are the concatenation of the words with that
+     * initial character. When concatenating the words, they should be
+     * separated by a colon (':').
+     */
+    @Test
+    public void ex06_mapOfStringByInitialCharacter() {
+        List<String> list = Arrays.asList(
+            "aardvark", "bison", "capybara",
+            "alligator", "bushbaby", "chimpanzee",
+            "avocet", "bustard", "capuchin");
+        Map<Character, String> result = new TreeMap<>();
+
+        //UNCOMMENT////TODO write code to populate result
+        //BEGINREMOVE
+        list.forEach(s -> result.merge(s.charAt(0), s, (s1, s2) -> s1 + ":" + s2));
+        //ENDREMOVE
+
+        assertEquals(Arrays.asList('a', 'b', 'c'), new ArrayList<>(result.keySet()));
+        assertEquals("aardvark:alligator:avocet", result.get('a'));
+        assertEquals("bison:bushbaby:bustard", result.get('b'));
+        assertEquals("capybara:chimpanzee:capuchin", result.get('c'));
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
