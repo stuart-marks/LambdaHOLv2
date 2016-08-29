@@ -1,13 +1,3 @@
-* Balloon stuff -- a bit complicated, but useful to show constructor references
-* Maurice's forEach example List<StringBuilder>
-* reorganize files:
-   C - default methods
-   D - simple streams and collectors
-   E - composite collectors
-   F - custom collectors
-   G - challenges
-   
-
 Java 8 Lambdas Hands-on Lab Materials
 
 (version for late 2016 conferences)

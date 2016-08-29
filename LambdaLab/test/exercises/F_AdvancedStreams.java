@@ -17,6 +17,7 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -241,7 +242,8 @@ public class F_AdvancedStreams {
 // ========================================================
 
 
-    static final String REGEXP = "[- .:,]+"; // for splitting into words
+    // Pattern for splitting a string into words
+    static final Pattern WORD_PATTERN = Pattern.compile("[- .:,]+");
 
     private BufferedReader reader;
 

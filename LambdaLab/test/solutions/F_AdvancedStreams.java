@@ -17,6 +17,7 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -70,7 +71,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         String result =
             reader.lines()
-                  .flatMap(line -> Arrays.stream(line.split(REGEXP)))
+                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
                   .reduce((a, b) -> b)
                   .get();
         //ENDREMOVE
@@ -97,7 +98,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<Integer, List<String>> result =
             reader.lines()
-                  .flatMap(line -> Arrays.stream(line.split(REGEXP)))
+                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(String::length));
         //ENDREMOVE
 
@@ -129,7 +130,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<Integer, Long> result =
             reader.lines()
-                  .flatMap(line -> Arrays.stream(line.split(REGEXP)))
+                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(String::length, Collectors.counting()));
         //ENDREMOVE
 
@@ -173,7 +174,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<String, Long> result =
             reader.lines()
-                  .flatMap(line -> Stream.of(line.split(REGEXP)))
+                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
                       // or use word -> word instead of Function.identity()
 
@@ -226,7 +227,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<String, Map<Integer, List<String>>> result =
             reader.lines()
-                  .flatMap(line -> Stream.of(line.split(REGEXP)))
+                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(word -> word.substring(0,1),
                                                  Collectors.groupingBy(String::length)));
         //ENDREMOVE
@@ -300,7 +301,8 @@ public class F_AdvancedStreams {
 // ========================================================
 
 
-    static final String REGEXP = "[- .:,]+"; // for splitting into words
+    // Pattern for splitting a string into words
+    static final Pattern WORD_PATTERN = Pattern.compile("[- .:,]+");
 
     private BufferedReader reader;
 

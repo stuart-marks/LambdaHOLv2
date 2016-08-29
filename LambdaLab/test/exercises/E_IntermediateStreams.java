@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,8 +52,10 @@ public class E_IntermediateStreams {
 
     /**
      * Collect all the words from the text file into a list.
-     * Use String.split(REGEXP) to split a string into words.
-     * REGEXP is defined at the bottom of this file.
+     * Use the regular expression pattern WORD_PATTERN to split
+     * a string into words, and use Pattern.splitAsStream(String)
+     * to do the splitting. WORD_PATTERN is defined at the bottom
+     * of this file.
      *
      * @throws IOException
      */
@@ -194,7 +197,8 @@ public class E_IntermediateStreams {
 // ========================================================
 
 
-    static final String REGEXP = "[- .:,]+"; // for splitting into words
+    // Pattern for splitting a string into words
+    static final Pattern WORD_PATTERN = Pattern.compile("[- .:,]+");
 
     private BufferedReader reader;
 
