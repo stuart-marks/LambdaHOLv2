@@ -1,6 +1,6 @@
-JavaOne 2016 Lambda/Streams Programming Laboratory [HOL3288]
+# JavaOne 2016 Lambda/Streams Programming Laboratory [HOL3288]
 
-# Introduction
+## Introduction
 
 Welcome to the Lambda/Streams Programming Laboratory! The goal of this
 lab is for you to learn about the lambda expressions and APIs
@@ -8,7 +8,7 @@ introduced in Java 8. The lab is structured as a set of exercises in
 the form of JUnit tests. To complete each exercise, write some code
 using a Java 8 lambda or API that enables the test to pass.
 
-# Lab Instructions
+## Lab Instructions
 
 1. Open NetBeans 8.1 by clicking on the desktop icon.
 
@@ -39,7 +39,7 @@ TODO marker and assertion code below the TODO marker.
 
 8. Make all the tests pass and get a 100% green bar!
 
-# Detailed Test Description
+## Detailed Test Description
 
 At the top of each exercise is a comment that describes the goal of
 the exercise. Within the test method, there is a // TODO comment that
