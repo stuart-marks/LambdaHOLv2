@@ -37,6 +37,15 @@ writing a single stream pipeline.
 Each exercise has one or two hints hidden in a code fold below the
 exercise. Open these up if you're stuck.
 
+Several of the exercises read data from a text file. The field named
+"reader" is a BufferedReader which will be opened for you on the text
+file. In any exercise that refers to reading from the text file, you
+can simply use the "reader" variable without worry about opening or
+closing it. This is set up by JUnit using the @Before and @After
+methods at the bottom of the file. The text file is "SonnetI.txt"
+(Shakespeare's first sonnet) which is located at the root of this
+NetBeans project.
+
 If you're really stuck, the solutions to the exercises are in the file
 Test Packages / solutions / Exercises.java. Many exercises can be
 solved in several different ways. In some cases, the solutions file
