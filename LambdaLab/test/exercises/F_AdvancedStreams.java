@@ -7,7 +7,6 @@ package exercises;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,6 +16,7 @@ import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -35,43 +35,10 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * This set of exercises covers advanced stream operations,
- * including reduction, grouping collectors, composition
- * of collectors.
+ * including grouping collectors, composition of collectors,
+ * and customized collectors.
  */
 public class F_AdvancedStreams {
-
-    /**
-     * Compute the value of 21!, that is, 21 factorial. This value is larger than
-     * Long.MAX_VALUE, so you must use BigInteger.
-     */
-    @Test @Ignore
-    public void ex19_bigFactorial() {
-        BigInteger result = BigInteger.ONE; // TODO
-
-        assertEquals(new BigInteger("51090942171709440000"), result);
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Use LongStream and reduction.
-    // </editor-fold>
-
-
-    /**
-     * Get the last word in the text file.
-     *
-     * @throws IOException
-     */
-    @Test @Ignore
-    public void ex20_getLastWord() throws IOException {
-        String result = null; // TODO
-
-        assertEquals("thee", result);
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Use Stream.reduce().
-    // </editor-fold>
-
 
     /**
      * Categorize the words from the text file into a map, where the map's key
@@ -82,7 +49,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex21_mapLengthToWordList() throws IOException {
+    public void f1_mapLengthToWordList() throws IOException {
         Map<Integer, List<String>> result = null; // TODO
 
         assertEquals(10, result.get(7).size());
@@ -108,7 +75,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex22_mapLengthToWordCount() throws IOException {
+    public void f2_mapLengthToWordCount() throws IOException {
         Map<Integer, Long> result = null; // TODO
 
         assertEquals( 1L, (long)result.get(1));
@@ -146,7 +113,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex23_wordFrequencies() throws IOException {
+    public void f3_wordFrequencies() throws IOException {
         Map<String, Long> result = null; // TODO
 
         assertEquals(2L, (long)result.get("tender"));
@@ -185,7 +152,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex24_nestedMaps() throws IOException {
+    public void f4_nestedMaps() throws IOException {
         Map<String, Map<Integer, List<String>>> result = null; // TODO
 
         assertEquals("[abundance]", result.get("a").get(9).toString());
@@ -210,6 +177,27 @@ public class F_AdvancedStreams {
 
 
     /**
+     * Given a stream of integers, compute separate sums of the even and odd values
+     * in this stream. Since the input is a stream, this necessitates making a single
+     * pass over the input.
+     */
+    @Test @Ignore
+    public void f5_separateOddEvenSums() {
+        IntStream input = new Random(987523).ints(20, 0, 100);
+
+        int sumEvens = 0; // TODO
+        int sumOdds  = 0; // TODO
+
+        assertEquals(516, sumEvens);
+        assertEquals(614, sumOdds);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use Collectors.partitioningBy().
+    // </editor-fold>
+
+
+    /**
      * Given a stream of strings, accumulate (collect) them into the result string
      * by inserting the input string at both the beginning and end. For example, given
      * input strings "x" and "y" the result should be "yxxy". Note: the input stream
@@ -217,7 +205,7 @@ public class F_AdvancedStreams {
      * correct result.
      */
     @Test @Ignore
-    public void ex25_insertBeginningAndEnd() {
+    public void f6_insertBeginningAndEnd() {
         Stream<String> input = Arrays.asList(
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m", "n", "o", "p", "q", "r", "s", "t")
@@ -232,7 +220,8 @@ public class F_AdvancedStreams {
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
     // The collector state (that is, the object being accumulated and
-    // combined) can be a single StringBuilder.
+    // combined) can be a single StringBuilder, which is manipulated
+    // by lambda expressions in the three-arg form of the collect() method.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">

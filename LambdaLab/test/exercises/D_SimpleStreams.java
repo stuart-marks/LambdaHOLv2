@@ -34,7 +34,7 @@ public class D_SimpleStreams {
      * only the odd-length words, converted to upper case.
      */
     @Test @Ignore
-    public void ex06_upcaseOddLengthWords() {
+    public void d1_upcaseOddLengthWords() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
@@ -58,9 +58,9 @@ public class D_SimpleStreams {
      * into a single string. Watch for off-by-one errors.
      */
     @Test @Ignore
-    public void ex07_joinStreamRange() {
-        List<String> input = new ArrayList<>(Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
+    public void d2_joinStreamRange() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         String result = ""; // TODO
 
@@ -84,7 +84,7 @@ public class D_SimpleStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex08_countLinesInFile() throws IOException {
+    public void d3_countLinesInFile() throws IOException {
         long count = 0; // TODO
 
         assertEquals(14, count);
@@ -105,7 +105,7 @@ public class D_SimpleStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex09_findLengthOfLongestLine() throws IOException {
+    public void d4_findLengthOfLongestLine() throws IOException {
         int longestLength = 0; // TODO
 
         assertEquals(53, longestLength);
@@ -126,7 +126,7 @@ public class D_SimpleStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex10_findLongestLine() throws IOException {
+    public void d5_findLongestLine() throws IOException {
         String longest = null; // TODO
 
         assertEquals("Feed'st thy light's flame with self-substantial fuel,", longest);
@@ -142,13 +142,31 @@ public class D_SimpleStreams {
 
 
     /**
+     * Select the longest words from the input list. That is, select the words
+     * whose lengths are equal to the maximum word length.
+     */
+    @Test @Ignore
+    public void d6_selectLongestWords() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+
+        List<String> result = null; // TODO
+
+        assertEquals("[charlie, foxtrot]", result.toString());
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Consider making two passes over the input stream.
+    // </editor-fold>
+
+    /**
      * Select the list of words from the input list whose length is greater than
      * the word's position in the list (starting from zero) .
      */
     @Test @Ignore
-    public void ex11_selectByLengthAndPosition() {
-        List<String> input = new ArrayList<>(Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel"));
+    public void d7_selectByLengthAndPosition() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
         List<String> result = null; // TODO
 
@@ -156,31 +174,8 @@ public class D_SimpleStreams {
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Instead of a stream of words (Strings), run an IntStream of positions.
-    // </editor-fold>
-
-
-    /**
-     * Given two lists of Integer, compute a third list where each element is the
-     * difference between the corresponding elements of the two input lists
-     * (first minus second).
-     */
-    @Test @Ignore
-    public void ex12_listDifference() {
-        List<Integer> one = Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6, 5, 3);
-        List<Integer> two = Arrays.asList(2, 7, 1, 8, 2, 8, 1, 8, 2, 8);
-
-        List<Integer> result = null; // TODO
-
-        assertEquals(Arrays.asList(1, -6, 3, -7, 3, 1, 1, -2, 3, -5), result);
-    }
-    // Hint 1:
-    // <editor-fold defaultstate="collapsed">
-    // Run an IntStream of list positions (indexes).
-    // </editor-fold>
-    // Hint 2:
-    // <editor-fold defaultstate="collapsed">
-    // Deal with boxed Integers either by casting or by using mapToObj().
+    // Instead of a stream of words (Strings), run an IntStream of indexes of
+    // the input list, using index values to get elements from the input list.
     // </editor-fold>
 
 

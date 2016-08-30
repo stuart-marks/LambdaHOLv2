@@ -2,6 +2,7 @@ package exercises;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * This set of exercises covers more advanced stream operations
- * as well as longer stream pipelines.
+ * longer stream pipelines, and simple reductions.
  */
 public class E_IntermediateStreams {
 
@@ -30,7 +32,7 @@ public class E_IntermediateStreams {
      * Convert a list of strings into a list of characters.
      */
     @Test @Ignore
-    public void ex13_stringsToCharacters() {
+    public void e1_stringsToCharacters() {
         List<String> input = Arrays.asList("alfa", "bravo", "charlie");
 
         List<Character> result = null; // TODO
@@ -58,7 +60,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex14_listOfAllWords() throws IOException {
+    public void e2_listOfAllWords() throws IOException {
         List<String> output = null; // TODO
 
         assertEquals(
@@ -92,7 +94,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex15_longLowerCaseSortedWords() throws IOException {
+    public void e3_longLowerCaseSortedWords() throws IOException {
         List<String> output = null; // TODO
 
         assertEquals(
@@ -115,7 +117,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex16_longLowerCaseReverseSortedWords() throws IOException {
+    public void e4_longLowerCaseReverseSortedWords() throws IOException {
         List<String> result = null; // TODO
 
         assertEquals(
@@ -137,7 +139,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test @Ignore
-    public void ex17_sortedLowerCaseDistinctByLengthThenAlphabetically() throws IOException {
+    public void e5_sortedLowerCaseDistinctByLengthThenAlphabetically() throws IOException {
         List<String> result = null; // TODO
 
         assertEquals(
@@ -164,6 +166,38 @@ public class E_IntermediateStreams {
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // Use Comparator.theComparing().
+    // </editor-fold>
+
+        /**
+     * Compute the value of 21!, that is, 21 factorial. This value is larger than
+     * Long.MAX_VALUE, so you must use BigInteger.
+     */
+    @Test @Ignore
+    public void e6_bigFactorial() {
+        BigInteger result = BigInteger.ONE; // TODO
+
+        assertEquals(new BigInteger("51090942171709440000"), result);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use LongStream and reduction.
+    // </editor-fold>
+
+
+    /**
+     * Get the last word in the text file.
+     *
+     * @throws IOException
+     */
+    @Test @Ignore
+    public void e7_getLastWord() throws IOException {
+        String result = null; // TODO
+
+        assertEquals("thee", result);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use Stream.reduce().
     // </editor-fold>
 
 

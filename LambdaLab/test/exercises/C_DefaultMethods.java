@@ -25,7 +25,7 @@ public class C_DefaultMethods {
      * in-place by appending the string "new" to each one.
      */
     @Test @Ignore
-    public void ex01_appendNew() {
+    public void c1_appendNew() {
         List<StringBuilder> sbList = Arrays.asList(
             new StringBuilder("alfa"),
             new StringBuilder("bravo"),
@@ -48,7 +48,7 @@ public class C_DefaultMethods {
      * Remove the words that have odd lengths from the list.
      */
     @Test @Ignore
-    public void ex02_removeOddLengthWords() {
+    public void c2_removeOddLengthWords() {
         List<String> list = new ArrayList<>(Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
@@ -66,7 +66,7 @@ public class C_DefaultMethods {
      * Replace every word in the list with its upper case equivalent.
      */
     @Test @Ignore
-    public void ex03_upcaseAllWords() {
+    public void c3_upcaseAllWords() {
         List<String> list = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
@@ -85,7 +85,7 @@ public class C_DefaultMethods {
      * into a single string, in iteration order.
      */
     @Test @Ignore
-    public void ex04_appendToMapValues() {
+    public void c4_appendToMapValues() {
         Map<Integer, StringBuilder> map = new TreeMap<>();
         map.put(1, new StringBuilder("alfa"));
         map.put(2, new StringBuilder("bravo"));
@@ -106,7 +106,7 @@ public class C_DefaultMethods {
      * each word, and whose values are list of words with that length.
      */
     @Test @Ignore
-    public void ex05_mapOfListOfStringsByLength() {
+    public void c5_mapOfListOfStringsByLength() {
         List<String> list = Arrays.asList(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",
@@ -134,7 +134,7 @@ public class C_DefaultMethods {
      * separated by a colon (':').
      */
     @Test @Ignore
-    public void ex06_mapOfStringByInitialCharacter() {
+    public void c6_mapOfStringByInitialCharacter() {
         List<String> list = Arrays.asList(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",

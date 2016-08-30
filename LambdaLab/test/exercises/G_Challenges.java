@@ -73,7 +73,7 @@ public class G_Challenges {
      *   ]
      */
     @Test @Ignore
-    public void ex26_denormalizeMap() {
+    public void g1_denormalizeMap() {
         Map<Integer, List<String>> input = new HashMap<>();
         input.put(4, Arrays.asList("ibex", "hedgehog", "wombat"));
         input.put(6, Arrays.asList("ant", "beetle", "cricket"));
@@ -109,10 +109,6 @@ public class G_Challenges {
     // </editor-fold>
 
 
-// ========================================================
-// NEW FOR 2016
-// ========================================================
-
     /**
      * Invert a "multi-map". (From an idea by Paul Sandoz)
      *
@@ -137,7 +133,7 @@ public class G_Challenges {
      * and p and q as its value set.
      */
     @Test @Ignore
-    public void ex27_invertMultiMap() {
+    public void g2_invertMultiMap() {
         Map<String, Set<Integer>> input = new HashMap<>();
         input.put("a", new HashSet<>(Arrays.asList(1, 2)));
         input.put("b", new HashSet<>(Arrays.asList(2, 3)));
@@ -157,134 +153,42 @@ public class G_Challenges {
 
 
     /**
-     * Select from the input list each word that longer than the immediately
-     * preceding word. Include the first word, since it is longer than the
-     * (nonexistent) word that precedes it.
-     *
-     * XXX - compare to ex11
-     */
-    @Test @Ignore
-    public void ex28_selectLongerThanPreceding() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
-
-        List<String> result = null; // TODO
-
-        assertEquals("[alfa, bravo, charlie, foxtrot, hotel]", result.toString());
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Instead of a stream of words (Strings), run an IntStream of positions.
-    // </editor-fold>
-
-
-    /**
-     * Generate a list of words that is the concatenation of each adjacent
-     * pair of words in the input list. For example, if the input is
-     *     [x, y, z]
-     * the output should be
-     *     [xy, yz]
-     *
-     * XXX - compare to ex11
-     */
-    @Test @Ignore
-    public void ex29_concatenateAdjacent() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
-
-        List<String> result = null; // TODO
-
-        assertEquals("[alfabravo, bravocharlie, charliedelta, deltaecho, echofoxtrot]",
-                     result.toString());
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Instead of a stream of words (Strings), run an IntStream of positions.
-    // </editor-fold>
-
-    /**
-     * Select the longest words from the input list. That is, select the words
-     * whose lengths are equal to the maximum word length. For this exercise,
-     * it's easiest to perform two passes over the input list.
-     *
-     * XXX - compare to ex09 and ex10
-     */
-    @Test @Ignore
-    public void ex30_selectLongestWords() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
-
-        List<String> result = null; // TODO
-
-        assertEquals("[charlie, foxtrot]", result.toString());
-    }
-
-    /**
-     * Select the longest words from the input stream. That is, select the words
+     * Select the longest words from an input stream. That is, select the words
      * whose lengths are equal to the maximum word length. For this exercise,
      * you must compute the result in a single pass over the input stream.
-     *
-     * XXX - compare to ex30
+     * The type of the input is a Stream, so you cannot access elements at random.
+     * The stream is run in parallel, so the combiner function must be correct.
      */
     @Test @Ignore
-    public void ex31_selectLongestWordsOnePass() {
+    public void g3_selectLongestWordsOnePass() {
         Stream<String> input = Stream.of(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+            "alfa", "bravo", "charlie", "delta",
+            "echo", "foxtrot", "golf", "hotel").parallel();
 
-        List<String> result = null; // TODO
+        List<String> result = input.collect(
+            Collector.of(null, null, null, null));
+        // TODO implement a collector by replacing the nulls above
 
-        assertEquals("[charlie, foxtrot]", result.toString());
-    }
-
-    /**
-     * Create a list of non-overlapping sublists of the input list, where each
-     * sublist (except for the first one) starts with a word whose first character is a ":".
-     * For example, given the input list
-     *     [w, x, :y, z]
-     * the output should be
-     *     [[w, x], [:y, z]]
-     */
-    @Test @Ignore
-    public void ex32_partitionIntoSublists() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", ":charlie", "delta", ":echo", ":foxtrot", "golf", "hotel");
-
-        List<List<String>> result = null; // TODO
-
-        assertEquals("[[alfa, bravo], [:charlie, delta], [:echo], [:foxtrot, golf, hotel]]",
-                     result.toString());
-    }
-
-    /**
-     * Given a stream of integers, compute separate sums of the even and odd values
-     * in this stream. Since the input is a stream, this necessitates making a single
-     * pass over the input.
-     */
-    @Test @Ignore
-    public void ex33_separateOddEvenSums() {
-        IntStream input = new Random(987523).ints(20, 0, 100);
-
-        int sumEvens = 0; // TODO
-        int sumOdds  = 0; // TODO
-
-        assertEquals(516, sumEvens);
-        assertEquals(614, sumOdds);
+        assertEquals(Arrays.asList("charlie", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Use Collectors.partitioningBy().
+    // There are several ways to solve this exercise, but one approach is to
+    // create a helper class with four functions, and then pass method
+    // references to these functions to the Collector.of() method.
     // </editor-fold>
+
+
+
 
     /**
      * Given a string, split it into a list of strings consisting of
      * consecutive characters from the original string. Note: this is
      * similar to Python's itertools.groupby function, but it differs
      * from Java's Collectors.groupingBy() collector.
-     *
-     * XXX - compare to ex32
      */
     @Test @Ignore
-    public void ex34_splitCharacterRuns() {
+    public void g4_splitCharacterRuns() {
         String input = "aaaaabbccccdeeeeeeaaafff";
 
         List<String> result = null; // TODO
@@ -293,27 +197,12 @@ public class G_Challenges {
     }
 
     /**
-     * Given a string, find the substring containing the longest run of consecutive,
-     * equal characters.
-     *
-     * XXX - compare to ex34
-     */
-    @Test @Ignore
-    public void ex35_longestCharacterRuns() {
-        String input = "aaaaabbccccdeeeeeeaaafff";
-
-        String result = null; // TODO
-
-        assertEquals("eeeeee", result);
-    }
-
-    /**
      * Given a parallel stream of strings, collect them into a collection in reverse order.
      * Since the stream is parallel, you MUST write a proper combiner function in order to get
      * the correct result.
      */
     @Test @Ignore
-    public void ex36_reversingCollector() {
+    public void g5_reversingCollector() {
         Stream<String> input =
             IntStream.range(0, 100).mapToObj(String::valueOf).parallel();
 
@@ -336,6 +225,10 @@ public class G_Challenges {
      * elements are that value), and return that int value in an OptionalInt.
      * Note, return the majority int value, not the number of times it occurs.
      * If there is no majority value, return an empty OptionalInt.
+     *
+     * For example, given an input array [11, 12, 12] the result should be
+     * an OptionalInt containing 12. Given an input array [11, 12, 13]
+     * the result should be an empty OptionalInt.
      */
 
     OptionalInt majority(int[] array) {
@@ -343,7 +236,7 @@ public class G_Challenges {
     }
 
     @Test @Ignore
-    public void ex37_majority() {
+    public void g6_majority() {
         int[] array1 = { 13, 13, 24, 35, 24, 24, 35, 24, 24 };
         int[] array2 = { 13, 13, 24, 35, 24, 24, 35, 24 };
 
@@ -378,7 +271,7 @@ public class G_Challenges {
     }
 
     @Test @Ignore
-    public void ex38_shoemaker() {
+    public void g7_shoemaker() {
         Supplier<Shoe> sup1 = makeShoeSupplier(Shoe::new, 9);
         Supplier<Shoe> sup2 = makeShoeSupplier(Shoe::new, 13);
 

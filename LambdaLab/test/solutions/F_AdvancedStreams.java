@@ -49,7 +49,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test
-    public void ex21_mapLengthToWordList() throws IOException {
+    public void f1_mapLengthToWordList() throws IOException {
         //TODO//Map<Integer, List<String>> result = null;
         //BEGINREMOVE
         Map<Integer, List<String>> result =
@@ -81,7 +81,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test
-    public void ex22_mapLengthToWordCount() throws IOException {
+    public void f2_mapLengthToWordCount() throws IOException {
         //TODO//Map<Integer, Long> result = null;
         //BEGINREMOVE
         Map<Integer, Long> result =
@@ -125,7 +125,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test
-    public void ex23_wordFrequencies() throws IOException {
+    public void f3_wordFrequencies() throws IOException {
         //TODO//Map<String, Long> result = null;
         //BEGINREMOVE
         Map<String, Long> result =
@@ -180,7 +180,7 @@ public class F_AdvancedStreams {
      * @throws IOException
      */
     @Test
-    public void ex24_nestedMaps() throws IOException {
+    public void f4_nestedMaps() throws IOException {
         //TODO//Map<String, Map<Integer, List<String>>> result = null;
         //BEGINREMOVE
         Map<String, Map<Integer, List<String>>> result =
@@ -217,7 +217,7 @@ public class F_AdvancedStreams {
      * pass over the input.
      */
     @Test
-    public void ex24a_separateOddEvenSums() {
+    public void f5_separateOddEvenSums() {
         IntStream input = new Random(987523).ints(20, 0, 100);
 
         //TODO//int sumEvens = 0;
@@ -249,7 +249,7 @@ public class F_AdvancedStreams {
      * correct result.
      */
     @Test
-    public void ex25_insertBeginningAndEnd() {
+    public void f6_insertBeginningAndEnd() {
         Stream<String> input = Arrays.asList(
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m", "n", "o", "p", "q", "r", "s", "t")

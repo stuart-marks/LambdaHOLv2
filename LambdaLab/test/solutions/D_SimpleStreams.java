@@ -34,7 +34,7 @@ public class D_SimpleStreams {
      * only the odd-length words, converted to upper case.
      */
     @Test
-    public void ex06_upcaseOddLengthWords() {
+    public void d1_upcaseOddLengthWords() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
@@ -68,7 +68,7 @@ public class D_SimpleStreams {
      * into a single string. Watch for off-by-one errors.
      */
     @Test
-    public void ex07_joinStreamRange() {
+    public void d2_joinStreamRange() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
@@ -102,7 +102,7 @@ public class D_SimpleStreams {
      * @throws IOException
      */
     @Test
-    public void ex08_countLinesInFile() throws IOException {
+    public void d3_countLinesInFile() throws IOException {
         //TODO//long count = 0;
         //BEGINREMOVE
         long count = reader.lines()
@@ -127,7 +127,7 @@ public class D_SimpleStreams {
      * @throws IOException
      */
     @Test
-    public void ex09_findLengthOfLongestLine() throws IOException {
+    public void d4_findLengthOfLongestLine() throws IOException {
         //TODO//int longestLength = 0;
         //BEGINREMOVE
         int longestLength =
@@ -155,7 +155,7 @@ public class D_SimpleStreams {
      * @throws IOException
      */
     @Test
-    public void ex10_findLongestLine() throws IOException {
+    public void d5_findLongestLine() throws IOException {
         //TODO//String longest = null;
         //BEGINREMOVE
         String longest =
@@ -185,7 +185,7 @@ public class D_SimpleStreams {
      * whose lengths are equal to the maximum word length.
      */
     @Test
-    public void ex10a_selectLongestWords() {
+    public void d6_selectLongestWords() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
@@ -213,7 +213,7 @@ public class D_SimpleStreams {
      * the word's position in the list (starting from zero) .
      */
     @Test
-    public void ex11_selectByLengthAndPosition() {
+    public void d7_selectByLengthAndPosition() {
         List<String> input = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 

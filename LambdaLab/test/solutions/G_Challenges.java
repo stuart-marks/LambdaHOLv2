@@ -73,7 +73,7 @@ public class G_Challenges {
      *   ]
      */
     @Test
-    public void ex26_denormalizeMap() {
+    public void g1_denormalizeMap() {
         Map<Integer, List<String>> input = new HashMap<>();
         input.put(4, Arrays.asList("ibex", "hedgehog", "wombat"));
         input.put(6, Arrays.asList("ant", "beetle", "cricket"));
@@ -155,7 +155,7 @@ public class G_Challenges {
      * and p and q as its value set.
      */
     @Test
-    public void ex27_invertMultiMap() {
+    public void g2_invertMultiMap() {
         Map<String, Set<Integer>> input = new HashMap<>();
         input.put("a", new HashSet<>(Arrays.asList(1, 2)));
         input.put("b", new HashSet<>(Arrays.asList(2, 3)));
@@ -203,7 +203,7 @@ public class G_Challenges {
      * The stream is run in parallel, so the combiner function must be correct.
      */
     @Test
-    public void ex31_selectLongestWordsOnePass() {
+    public void g3_selectLongestWordsOnePass() {
         Stream<String> input = Stream.of(
             "alfa", "bravo", "charlie", "delta",
             "echo", "foxtrot", "golf", "hotel").parallel();
@@ -267,7 +267,7 @@ public class G_Challenges {
      * from Java's Collectors.groupingBy() collector.
      */
     @Test
-    public void ex34_splitCharacterRuns() {
+    public void g4_splitCharacterRuns() {
         String input = "aaaaabbccccdeeeeeeaaafff";
 
         //TODO//List<String> result = null;
@@ -296,7 +296,7 @@ public class G_Challenges {
      * the correct result.
      */
     @Test
-    public void ex36_reversingCollector() {
+    public void g5_reversingCollector() {
         Stream<String> input =
             IntStream.range(0, 100).mapToObj(String::valueOf).parallel();
 
@@ -350,7 +350,7 @@ public class G_Challenges {
     }
 
     @Test
-    public void ex37_majority() {
+    public void g6_majority() {
         int[] array1 = { 13, 13, 24, 35, 24, 24, 35, 24, 24 };
         int[] array2 = { 13, 13, 24, 35, 24, 24, 35, 24 };
 
@@ -388,7 +388,7 @@ public class G_Challenges {
     }
 
     @Test
-    public void ex38_shoemaker() {
+    public void g7_shoemaker() {
         Supplier<Shoe> sup1 = makeShoeSupplier(Shoe::new, 9);
         Supplier<Shoe> sup2 = makeShoeSupplier(Shoe::new, 13);
 

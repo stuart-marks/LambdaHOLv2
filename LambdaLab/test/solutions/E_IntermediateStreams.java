@@ -32,7 +32,7 @@ public class E_IntermediateStreams {
      * Convert a list of strings into a list of characters.
      */
     @Test
-    public void ex13_stringsToCharacters() {
+    public void e1_stringsToCharacters() {
         List<String> input = Arrays.asList("alfa", "bravo", "charlie");
 
         //TODO//List<Character> result = null;
@@ -66,7 +66,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test
-    public void ex14_listOfAllWords() throws IOException {
+    public void e2_listOfAllWords() throws IOException {
         //TODO//List<String> output = null;
         //BEGINREMOVE
         List<String> output =
@@ -107,7 +107,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test
-    public void ex15_longLowerCaseSortedWords() throws IOException {
+    public void e3_longLowerCaseSortedWords() throws IOException {
         //TODO//List<String> output = null;
         //BEGINREMOVE
         List<String> output =
@@ -139,7 +139,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test
-    public void ex16_longLowerCaseReverseSortedWords() throws IOException {
+    public void e4_longLowerCaseReverseSortedWords() throws IOException {
         //TODO//List<String> result = null;
         //BEGINREMOVE
         List<String> result =
@@ -170,7 +170,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test
-    public void ex17_sortedLowerCaseDistinctByLengthThenAlphabetically() throws IOException {
+    public void e5_sortedLowerCaseDistinctByLengthThenAlphabetically() throws IOException {
         //TODO//List<String> result = null;
         //BEGINREMOVE
         List<String> result =
@@ -214,7 +214,7 @@ public class E_IntermediateStreams {
      * Long.MAX_VALUE, so you must use BigInteger.
      */
     @Test
-    public void ex19_bigFactorial() {
+    public void e6_bigFactorial() {
         //TODO//BigInteger result = BigInteger.ONE;
         //BEGINREMOVE
         BigInteger result =
@@ -237,7 +237,7 @@ public class E_IntermediateStreams {
      * @throws IOException
      */
     @Test
-    public void ex20_getLastWord() throws IOException {
+    public void e7_getLastWord() throws IOException {
         //TODO//String result = null;
         //BEGINREMOVE
         String result =
