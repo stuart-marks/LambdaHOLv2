@@ -54,7 +54,7 @@ public class C_DefaultMethods {
 
         // TODO write code to modify list
 
-        assertEquals("[alfa, echo]", list.toString());
+        assertEquals(Arrays.asList("alfa", "echo"), list);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -72,7 +72,8 @@ public class C_DefaultMethods {
 
         // TODO code to modify list
 
-        assertEquals("[ALFA, BRAVO, CHARLIE, DELTA, ECHO, FOXTROT]", list.toString());
+        assertEquals(Arrays.asList("ALFA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"),
+                     list);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -93,7 +94,11 @@ public class C_DefaultMethods {
 
         // TODO write code to modify map
 
-        assertEquals("{1=alfa1, 2=bravo2, 3=charlie3}", map.toString());
+        assertEquals(3, map.size());
+        assertTrue(map.values().stream().allMatch(x -> x instanceof StringBuilder));
+        assertEquals("alfa1",    map.get(1).toString());
+        assertEquals("bravo2",   map.get(2).toString());
+        assertEquals("charlie3", map.get(3).toString());
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -144,8 +149,8 @@ public class C_DefaultMethods {
         // TODO write code to populate result
 
         assertEquals(Arrays.asList('a', 'b', 'c'), new ArrayList<>(result.keySet()));
-        assertEquals("aardvark:alligator:avocet", result.get('a'));
-        assertEquals("bison:bushbaby:bustard", result.get('b'));
+        assertEquals("aardvark:alligator:avocet",    result.get('a'));
+        assertEquals("bison:bushbaby:bustard",       result.get('b'));
         assertEquals("capybara:chimpanzee:capuchin", result.get('c'));
     }
     // Hint:

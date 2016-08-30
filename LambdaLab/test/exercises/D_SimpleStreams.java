@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -40,7 +39,7 @@ public class D_SimpleStreams {
 
         List<String> result = null; // TODO
 
-        assertEquals("[BRAVO, CHARLIE, DELTA, FOXTROT]", result.toString());
+        assertEquals(Arrays.asList("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
@@ -152,7 +151,7 @@ public class D_SimpleStreams {
 
         List<String> result = null; // TODO
 
-        assertEquals("[charlie, foxtrot]", result.toString());
+        assertEquals(Arrays.asList("charlie", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">

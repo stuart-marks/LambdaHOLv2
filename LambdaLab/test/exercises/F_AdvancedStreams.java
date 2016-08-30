@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package exercises;
 
 import java.io.BufferedReader;
@@ -265,7 +260,7 @@ public class F_AdvancedStreams {
     }
 
     @Test @Ignore
-    public void ex26_countTotalAndDistinctWords() {
+    public void f7_countTotalAndDistinctWords() {
         List<String> allWords = reader.lines()
                                       .map(String::toLowerCase)
                                       .flatMap(line -> WORD_PATTERN.splitAsStream(line))

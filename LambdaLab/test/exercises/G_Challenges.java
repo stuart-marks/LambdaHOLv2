@@ -1,24 +1,5 @@
 package exercises;
 
-/*
- * LAMBDA PROGRAMMING LABORATORY
- *
- * For each exercise, develop a solution using Java SE 8 Lambda/Streams
- * and remove the @Ignore tag. Then run the tests.
- *
- * In NetBeans, Ctrl-F6 will run the project's tests, which default to
- * the unsolved exercises (as opposed to the solutions). Alt-F6 [PC] or
- * or Cmd-F6 [Mac] will run just the tests in the currently selected file.
- *
- * Several of the exercises read data from a text file. The field named
- * "reader" is a BufferedReader which will be opened for you on the text file.
- * In any exercise that refers to reading from the text file, you can simply
- * use the "reader" variable without worry about opening or closing it.
- * This is setup by JUnit using the @Before and @After methods at the bottom of
- * this file. The text file is "SonnetI.txt" (Shakespeare's first sonnet) which
- * is located at the root of this NetBeans project.
- */
-
 import java.util.AbstractMap;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -29,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
@@ -38,8 +18,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
