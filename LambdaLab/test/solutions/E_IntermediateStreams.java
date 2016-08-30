@@ -8,10 +8,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.LongAdder;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -207,39 +205,6 @@ public class E_IntermediateStreams {
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // Use Comparator.theComparing().
-    // </editor-fold>
-
-
-    /**
-     * Count the total number of words and the number of distinct, lower case
-     * words in the text file, in one pass.
-     */
-    @Test
-    public void ex18_countTotalAndDistinctWords() {
-        //TODO//long distinctCount = 0;
-        //TODO//long totalCount = 0;
-        //BEGINREMOVE
-        LongAdder adder = new LongAdder();
-        long distinctCount =
-            reader.lines()
-                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
-                  .map(String::toLowerCase)
-                  .peek(s -> adder.increment())
-                  .distinct()
-                  .count();
-        long totalCount = adder.longValue();
-        //ENDREMOVE
-
-        assertEquals("distinct count", 81, distinctCount);
-        assertEquals("total count", 107, totalCount);
-    }
-    // Hint 1:
-    // <editor-fold defaultstate="collapsed">
-    // Use Stream.peek().
-    // </editor-fold>
-    // Hint 2:
-    // <editor-fold defaultstate="collapsed">
-    // Use LongAdder or AtomicLong/AtomicInteger to allow peek() to have side effects.
     // </editor-fold>
 
 
