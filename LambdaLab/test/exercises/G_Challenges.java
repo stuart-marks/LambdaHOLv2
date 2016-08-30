@@ -109,6 +109,10 @@ public class G_Challenges {
      * in the value sets for both p and q in the input map. Therefore,
      * in the result map, there should be a mapping with 20 as the key
      * and p and q as its value set.
+     *
+     * It is possible to accomplish this task using a single stream
+     * pipeline (not counting nested streams), that is, in a single pass
+     * over the input, without storing anything in a temporary collection.
      */
     @Test @Ignore
     public void g2_invertMultiMap() {
@@ -128,6 +132,17 @@ public class G_Challenges {
         assertEquals(new HashSet<>(Arrays.asList("d", "e", "f")), result.get(4));
         assertEquals(4, result.size());
     }
+    // Hint 1:
+    // <editor-fold defaultstate="collapsed">
+    // A general approach is to flatten the input structure in one stage
+    // of the pipeline and then to create the result structure using a collector.
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // A useful intermediate data structure after the flattening step
+    // is a pair of items. You can write your own pair class, or you can
+    // use a pre-existing class like AbstractMap.SimpleEntry.
+    // </editor-fold>
 
 
     /**
@@ -158,7 +173,6 @@ public class G_Challenges {
 
 
 
-
     /**
      * Given a string, split it into a list of strings consisting of
      * consecutive characters from the original string. Note: this is
@@ -173,6 +187,12 @@ public class G_Challenges {
 
         assertEquals("[aaaaa, bb, cccc, d, eeeeee, aaa, fff]", result.toString());
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // One possibility is a two-pass approach: one pass to gather data about
+    // the boundaries between the runs, and the second to create the substrings
+    // based on output from the first.
+    // </editor-fold>
 
     /**
      * Given a parallel stream of strings, collect them into a collection in reverse order.
@@ -188,7 +208,6 @@ public class G_Challenges {
             input.collect(Collector.of(null, null, null));
             // TODO fill in collector functions above
 
-
         assertEquals(
             IntStream.range(0, 100)
                      .map(i -> 99 - i)
@@ -196,6 +215,14 @@ public class G_Challenges {
                      .collect(Collectors.toList()),
             new ArrayList<>(result));
     }
+    // Hint 1:
+    // <editor-fold defaultstate="collapsed">
+    // ArrayDeque supports fast insertion at the front.
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // Be careful with ordering of the arguments and results in the combiner.
+    // </editor-fold>
 
     /**
      * Given an array of int, find the int value that occurs a majority
@@ -212,6 +239,11 @@ public class G_Challenges {
     OptionalInt majority(int[] array) {
         return null; // TODO
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // A two-pass approach may be called for here: a counting pass
+    // and a majority-finding pass.
+    // </editor-fold>
 
     @Test @Ignore
     public void g6_majority() {
@@ -238,6 +270,11 @@ public class G_Challenges {
     Supplier<Shoe> makeShoeSupplier(IntFunction<Shoe> ifunc, int size) {
         return null; // TODO
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // You don't want to return the result of calling the IntFunction.
+    // Instead, you want to return a lambda that calls the IntFunction.
+    // </editor-fold>
 
     static class Shoe {
         final int size;

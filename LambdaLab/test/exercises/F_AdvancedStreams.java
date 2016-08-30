@@ -91,7 +91,8 @@ public class F_AdvancedStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // Use the "downstream" overload of Collectors.groupingBy().
+    // Use the overload of Collectors.groupingBy() that has
+    // a "downstream" parameter.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
@@ -162,8 +163,8 @@ public class F_AdvancedStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // The nested map structure that's the desired is the result of applying
-    // a "downstream" collector that's the same operation as the first-level collector.
+    // The nested map structure that's desired is the result of applying a
+    // "downstream" collector that's the same operation as the first-level collector.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
@@ -263,6 +264,11 @@ public class F_AdvancedStreams {
         int getTotalCount() { return count; }
         int getDistinctCount() { return set.size(); }
     }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // The operations you need to write are actually quite simple.
+    // Don't overthink it.
+    // </editor-fold>
 
     @Test @Ignore
     public void f7_countTotalAndDistinctWords() {

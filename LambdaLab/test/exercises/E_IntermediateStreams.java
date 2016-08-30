@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -52,7 +52,7 @@ public class E_IntermediateStreams {
 
     /**
      * Collect all the words from the text file into a list.
-     * Use the regular expression pattern WORD_PATTERN to split
+     * Use the regular expression Pattern WORD_PATTERN to split
      * a string into words, and use Pattern.splitAsStream(String)
      * to do the splitting. WORD_PATTERN is defined at the bottom
      * of this file.
@@ -178,9 +178,15 @@ public class E_IntermediateStreams {
 
         assertEquals(new BigInteger("51090942171709440000"), result);
     }
-    // Hint:
+    // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // Use LongStream and reduction.
+    // Use one of the range methods of LongStream to help create
+    // the BigInteger instances.
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // Use Stream.reduce() to "collapse" all elements of a stream into
+    // a single value.
     // </editor-fold>
 
 
@@ -197,7 +203,7 @@ public class E_IntermediateStreams {
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Use Stream.reduce().
+    // Use Stream.reduce() and think about the order of the arguments.
     // </editor-fold>
 
 

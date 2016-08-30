@@ -57,7 +57,8 @@ public class D_SimpleStreams {
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-    // Use collect() to create the result list.
+    // To create the result list, use collect() with one of the
+    // predefined collectors on the Collectors class.
     // </editor-fold>
 
 
@@ -140,11 +141,16 @@ public class D_SimpleStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // Use Stream.mapToInt() to convert to IntStream.
+    // Use Stream.mapToInt() to convert a stream of objects to an IntStream.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // Look at java.util.OptionalInt to get the result.
+    // </editor-fold>
+    // Hint 3:
+    // <editor-fold defaultstate="collapsed">
+    // Think about the case where the OptionalInt might be empty
+    // (that is, where it has no value).
     // </editor-fold>
 
 
