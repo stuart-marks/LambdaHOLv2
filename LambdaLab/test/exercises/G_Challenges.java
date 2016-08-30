@@ -117,6 +117,24 @@ public class G_Challenges {
      * Invert a "multi-map". (From an idea by Paul Sandoz)
      *
      * Given a Map<X, Set<Y>>, convert it to Map<Y, Set<X>>.
+     * Each set member of the input map's values becomes a key in
+     * the result map. Each key in the input map becomes a set member
+     * of the values of the result map. In the input map, an item
+     * may appear in the value set of multiple keys. In the result
+     * map, that item will be a key, and its value set will be
+     * its corresopnding keys from the input map.
+     *
+     * In this case the input is Map<String, Set<Integer>>
+     * and the result is Map<Integer, Set<String>>.
+     *
+     * For example, if the input map is
+     *     {p=[10, 20], q=[20, 30]}
+     * then the result map should be
+     *     {10=[p], 20=[p, q], 30=[q]}
+     * irrespective of ordering. Note that the Integer 20 appears
+     * in the value sets for both p and q in the input map. Therefore,
+     * in the result map, there should be a mapping with 20 as the key
+     * and p and q as its value set.
      */
     @Test @Ignore
     public void ex27_invertMultiMap() {
@@ -128,7 +146,7 @@ public class G_Challenges {
         input.put("e", new HashSet<>(Arrays.asList(2, 4)));
         input.put("f", new HashSet<>(Arrays.asList(3, 4)));
 
-        Map<Integer, List<String>> result = null; // TODO
+        Map<Integer, Set<String>> result = null; // TODO
 
         assertEquals(new HashSet<>(Arrays.asList("a", "c", "d")), result.get(1));
         assertEquals(new HashSet<>(Arrays.asList("a", "b", "e")), result.get(2));
