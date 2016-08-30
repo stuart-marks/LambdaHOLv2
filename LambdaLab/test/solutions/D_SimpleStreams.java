@@ -157,12 +157,12 @@ public class D_SimpleStreams {
      */
     @Test
     public void ex10_findLongestLine() throws IOException {
-        //TODO//String longest = "";
+        //TODO//String longest = null;
         //BEGINREMOVE
         String longest =
             reader.lines()
                   .max(Comparator.comparingInt(String::length))
-                  .get();
+                  .orElse("");
             // Alternative:
             // Instead of Comparator.comparingInt(String::length), one could
             // use something like:

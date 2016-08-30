@@ -127,7 +127,7 @@ public class D_SimpleStreams {
      */
     @Test @Ignore
     public void ex10_findLongestLine() throws IOException {
-        String longest = ""; // TODO
+        String longest = null; // TODO
 
         assertEquals("Feed'st thy light's flame with self-substantial fuel,", longest);
     }

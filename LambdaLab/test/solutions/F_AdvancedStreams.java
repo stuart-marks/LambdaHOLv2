@@ -75,7 +75,7 @@ public class F_AdvancedStreams {
             reader.lines()
                   .flatMap(line -> WORD_PATTERN.splitAsStream(line))
                   .reduce((a, b) -> b)
-                  .get();
+                  .orElse("");
         //ENDREMOVE
 
         assertEquals("thee", result);

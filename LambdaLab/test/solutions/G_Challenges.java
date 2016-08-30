@@ -440,7 +440,7 @@ public class G_Challenges {
                      .max((i, j) -> Integer.compare(bounds.get(i) - bounds.get(i-1),
                                                     bounds.get(j) - bounds.get(j-1)))
                      .map(i -> input.substring(bounds.get(i-1), bounds.get(i)))
-                     .get();
+                     .orElse("");
 
         //ENDREMOVE
 
