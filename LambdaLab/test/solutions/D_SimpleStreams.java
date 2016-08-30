@@ -181,6 +181,34 @@ public class D_SimpleStreams {
 
 
     /**
+     * Select the longest words from the input list. That is, select the words
+     * whose lengths are equal to the maximum word length.
+     */
+    @Test
+    public void ex10a_selectLongestWords() {
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+        int max = input.stream()
+                       .mapToInt(String::length)
+                       .max()
+                       .orElse(-1);
+
+        List<String> result = input.stream()
+                                   .filter(s -> s.length() == max)
+                                   .collect(Collectors.toList());
+        //ENDREMOVE
+
+        assertEquals("[charlie, foxtrot]", result.toString());
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Consider making two passes over the input stream.
+    // </editor-fold>
+
+    /**
      * Select the list of words from the input list whose length is greater than
      * the word's position in the list (starting from zero) .
      */
@@ -204,36 +232,6 @@ public class D_SimpleStreams {
     // <editor-fold defaultstate="collapsed">
     // Instead of a stream of words (Strings), run an IntStream of indexes of
     // the input list, using index values to get elements from the input list.
-    // </editor-fold>
-
-
-    /**
-     * Given two lists of Integer, compute a third list where each element is the
-     * difference between the corresponding elements of the two input lists
-     * (first minus second).
-     */
-    @Test
-    public void ex12_listDifference() {
-        List<Integer> one = Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6, 5, 3);
-        List<Integer> two = Arrays.asList(2, 7, 1, 8, 2, 8, 1, 8, 2, 8);
-
-        //TODO//List<Integer> result = null;
-        //BEGINREMOVE
-        List<Integer> result =
-            IntStream.range(0, one.size())
-                .mapToObj(i -> one.get(i) - two.get(i))
-                .collect(Collectors.toList());
-        //ENDREMOVE
-
-        assertEquals(Arrays.asList(1, -6, 3, -7, 3, 1, 1, -2, 3, -5), result);
-    }
-    // Hint 1:
-    // <editor-fold defaultstate="collapsed">
-    // Run an IntStream of list positions (indexes).
-    // </editor-fold>
-    // Hint 2:
-    // <editor-fold defaultstate="collapsed">
-    // Deal with boxed Integers either by casting or by using mapToObj().
     // </editor-fold>
 
 

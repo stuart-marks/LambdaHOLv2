@@ -2,6 +2,7 @@ package solutions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * This set of exercises covers more advanced stream operations
- * as well as longer stream pipelines.
+ * longer stream pipelines, and simple reductions.
  */
 public class E_IntermediateStreams {
 
@@ -205,6 +207,51 @@ public class E_IntermediateStreams {
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // Use Comparator.theComparing().
+    // </editor-fold>
+
+        /**
+     * Compute the value of 21!, that is, 21 factorial. This value is larger than
+     * Long.MAX_VALUE, so you must use BigInteger.
+     */
+    @Test
+    public void ex19_bigFactorial() {
+        //TODO//BigInteger result = BigInteger.ONE;
+        //BEGINREMOVE
+        BigInteger result =
+            IntStream.rangeClosed(1, 21)
+                     .mapToObj(n -> BigInteger.valueOf(n))
+                     .reduce(BigInteger.ONE, (m, n) -> m.multiply(n));
+        //ENDREMOVE
+
+        assertEquals(new BigInteger("51090942171709440000"), result);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use LongStream and reduction.
+    // </editor-fold>
+
+
+    /**
+     * Get the last word in the text file.
+     *
+     * @throws IOException
+     */
+    @Test
+    public void ex20_getLastWord() throws IOException {
+        //TODO//String result = null;
+        //BEGINREMOVE
+        String result =
+            reader.lines()
+                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                  .reduce((a, b) -> b)
+                  .orElse("");
+        //ENDREMOVE
+
+        assertEquals("thee", result);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use Stream.reduce().
     // </editor-fold>
 
 

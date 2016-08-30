@@ -196,195 +196,75 @@ public class G_Challenges {
 
 
     /**
-     * Select from the input list each word that longer than the immediately
-     * preceding word. Include the first word, since it is longer than the
-     * (nonexistent) word that precedes it.
-     *
-     * XXX - compare to ex11
-     */
-    @Test
-    public void ex28_selectLongerThanPreceding() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
-
-        //TODO//List<String> result = null;
-        //BEGINREMOVE
-        List<String> result =
-            IntStream.range(0, input.size())
-                .filter(pos -> pos == 0 || input.get(pos-1).length() < input.get(pos).length())
-                .mapToObj(pos -> input.get(pos))
-                .collect(Collectors.toList());
-        //ENDREMOVE
-
-        assertEquals("[alfa, bravo, charlie, foxtrot, hotel]", result.toString());
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Instead of a stream of words (Strings), run an IntStream of positions.
-    // </editor-fold>
-
-
-    /**
-     * Generate a list of words that is the concatenation of each adjacent
-     * pair of words in the input list. For example, if the input is
-     *     [x, y, z]
-     * the output should be
-     *     [xy, yz]
-     *
-     * XXX - compare to ex11
-     */
-    @Test
-    public void ex29_concatenateAdjacent() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
-
-        //TODO//List<String> result = null;
-        //BEGINREMOVE
-        List<String> result =
-            IntStream.range(1, input.size())
-                .mapToObj(pos -> input.get(pos-1) + input.get(pos))
-                .collect(Collectors.toList());
-        //ENDREMOVE
-
-        assertEquals("[alfabravo, bravocharlie, charliedelta, deltaecho, echofoxtrot]",
-                     result.toString());
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Instead of a stream of words (Strings), run an IntStream of positions.
-    // </editor-fold>
-
-    /**
-     * Select the longest words from the input list. That is, select the words
-     * whose lengths are equal to the maximum word length. For this exercise,
-     * it's easiest to perform two passes over the input list.
-     *
-     * XXX - compare to ex09 and ex10
-     */
-    @Test
-    public void ex30_selectLongestWords() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
-
-        //TODO//List<String> result = null;
-        //BEGINREMOVE
-        int max = input.stream()
-                       .mapToInt(String::length)
-                       .max()
-                       .orElse(-1);
-
-        List<String> result = input.stream()
-                                   .filter(s -> s.length() == max)
-                                   .collect(Collectors.toList());
-        //ENDREMOVE
-
-        assertEquals("[charlie, foxtrot]", result.toString());
-    }
-
-    /**
-     * Select the longest words from the input stream. That is, select the words
+     * Select the longest words from an input stream. That is, select the words
      * whose lengths are equal to the maximum word length. For this exercise,
      * you must compute the result in a single pass over the input stream.
-     *
-     * XXX - compare to ex30
+     * The type of the input is a Stream, so you cannot access elements at random.
+     * The stream is run in parallel, so the combiner function must be correct.
      */
     @Test
     public void ex31_selectLongestWordsOnePass() {
         Stream<String> input = Stream.of(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+            "alfa", "bravo", "charlie", "delta",
+            "echo", "foxtrot", "golf", "hotel").parallel();
 
-        //TODO//List<String> result = null;
+        //UNCOMMENT//List<String> result = input.collect(
+        //UNCOMMENT//    Collector.of(null, null, null, null));
+        //UNCOMMENT//// TODO implement a collector by replacing the nulls above
         //BEGINREMOVE
-
-        List<String> result = new ArrayList<>();
-        input.forEachOrdered(s -> {
-            if (result.isEmpty()) {
-                result.add(s);
-            } else {
-                int reslen = result.get(0).length();
-                int curlen = s.length();
-                if (curlen > reslen) {
-                    result.clear();
-                    result.add(s);
-                } else if (curlen == reslen) {
-                    result.add(s);
-                }
-            }
-        });
+        List<String> result = input.collect(
+            Collector.of(Longest::new, Longest::acc, Longest::comb, Longest::finish));
         //ENDREMOVE
 
-        assertEquals("[charlie, foxtrot]", result.toString());
-    }
-
-    /**
-     * Create a list of non-overlapping sublists of the input list, where each
-     * sublist (except for the first one) starts with a word whose first character is a ":".
-     * For example, given the input list
-     *     [w, x, :y, z]
-     * the output should be
-     *     [[w, x], [:y, z]]
-     */
-    @Test
-    public void ex32_partitionIntoSublists() {
-        List<String> input = Arrays.asList(
-            "alfa", "bravo", ":charlie", "delta", ":echo", ":foxtrot", "golf", "hotel");
-
-        //TODO//List<List<String>> result = null;
-        //BEGINREMOVE
-
-        List<Integer> bounds =
-            IntStream.rangeClosed(0, input.size())
-                     .filter(i -> i == 0 || i == input.size() || input.get(i).startsWith(":"))
-                     .boxed()
-                     .collect(Collectors.toList());
-
-        List<List<String>> result =
-            IntStream.range(1, bounds.size())
-                     .mapToObj(i -> input.subList(bounds.get(i-1), bounds.get(i)))
-                     .collect(Collectors.toList());
-
-        //ENDREMOVE
-
-        assertEquals("[[alfa, bravo], [:charlie, delta], [:echo], [:foxtrot, golf, hotel]]",
-                     result.toString());
-    }
-
-    /**
-     * Given a stream of integers, compute separate sums of the even and odd values
-     * in this stream. Since the input is a stream, this necessitates making a single
-     * pass over the input.
-     */
-    @Test
-    public void ex33_separateOddEvenSums() {
-        IntStream input = new Random(987523).ints(20, 0, 100);
-
-        //TODO//int sumEvens = 0;
-        //TODO//int sumOdds  = 0;
-        //BEGINREMOVE
-
-        Map<Boolean, Integer> sums =
-            input.boxed()
-                 .collect(Collectors.partitioningBy(i -> (i & 1) == 1,
-                                                    Collectors.summingInt(i -> i)));
-        int sumEvens = sums.get(false);
-        int sumOdds  = sums.get(true);
-        //ENDREMOVE
-
-        assertEquals(516, sumEvens);
-        assertEquals(614, sumOdds);
+        assertEquals(Arrays.asList("charlie", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Use Collectors.partitioningBy().
+    // There are several ways to solve this exercise, but one approach is to
+    // create a helper class with four functions, and then pass method
+    // references to these functions to the Collector.of() method.
     // </editor-fold>
+
+    //BEGINREMOVE
+    static class Longest {
+        int len = -1;
+        List<String> list = new ArrayList<>();
+
+        void acc(String s) {
+            int slen = s.length();
+            if (slen == len) {
+                list.add(s);
+            } else if (slen > len) {
+                len = slen;
+                list.clear();
+                list.add(s);
+            } // ignore if slen < len
+        }
+
+        Longest comb(Longest other) {
+            if (this.len > other.len) {
+                return this;
+            } else if (this.len < other.len) {
+                return other;
+            } else {
+                this.list.addAll(other.list);
+                return this;
+            }
+        }
+
+        List<String> finish() {
+            return list;
+        }
+    }
+    //ENDREMOVE
+
+
 
     /**
      * Given a string, split it into a list of strings consisting of
      * consecutive characters from the original string. Note: this is
      * similar to Python's itertools.groupby function, but it differs
      * from Java's Collectors.groupingBy() collector.
-     *
-     * XXX - compare to ex32
      */
     @Test
     public void ex34_splitCharacterRuns() {
@@ -408,39 +288,6 @@ public class G_Challenges {
         //ENDREMOVE
 
         assertEquals("[aaaaa, bb, cccc, d, eeeeee, aaa, fff]", result.toString());
-    }
-
-    /**
-     * Given a string, find the substring containing the longest run of consecutive,
-     * equal characters.
-     *
-     * XXX - compare to ex34
-     */
-    @Test
-    public void ex35_longestCharacterRuns() {
-        String input = "aaaaabbccccdeeeeeeaaafff";
-
-        //TODO//String result = null;
-        //BEGINREMOVE
-
-        List<Integer> bounds =
-            IntStream.rangeClosed(0, input.length())
-                     .filter(i -> i == 0 || i == input.length() ||
-                                  input.charAt(i-1) != input.charAt(i))
-                     .boxed()
-                     .collect(Collectors.toList());
-
-        String result =
-            IntStream.range(1, bounds.size())
-                     .boxed()
-                     .max((i, j) -> Integer.compare(bounds.get(i) - bounds.get(i-1),
-                                                    bounds.get(j) - bounds.get(j-1)))
-                     .map(i -> input.substring(bounds.get(i-1), bounds.get(i)))
-                     .orElse("");
-
-        //ENDREMOVE
-
-        assertEquals("eeeeee", result);
     }
 
     /**

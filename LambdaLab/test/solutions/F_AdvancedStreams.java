@@ -7,7 +7,6 @@ package solutions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,6 +16,7 @@ import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -35,56 +35,10 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * This set of exercises covers advanced stream operations,
- * including reduction, grouping collectors, composition
- * of collectors.
+ * including grouping collectors, composition of collectors,
+ * and customized collectors.
  */
 public class F_AdvancedStreams {
-
-    /**
-     * Compute the value of 21!, that is, 21 factorial. This value is larger than
-     * Long.MAX_VALUE, so you must use BigInteger.
-     */
-    @Test
-    public void ex19_bigFactorial() {
-        //TODO//BigInteger result = BigInteger.ONE;
-        //BEGINREMOVE
-        BigInteger result =
-            IntStream.rangeClosed(1, 21)
-                     .mapToObj(n -> BigInteger.valueOf(n))
-                     .reduce(BigInteger.ONE, (m, n) -> m.multiply(n));
-        //ENDREMOVE
-
-        assertEquals(new BigInteger("51090942171709440000"), result);
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Use LongStream and reduction.
-    // </editor-fold>
-
-
-    /**
-     * Get the last word in the text file.
-     *
-     * @throws IOException
-     */
-    @Test
-    public void ex20_getLastWord() throws IOException {
-        //TODO//String result = null;
-        //BEGINREMOVE
-        String result =
-            reader.lines()
-                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
-                  .reduce((a, b) -> b)
-                  .orElse("");
-        //ENDREMOVE
-
-        assertEquals("thee", result);
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Use Stream.reduce().
-    // </editor-fold>
-
 
     /**
      * Categorize the words from the text file into a map, where the map's key
@@ -258,6 +212,36 @@ public class F_AdvancedStreams {
 
 
     /**
+     * Given a stream of integers, compute separate sums of the even and odd values
+     * in this stream. Since the input is a stream, this necessitates making a single
+     * pass over the input.
+     */
+    @Test
+    public void ex24a_separateOddEvenSums() {
+        IntStream input = new Random(987523).ints(20, 0, 100);
+
+        //TODO//int sumEvens = 0;
+        //TODO//int sumOdds  = 0;
+        //BEGINREMOVE
+
+        Map<Boolean, Integer> sums =
+            input.boxed()
+                 .collect(Collectors.partitioningBy(i -> (i & 1) == 1,
+                                                    Collectors.summingInt(i -> i)));
+        int sumEvens = sums.get(false);
+        int sumOdds  = sums.get(true);
+        //ENDREMOVE
+
+        assertEquals(516, sumEvens);
+        assertEquals(614, sumOdds);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use Collectors.partitioningBy().
+    // </editor-fold>
+
+
+    /**
      * Given a stream of strings, accumulate (collect) them into the result string
      * by inserting the input string at both the beginning and end. For example, given
      * input strings "x" and "y" the result should be "yxxy". Note: the input stream
@@ -291,7 +275,8 @@ public class F_AdvancedStreams {
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
     // The collector state (that is, the object being accumulated and
-    // combined) can be a single StringBuilder.
+    // combined) can be a single StringBuilder, which is manipulated
+    // by lambda expressions in the three-arg form of the collect() method.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
