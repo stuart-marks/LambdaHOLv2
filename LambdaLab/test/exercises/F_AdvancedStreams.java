@@ -186,9 +186,14 @@ public class F_AdvancedStreams {
         assertEquals(516, sumEvens);
         assertEquals(614, sumOdds);
     }
-    // Hint:
+    // Hint 1:
     // <editor-fold defaultstate="collapsed">
     // Use Collectors.partitioningBy().
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
+    // The collect(Collector) method we need is defined on Stream<T>, but not on
+    // IntStream, LongStream or DoubleStream.
     // </editor-fold>
 
 

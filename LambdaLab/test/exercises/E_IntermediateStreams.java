@@ -42,7 +42,7 @@ public class E_IntermediateStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // Use Stream.flatMap().
+    // Use String.chars() and Stream.flatMap().
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
@@ -165,10 +165,10 @@ public class E_IntermediateStreams {
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
-    // Use Comparator.theComparing().
+    // Use Comparator.thenComparing().
     // </editor-fold>
 
-        /**
+    /**
      * Compute the value of 21!, that is, 21 factorial. This value is larger than
      * Long.MAX_VALUE, so you must use BigInteger.
      */
