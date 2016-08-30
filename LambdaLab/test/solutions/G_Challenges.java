@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -134,19 +136,19 @@ public class G_Challenges {
 // ========================================================
 
     /**
-     * Invert a "multi-map". (P. Sandoz)
+     * Invert a "multi-map". (From an idea by Paul Sandoz)
      *
      * Given a Map<X, Set<Y>>, convert it to Map<Y, Set<X>>.
      */
     @Test
     public void ex27_invertMultiMap() {
-        Map<String, List<Integer>> input = new HashMap<>();
-        input.put("a", Arrays.asList(1, 2));
-        input.put("b", Arrays.asList(2, 3));
-        input.put("c", Arrays.asList(1, 3));
-        input.put("d", Arrays.asList(1, 4));
-        input.put("e", Arrays.asList(2, 4));
-        input.put("f", Arrays.asList(3, 4));
+        Map<String, Set<Integer>> input = new HashMap<>();
+        input.put("a", new HashSet<>(Arrays.asList(1, 2)));
+        input.put("b", new HashSet<>(Arrays.asList(2, 3)));
+        input.put("c", new HashSet<>(Arrays.asList(1, 3)));
+        input.put("d", new HashSet<>(Arrays.asList(1, 4)));
+        input.put("e", new HashSet<>(Arrays.asList(2, 4)));
+        input.put("f", new HashSet<>(Arrays.asList(3, 4)));
 
         //TODO//Map<Integer, List<String>> result = null;
         //BEGINREMOVE
@@ -154,9 +156,21 @@ public class G_Challenges {
             input.entrySet().stream()
                  .flatMap(e -> e.getValue().stream()
                                 .map(v -> new AbstractMap.SimpleEntry<>(e.getKey(), v)))
-                 .collect(Collectors.groupingBy(Map.Entry::getValue, 
+                 .collect(Collectors.groupingBy(Map.Entry::getValue,
                                                 Collectors.mapping(Map.Entry::getKey,
                                                                    Collectors.toSet())));
+
+        // Alternatively:
+        // Map<Integer, Set<String>> result =
+        //     input.entrySet().stream()
+        //          .flatMap(e -> e.getValue().stream()
+        //                         .map(v -> new AbstractMap.SimpleEntry<>(v, e.getKey())))
+        //          .collect(Collectors.toMap(
+        //                       e -> e.getKey(),
+        //                       e -> new HashSet<>(Arrays.asList(e.getValue())),
+        //                       (set1, set2) -> { set1.addAll(set2); return set1; }
+        //                 ));
+
         //ENDREMOVE
 
         assertEquals(new HashSet<>(Arrays.asList("a", "c", "d")), result.get(1));
@@ -449,8 +463,9 @@ public class G_Challenges {
     /**
      * Given an array of int, find the int value that occurs a majority
      * of times in the array (that is, strictly more than half of the
-     * elements are that value), and return it in an OptionalInt. If there
-     * is no majority value, return an empty OptionalInt.
+     * elements are that value), and return that int value in an OptionalInt.
+     * Note, return the majority int value, not the number of times it occurs.
+     * If there is no majority value, return an empty OptionalInt.
      */
 
     OptionalInt majority(int[] array) {
@@ -471,13 +486,57 @@ public class G_Challenges {
 
     @Test
     public void ex37_majority() {
-        int[] array1 = { 3, 3, 4, 2, 4, 4, 2, 4, 4 };
-        int[] array2 = { 3, 3, 4, 2, 4, 4, 2, 4 };
+        int[] array1 = { 13, 13, 24, 35, 24, 24, 35, 24, 24 };
+        int[] array2 = { 13, 13, 24, 35, 24, 24, 35, 24 };
 
         OptionalInt result1 = majority(array1);
         OptionalInt result2 = majority(array2);
 
-        assertEquals(OptionalInt.of(4), result1);
+        assertEquals(OptionalInt.of(24), result1);
         assertFalse(result2.isPresent());
+    }
+
+    /**
+     * Write a method that takes an IntFunction and returns a Supplier.
+     * An IntFunction takes an int as an argument and returns some object.
+     * A Supplier takes no arguments and returns some object. The object
+     * type in this case is a Shoe that has a single attribute, its size.
+     * The goal is to write a lambda expression that uses the IntFunction
+     * and size values provided as arguments, and that returns a Supplier
+     * that embodies both of them. This is an example of a functional
+     * programming concept called "partial application."
+     */
+    Supplier<Shoe> makeShoeSupplier(IntFunction<Shoe> ifunc, int size) {
+        //TODO//return null;
+        //BEGINREMOVE
+        return () -> ifunc.apply(size);
+        //ENDREMOVE
+    }
+
+    static class Shoe {
+        final int size;
+        public Shoe(int size) { this.size = size; }
+        public int hashCode() { return size ^ 0xcafebabe; }
+        public boolean equals(Object other) {
+            return (other instanceof Shoe) && this.size == ((Shoe)other).size;
+        }
+    }
+
+    @Test
+    public void ex38_shoemaker() {
+        Supplier<Shoe> sup1 = makeShoeSupplier(Shoe::new, 9);
+        Supplier<Shoe> sup2 = makeShoeSupplier(Shoe::new, 13);
+
+        Shoe shoe1 = sup1.get();
+        Shoe shoe2 = sup1.get();
+        Shoe shoe3 = sup2.get();
+        Shoe shoe4 = sup2.get();
+
+        assertTrue(shoe1 != shoe2);
+        assertTrue(shoe3 != shoe4);
+        assertEquals(new Shoe(9), shoe1);
+        assertEquals(shoe1, shoe2);
+        assertEquals(new Shoe(13), shoe3);
+        assertEquals(shoe3, shoe4);
     }
 }

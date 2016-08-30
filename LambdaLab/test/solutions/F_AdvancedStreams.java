@@ -69,7 +69,7 @@ public class F_AdvancedStreams {
      */
     @Test
     public void ex20_getLastWord() throws IOException {
-        //TODO//List<String> result = null;
+        //TODO//String result = null;
         //BEGINREMOVE
         String result =
             reader.lines()
@@ -201,12 +201,14 @@ public class F_AdvancedStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // For Collectors.groupingBy(), consider that each word needs to
-    // be categorized by itself.
+    // For Collectors.groupingBy(), consider that each word needs to be in
+    // a category of its own, that is, each word is categorized as itself.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // For Collectors.toMap(), the first occurrence of a word should be mapped to 1.
+    // If two elements of the Stream are generating the same key, you will need to
+    // provide a merging function.
     // </editor-fold>
 
 
@@ -269,7 +271,9 @@ public class F_AdvancedStreams {
             "k", "l", "m", "n", "o", "p", "q", "r", "s", "t")
             .parallelStream();
 
-        //TODO//String result = input.collect(null, null, null);
+        //UNCOMMENT//String result = input.collect(null, null, null).toString();
+        //UNCOMMENT//// TODO fill in lambda expressions or method references
+        //UNCOMMENT//// in place of the nulls in the line above.
         //BEGINREMOVE
         String result =
             input.collect(StringBuilder::new,
@@ -286,10 +290,15 @@ public class F_AdvancedStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
+    // The collector state (that is, the object being accumulated and
+    // combined) can be a single StringBuilder.
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
     // The combiner function must take its second argument and merge
     // it into the first argument, mutating the first argument.
     // </editor-fold>
-    // Hint 2:
+    // Hint 3:
     // <editor-fold defaultstate="collapsed">
     // The second argument to the combiner function happens AFTER the first
     // argument in encounter order, so the second argument needs to be split
@@ -314,7 +323,7 @@ public class F_AdvancedStreams {
         // rely on implicit no-arg constructor
 
         void accumulate(String s) {
-            //UNCOMMENT////TODO write code to accumulate a single string into this object
+            //UNCOMMENT//// TODO write code to accumulate a single string into this object
             //BEGINREMOVE
             count++;
             set.add(s);
@@ -322,7 +331,7 @@ public class F_AdvancedStreams {
         }
 
         void combine(TotalAndDistinct other) {
-            //UNCOMMENT////TODO write code to combine the other object into this one
+            //UNCOMMENT//// TODO write code to combine the other object into this one
             //BEGINREMOVE
             count += other.count;
             set.addAll(other.set);

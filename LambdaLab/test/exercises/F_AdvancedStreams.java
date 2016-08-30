@@ -12,10 +12,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -61,7 +63,7 @@ public class F_AdvancedStreams {
      */
     @Test @Ignore
     public void ex20_getLastWord() throws IOException {
-        List<String> result = null; // TODO
+        String result = null; // TODO
 
         assertEquals("thee", result);
     }
@@ -158,12 +160,14 @@ public class F_AdvancedStreams {
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
-    // For Collectors.groupingBy(), consider that each word needs to
-    // be categorized by itself.
+    // For Collectors.groupingBy(), consider that each word needs to be in
+    // a category of its own, that is, each word is categorized as itself.
     // </editor-fold>
     // Hint 2:
     // <editor-fold defaultstate="collapsed">
     // For Collectors.toMap(), the first occurrence of a word should be mapped to 1.
+    // If two elements of the Stream are generating the same key, you will need to
+    // provide a merging function.
     // </editor-fold>
 
 
@@ -219,22 +223,76 @@ public class F_AdvancedStreams {
             "k", "l", "m", "n", "o", "p", "q", "r", "s", "t")
             .parallelStream();
 
-        String result = input.collect(null, null, null); // TODO
+        String result = input.collect(null, null, null).toString();
+        // TODO fill in lambda expressions or method references
+        // in place of the nulls in the line above.
 
         assertEquals("tsrqponmlkjihgfedcbaabcdefghijklmnopqrst", result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
+    // The collector state (that is, the object being accumulated and
+    // combined) can be a single StringBuilder.
+    // </editor-fold>
+    // Hint 2:
+    // <editor-fold defaultstate="collapsed">
     // The combiner function must take its second argument and merge
     // it into the first argument, mutating the first argument.
     // </editor-fold>
-    // Hint 2:
+    // Hint 3:
     // <editor-fold defaultstate="collapsed">
     // The second argument to the combiner function happens AFTER the first
     // argument in encounter order, so the second argument needs to be split
     // in half and prepended/appended to the first argument.
     // </editor-fold>
 
+    /**
+     * Count the total number of words and the number of distinct, lower case
+     * words in a stream, in one pass. This exercise uses a helper class
+     * that defines methods that are called by the Stream.collect() method.
+     * Your task is to fill in the implementation of the accumulate() and
+     * combine() methods in the helper class. You don't need to modify the
+     * test method itself.
+     *
+     * The stream is run in parallel, so you must write a combine() method
+     * that works properly.
+     */
+    static class TotalAndDistinct {
+        private int count = 0;
+        private final Set<String> set = new HashSet<>();
+
+        // rely on implicit no-arg constructor
+
+        void accumulate(String s) {
+            // TODO write code to accumulate a single string into this object
+        }
+
+        void combine(TotalAndDistinct other) {
+            // TODO write code to combine the other object into this one
+        }
+
+        int getTotalCount() { return count; }
+        int getDistinctCount() { return set.size(); }
+    }
+
+    @Test @Ignore
+    public void ex26_countTotalAndDistinctWords() {
+        List<String> allWords = reader.lines()
+                                      .map(String::toLowerCase)
+                                      .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                                      .collect(Collectors.toList());
+
+        TotalAndDistinct totalAndDistinct =
+            Collections.nCopies(100, allWords)
+                       .parallelStream()
+                       .flatMap(List::stream)
+                       .collect(TotalAndDistinct::new,
+                                TotalAndDistinct::accumulate,
+                                TotalAndDistinct::combine);
+
+        assertEquals("distinct count", 81, totalAndDistinct.getDistinctCount());
+        assertEquals("total count", 10700, totalAndDistinct.getTotalCount());
+    }
 
 // ========================================================
 // END OF EXERCISES

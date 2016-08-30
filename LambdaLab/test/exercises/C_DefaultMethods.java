@@ -113,7 +113,7 @@ public class C_DefaultMethods {
             "avocet", "bustard", "capuchin");
         Map<Integer, List<String>> result = new TreeMap<>();
 
-        //TODO write code to populate result
+        // TODO write code to populate result
 
         assertEquals(Arrays.asList(5, 6, 7, 8, 9, 10), new ArrayList<>(result.keySet()));
         assertEquals(Arrays.asList("bison"), result.get(5));
@@ -141,7 +141,7 @@ public class C_DefaultMethods {
             "avocet", "bustard", "capuchin");
         Map<Character, String> result = new TreeMap<>();
 
-        //TODO write code to populate result
+        // TODO write code to populate result
 
         assertEquals(Arrays.asList('a', 'b', 'c'), new ArrayList<>(result.keySet()));
         assertEquals("aardvark:alligator:avocet", result.get('a'));

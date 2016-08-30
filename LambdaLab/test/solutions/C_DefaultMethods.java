@@ -129,7 +129,7 @@ public class C_DefaultMethods {
             "avocet", "bustard", "capuchin");
         Map<Integer, List<String>> result = new TreeMap<>();
 
-        //UNCOMMENT////TODO write code to populate result
+        //UNCOMMENT//// TODO write code to populate result
         //BEGINREMOVE
         list.forEach(s -> result.computeIfAbsent(s.length(), key -> new ArrayList<>()).add(s));
         //ENDREMOVE
@@ -160,7 +160,7 @@ public class C_DefaultMethods {
             "avocet", "bustard", "capuchin");
         Map<Character, String> result = new TreeMap<>();
 
-        //UNCOMMENT////TODO write code to populate result
+        //UNCOMMENT//// TODO write code to populate result
         //BEGINREMOVE
         list.forEach(s -> result.merge(s.charAt(0), s, (s1, s2) -> s1 + ":" + s2));
         //ENDREMOVE
