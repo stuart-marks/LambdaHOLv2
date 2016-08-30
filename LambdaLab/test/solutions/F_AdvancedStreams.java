@@ -328,7 +328,7 @@ public class F_AdvancedStreams {
     }
 
     @Test
-    public void ex26_countTotalAndDistinctWords() {
+    public void f7_countTotalAndDistinctWords() {
         List<String> allWords = reader.lines()
                                       .map(String::toLowerCase)
                                       .flatMap(line -> WORD_PATTERN.splitAsStream(line))
