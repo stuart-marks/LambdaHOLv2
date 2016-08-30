@@ -50,7 +50,7 @@ public class D_SimpleStreams {
             // Instead of String::toUpperCase, use w -> w.toUpperCase()
         //ENDREMOVE
 
-        assertEquals("[BRAVO, CHARLIE, DELTA, FOXTROT]", result.toString());
+        assertEquals(Arrays.asList("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
@@ -201,7 +201,7 @@ public class D_SimpleStreams {
                                    .collect(Collectors.toList());
         //ENDREMOVE
 
-        assertEquals("[charlie, foxtrot]", result.toString());
+        assertEquals(Arrays.asList("charlie", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
