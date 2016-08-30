@@ -69,17 +69,17 @@ public class D_SimpleStreams {
      */
     @Test
     public void ex07_joinStreamRange() {
-        List<String> input = new ArrayList<>(Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         //TODO//String result = "";
         //BEGINREMOVE
         String result =
             input.stream()
-                .skip(2)
-                .limit(3)
-                .map(word -> word.substring(1, 2))
-                .collect(Collectors.joining(","));
+                 .skip(2)
+                 .limit(3)
+                 .map(word -> word.substring(1, 2))
+                 .collect(Collectors.joining(","));
         //ENDREMOVE
 
         assertEquals("h,e,c", result);
@@ -105,9 +105,8 @@ public class D_SimpleStreams {
     public void ex08_countLinesInFile() throws IOException {
         //TODO//long count = 0;
         //BEGINREMOVE
-        long count =
-            reader.lines()
-                  .count();
+        long count = reader.lines()
+                           .count();
         //ENDREMOVE
 
         assertEquals(14, count);
@@ -135,7 +134,7 @@ public class D_SimpleStreams {
             reader.lines()
                   .mapToInt(String::length)
                   .max()
-                  .getAsInt();
+                  .orElse(0);
         //ENDREMOVE
 
         assertEquals(53, longestLength);
@@ -187,23 +186,24 @@ public class D_SimpleStreams {
      */
     @Test
     public void ex11_selectByLengthAndPosition() {
-        List<String> input = new ArrayList<>(Arrays.asList(
-            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel"));
+        List<String> input = Arrays.asList(
+            "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
         //TODO//List<String> result = null;
         //BEGINREMOVE
         List<String> result =
             IntStream.range(0, input.size())
-                .filter(pos -> input.get(pos).length() > pos)
-                .mapToObj(pos -> input.get(pos))
-                .collect(Collectors.toList());
+                     .filter(pos -> input.get(pos).length() > pos)
+                     .mapToObj(pos -> input.get(pos))
+                     .collect(Collectors.toList());
         //ENDREMOVE
 
         assertEquals(Arrays.asList("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Instead of a stream of words (Strings), run an IntStream of positions.
+    // Instead of a stream of words (Strings), run an IntStream of indexes of
+    // the input list, using index values to get elements from the input list.
     // </editor-fold>
 
 

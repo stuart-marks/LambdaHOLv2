@@ -50,8 +50,8 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         BigInteger result =
             IntStream.rangeClosed(1, 21)
-                .mapToObj(n -> BigInteger.valueOf(n))
-                .reduce(BigInteger.ONE, (m, n) -> m.multiply(n));
+                     .mapToObj(n -> BigInteger.valueOf(n))
+                     .reduce(BigInteger.ONE, (m, n) -> m.multiply(n));
         //ENDREMOVE
 
         assertEquals(new BigInteger("51090942171709440000"), result);

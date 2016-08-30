@@ -131,10 +131,6 @@ public class G_Challenges {
     // </editor-fold>
 
 
-// ========================================================
-// NEW FOR 2016
-// ========================================================
-
     /**
      * Invert a "multi-map". (From an idea by Paul Sandoz)
      *
@@ -275,7 +271,7 @@ public class G_Challenges {
         int max = input.stream()
                        .mapToInt(String::length)
                        .max()
-                       .getAsInt();
+                       .orElse(-1);
 
         List<String> result = input.stream()
                                    .filter(s -> s.length() == max)
@@ -484,6 +480,10 @@ public class G_Challenges {
      * elements are that value), and return that int value in an OptionalInt.
      * Note, return the majority int value, not the number of times it occurs.
      * If there is no majority value, return an empty OptionalInt.
+     *
+     * For example, given an input array [11, 12, 12] the result should be
+     * an OptionalInt containing 12. Given an input array [11, 12, 13]
+     * the result should be an empty OptionalInt.
      */
 
     OptionalInt majority(int[] array) {
