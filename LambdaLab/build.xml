@@ -14,6 +14,9 @@
     <target depends="init,compile-test,-pre-test-run" if="have.tests" name="-do-test-run">
         <j2seproject3:test testincludes="suite/*.java"/>
     </target>
+    
+    <target depends="init,compile,test" description="Run tests instead of main program." name="run">
+    </target>
 
     <!--
 

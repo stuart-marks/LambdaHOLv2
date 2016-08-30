@@ -1,60 +1,56 @@
-JavaOne 2016 Lambda/Streams Programming Laboratory [HOL3288]
+<p>JavaOne 2016 Lambda/Streams Programming Laboratory [HOL3288]</p>
 
-# Introduction
+<h1>Introduction</h1>
 
-Welcome to the Lambda/Streams Programming Laboratory! The goal of this
+<p>Welcome to the Lambda/Streams Programming Laboratory! The goal of this
 lab is for you to learn about the lambda expressions and APIs
 introduced in Java 8. The lab is structured as a set of exercises in
 the form of JUnit tests. To complete each exercise, write some code
-using a Java 8 lambda or API that enables the test to pass.
+using a Java 8 lambda or API that enables the test to pass.</p>
 
-# Lab Instructions
+<h1>Lab Instructions</h1>
 
-1. Open NetBeans 8.1 by clicking on the desktop icon.
+<ol>
+<li><p>Open NetBeans 8.1 by clicking on the desktop icon.</p></li>
+<li><p>The LambdaLab project should already be open. If it isn't,
+it can be located in $HOME/HOL3288/LambdaLab.</p></li>
+<li><p>Inside the LambdaLab project, open the Test Packages folder.</p></li>
+<li><p>Open up one of the following exercise files:</p>
 
-2. The LambdaLab project should already be open. If it isn't,
-it can be located in $HOME/HOL3288/LambdaLab.
-
-3. Inside the LambdaLab project, open the Test Packages folder.
-
-4. Open up one of the following exercise files:
-
-        A_Lambdas.java
-        B_Comparators.java
-        C_DefaultMethods.java
-        D_SimpleStreams.java
-        E_IntermediateStreams.java
-        F_AdvancedStreams.java
-        G_Challenges.java
-
-5. Each exercise is in the form of a single JUnit test method. Each
+<pre><code>A_Lambdas.java
+B_Comparators.java
+C_DefaultMethods.java
+D_SimpleStreams.java
+E_IntermediateStreams.java
+F_AdvancedStreams.java
+G_Challenges.java
+</code></pre></li>
+<li><p>Each exercise is in the form of a single JUnit test method. Each
 test is marked with an @Ignore annotation so that JUnit will skip that
-test initially.
-
-6. To work on a test, delete the @Ignore annotation, fill in code at
+test initially.</p></li>
+<li><p>To work on a test, delete the @Ignore annotation, fill in code at
 the // TODO marker, trying to avoid modifying any setup code above the
-TODO marker and assertion code below the TODO marker.
+TODO marker and assertion code below the TODO marker.</p></li>
+<li><p>Press Control-F6 to run the tests in this file.</p></li>
+<li><p>Make all the tests pass and get a 100% green bar!</p></li>
+</ol>
 
-7. Press Control-F6 to run the tests in this file.
+<h1>Detailed Test Description</h1>
 
-8. Make all the tests pass and get a 100% green bar!
-
-# Detailed Test Description
-
-At the top of each exercise is a comment that describes the goal of
+<p>At the top of each exercise is a comment that describes the goal of
 the exercise. Within the test method, there is a // TODO comment that
 marks the location where you need fill in some implementation
 code. There may be some setup code above the // TODO comment, and
 there will be some assertion-checking code below.  You shouldn't have
 to modify any of the setup code at the top of the test method or the
-assertions at the bottom of the test method.
+assertions at the bottom of the test method.</p>
 
-There is sometimes a hint or two after a test method. If you're having
+<p>There is sometimes a hint or two after a test method. If you're having
 trouble with an exercise, look for hints. The hint text is inside
 a editor fold that is closed by default, so click on the plus-sign
-in the left margin to read it.
+in the left margin to read it.</p>
 
-The intent of the exercises is to solve them using the new Java 8
+<p>The intent of the exercises is to solve them using the new Java 8
 lambda expressions feature, the new Java 8 Streams API, and other APIs
 added in Java 8. Of course, it is possible to use conventional Java
 code, such as for-loops, but all of the exercises are amenable to
@@ -63,23 +59,24 @@ lines. Most exercises will take less than half a dozen lines. Some of
 the more difficult exercises may take up to eight lines, depending
 upon how aggressive you are about breaking lines. None of the
 exercises involve writing large amounts of code. Most of the
-streams-based exercises involve writing a single stream pipeline.
+streams-based exercises involve writing a single stream pipeline.</p>
 
-Several of the exercises read data from a text file. The field named
+<p>Several of the exercises read data from a text file. The field named
 "reader" is a BufferedReader which will be opened for you on the text
 file. In any exercise that refers to reading from the text file, you
 can simply use the "reader" variable without worry about opening or
 closing it. This is set up by JUnit using the @Before and @After
 methods at the bottom of the file. The text file is "SonnetI.txt"
 (Shakespeare's first sonnet) which is located at the root of this
-NetBeans project.
+NetBeans project.</p>
 
-If you're really stuck, the solutions to the exercises are in the package
+<p>If you're really stuck, the solutions to the exercises are in the package</p>
 
-        Test Packages > solutions
+<pre><code>    Test Packages &gt; solutions
+</code></pre>
 
-There is one solutions file corresponding to each exercise file.  Many
+<p>There is one solutions file corresponding to each exercise file.  Many
 exercises can be solved in several different ways. In some cases, the
 solutions file will have several alternatives. Even if you've solved
 an exercise, it can be useful to look at the solutions to compare your
-solutions with those of the lab authors.
+solutions with those of the lab authors.</p>
