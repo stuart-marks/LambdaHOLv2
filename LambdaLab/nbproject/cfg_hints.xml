@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//NetBeans//DTD Tool Configuration 1.0//EN" "http://www.netbeans.org/dtds/ToolConfiguration-1_0.dtd">
+<configuration>
+    <tool kind="hints" type="text/x-java">
+        <node name="Imports_UNUSED">
+            <attribute name="enabled" value="false"/>
+        </node>
+    </tool>
+</configuration>
