@@ -108,7 +108,7 @@ public class C_DefaultMethods {
 
 
     /**
-     * Given a list of words, create a map whose keys are the lengths of
+     * Given a list of words, populate a map whose keys are the lengths of
      * each word, and whose values are list of words with that length.
      */
     @Test @Ignore
@@ -134,7 +134,7 @@ public class C_DefaultMethods {
     // </editor-fold>
 
     /**
-     * Given a list of words, create a map whose keys are the initial characters of
+     * Given a list of words, populate a map whose keys are the initial characters of
      * each word, and whose values are the concatenation of the words with that
      * initial character. When concatenating the words, they should be
      * separated by a colon (':').

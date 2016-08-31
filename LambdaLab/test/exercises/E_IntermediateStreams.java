@@ -55,7 +55,9 @@ public class E_IntermediateStreams {
      * Use the regular expression Pattern WORD_PATTERN to split
      * a string into words, and use Pattern.splitAsStream(String)
      * to do the splitting. WORD_PATTERN is defined at the bottom
-     * of this file.
+     * of this file. As before, use the BufferedReader variable
+     * named "reader" that has been set up for you to read from
+     * the text file.
      *
      * @throws IOException
      */

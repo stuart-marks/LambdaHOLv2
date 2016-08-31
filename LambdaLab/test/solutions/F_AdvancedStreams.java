@@ -39,7 +39,9 @@ public class F_AdvancedStreams {
      * Categorize the words from the text file into a map, where the map's key
      * is the length of each word, and the value corresponding to a key is a
      * list of words of that length. Don't bother with uniqueness or lower-
-     * casing the words.
+     * casing the words. As before, use the BufferedReader variable named
+     * "reader" that has been set up for you to read from the text file, and
+     * use WORD_PATTERN for splitting the line into words.
      *
      * @throws IOException
      */
