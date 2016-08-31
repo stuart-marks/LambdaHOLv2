@@ -82,8 +82,9 @@ public class C_DefaultMethods {
 
 
     /**
-     * Convert every key-value pair of a map into a string and append them all
-     * into a single string, in iteration order.
+     * Given a map whose keys are Integers and whose values are StringBuilders,
+     * append to each StringBuilder the string representation of its corresponding
+     * Integer key. This should mutate each StringBuilder value in-place.
      */
     @Test @Ignore
     public void c4_appendToMapValues() {
