@@ -30,6 +30,7 @@ public class B_Comparators {
      * Write a Comparator that compare intances of String using their length. 
      * For instance FOUR (4 letters) is greater than TWO (three letters)
      */
+    @Test @Ignore
     public void comparator0a() {
         Comparator<String> compareByLength = null; // TODO
         
@@ -48,6 +49,7 @@ public class B_Comparators {
      * Write a Comparator that compare intances of String using their length. 
      * If the lengths are the same, then use the alphabetical order.  
      */
+    @Test @Ignore
     public void comparator0b() {
         Comparator<String> compareByLengthThenAlphabetical = null; // TODO
         
