@@ -6,7 +6,6 @@ import java.util.function.IntBinaryOperator;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -27,6 +26,45 @@ public class B_Comparators {
     final Person mick = new Person("Mick", "Jagger", 73);
     final Person jermaine = new Person("Jermaine", "Jackson", 61);
 
+    /**
+     * Write a Comparator that compare intances of String using their length. 
+     * For instance FOUR (4 letters) is greater than TWO (three letters)
+     */
+    public void comparator0a() {
+        Comparator<String> compareByLength = null; // TODO
+        
+        assertTrue(compareByLength.compare("FOUR", "TWO") > 0);
+        assertTrue(compareByLength.compare("ONE", "SEVEN") < 0);
+        assertTrue(compareByLength.compare("ONE", "TWO") == 0);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Check the static factory methods of the Comparator interface. Remember
+    // how you implemented functions in the previous exercises. Write it using
+    // a method reference.
+    // </editor-fold>
+
+    /**
+     * Write a Comparator that compare intances of String using their length. 
+     * If the lengths are the same, then use the alphabetical order.  
+     */
+    public void comparator0b() {
+        Comparator<String> compareByLengthThenAlphabetical = null; // TODO
+        
+        assertTrue(compareByLengthThenAlphabetical.compare("FOUR", "TWO") > 0);
+        assertTrue(compareByLengthThenAlphabetical.compare("ONE", "SEVEN") < 0);
+        assertTrue(compareByLengthThenAlphabetical.compare("ONE", "TWO") < 0);
+        assertTrue(compareByLengthThenAlphabetical.compare("FOUR", "FIVE") > 0);
+        assertTrue(compareByLengthThenAlphabetical.compare("EIGHT", "EIGHT") == 0);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Use the previous comparator and check the default methods of the 
+    // Comparator interface.
+    // Check also the factory methods of the Comparator interface, and remember 
+    // that String is comparable. 
+    // </editor-fold>
+    
     /**
      * Write a Comparator that compares instances of Person using their lastName.
      */
