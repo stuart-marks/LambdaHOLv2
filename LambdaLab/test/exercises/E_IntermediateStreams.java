@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -215,7 +216,7 @@ public class E_IntermediateStreams {
     /**
      * Create a list containing all the super classes of ArrayList.
      */
-    @Test
+    @Test @Ignore
     public void e8_selectTheSuperClassesOfArrayList() {
         Class<?> origin = ArrayList.class;
 
@@ -231,6 +232,31 @@ public class E_IntermediateStreams {
     // Creating a stream of these classes can be made with Stream.iterate(). 
     // Then you need to close that stream when the current class is null. 
     // Java 9 added the takeWhile() method on the stream interface. 
+    // </editor-fold>
+
+
+    /**
+     * Count the length of a stream dropping the first elements on a predicate.
+     */
+    @Test @Ignore
+    public void e9_countTheElementsAfterAPredicate() {
+
+        Random rand = new Random(314L);
+        Stream<String> stream = Stream.iterate(
+                "", 
+                (String s) -> {
+                final int nextInt = rand.nextInt(10);
+                return (nextInt == 0 && !s.isEmpty()) ? s.substring(0, s.length() - 1) :
+                       (nextInt == 8 || nextInt == 9) ? s + "+" : s;
+                }).limit(100);
+
+        long count = 0L; // TODO
+        
+        assertEquals(53, count);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed"> 
+    // Java 9 added the dropWhile() method on the stream interface. 
     // </editor-fold>
 
 
