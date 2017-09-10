@@ -26,7 +26,7 @@ public class C_DefaultMethods {
      * in-place by appending the string "new" to each one.
      */
     @Test
-    public void c1_appendNew() {
+    public void c01_appendNew() {
         List<StringBuilder> sbList = Arrays.asList(
             new StringBuilder("alfa"),
             new StringBuilder("bravo"),
@@ -52,7 +52,7 @@ public class C_DefaultMethods {
      * Remove the words that have odd lengths from the list.
      */
     @Test
-    public void c2_removeOddLengthWords() {
+    public void c02_removeOddLengthWords() {
         List<String> list = new ArrayList<>(Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
@@ -75,7 +75,7 @@ public class C_DefaultMethods {
      * Replace every word in the list with its upper case equivalent.
      */
     @Test
-    public void c3_upcaseAllWords() {
+    public void c03_upcaseAllWords() {
         List<String> list = Arrays.asList(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
@@ -101,7 +101,7 @@ public class C_DefaultMethods {
      * Integer key. This should mutate each StringBuilder value in-place.
      */
     @Test
-    public void c4_appendToMapValues() {
+    public void c04_appendToMapValues() {
         Map<Integer, StringBuilder> map = new TreeMap<>();
         map.put(1, new StringBuilder("alfa"));
         map.put(2, new StringBuilder("bravo"));
@@ -127,10 +127,10 @@ public class C_DefaultMethods {
     /**
      * Given a map whose keys are Integers and whose values are Strings,
      * append to each String the string representation of its corresponding
-     * Integer key. 
+     * Integer key.
      */
     @Test
-    public void c4b_replaceMapValues() {
+    public void c05_replaceMapValues() {
         Map<Integer, String> map = new TreeMap<>();
         map.put(1, "alfa");
         map.put(2, "bravo");
@@ -157,7 +157,7 @@ public class C_DefaultMethods {
      * each word, and whose values are list of words with that length.
      */
     @Test
-    public void c5_mapOfListOfStringsByLength() {
+    public void c06_mapOfListOfStringsByLength() {
         List<String> list = Arrays.asList(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",
@@ -188,7 +188,7 @@ public class C_DefaultMethods {
      * separated by a colon (':').
      */
     @Test
-    public void c6_mapOfStringByInitialCharacter() {
+    public void c07_mapOfStringByInitialCharacter() {
         List<String> list = Arrays.asList(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",
@@ -210,186 +210,177 @@ public class C_DefaultMethods {
     // Use Map.merge() within Iterable.forEach().
     // </editor-fold>
 
-    
+
     /**
-     * For some reason the provided map has been filled with null values. 
-     * This is a problem, beacuse everytime we get a value from this map, we
-     * need to protect our application against NullPointerException. 
-     * Write a code to replace these null values with empty Strings. The 
-     * set of the keys is provided, note that the "g" key is not in the map,
-     * and it should be. 
+     * For some reason the provided map doesn't have mappings for all the keys. This
+     * is a problem, because if we call get() on a key that isn't present, it returns
+     * null, and we need to add checks to protect against NullPointerException.
+     * Write code to ensure that all missing keys are mapped to the empty string.
      */
     @Test
-    public void c7_mapWithNullValues() {
+    public void c08_mapWithMissingValues() {
         List<String> keys = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "alfa");
-        map.put("b", "bravo");
-        map.put("c", "charlie");
-        map.put("d", "delta");
-        map.put("e", null);
-        map.put("f", null);
-        
+        Map<String, String> map = new HashMap<>(Map.of("a", "alfa",
+                                                       "b", "bravo",
+                                                       "c", "charlie",
+                                                       "d", "delta"));
+
         //UNCOMMENT//// TODO write code to fix the map
         //BEGINREMOVE
         keys.forEach(key -> map.putIfAbsent(key, ""));
         //ENDREMOVE
-        
-        assertEquals(7, map.size());
-        assertEquals("alfa", map.get("a"));
-        assertEquals("bravo", map.get("b"));
-        assertEquals("charlie", map.get("c"));
-        assertEquals("delta", map.get("d"));
-        assertEquals("", map.get("e"));
-        assertEquals("", map.get("f"));
-        assertEquals("", map.get("g"));
+
+        assertEquals(Map.of("a", "alfa",
+                            "b", "bravo",
+                            "c", "charlie",
+                            "d", "delta",
+                            "e", "",
+                            "f", "",
+                            "g", ""),
+                     map);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Check the Map.putIfAbsent() default method.
     // </editor-fold>
-    
-    
+
+
     /**
-     * Another way of dealing with the problem of the previous example could
-     * be to remove the keys if the values are null. 
-     * Write a code that removes the keys of the map if the associated value
-     * is null. 
+     * In the previous example, we added map entries that had a default value.
+     * We've now determined that's incorrect, and we want to undo that. This
+     * time, we want to remove the entry if the value is the empty string.
      */
     @Test
-    public void c8_mapWithNullValues() {
+    public void c09_mapRemoveEntriesWithEmptyValues() {
         List<String> keys = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "alfa");
-        map.put("b", "bravo");
-        map.put("c", "charlie");
-        map.put("d", "delta");
-        map.put("e", null);
-        map.put("f", null);
-        
+        Map<String, String> map = new HashMap<>(Map.of("a", "alfa",
+                                                       "b", "bravo",
+                                                       "c", "charlie",
+                                                       "d", "delta",
+                                                       "e", "",
+                                                       "f", "",
+                                                       "g", ""));
+
         //UNCOMMENT//// TODO write code to fix the map
         //BEGINREMOVE
-        keys.forEach(key -> map.remove(key, null));
+        keys.forEach(key -> map.remove(key, ""));
         //ENDREMOVE
-        
-        assertEquals(4, map.size());
-        assertEquals("alfa", map.get("a"));
-        assertEquals("bravo", map.get("b"));
-        assertEquals("charlie", map.get("c"));
-        assertEquals("delta", map.get("d"));
+
+        assertEquals(Map.of("a", "alfa",
+                            "b", "bravo",
+                            "c", "charlie",
+                            "d", "delta"),
+                     map);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Check the Map.remove() default method.
+    // Check the two-arg Map.remove() default method.
     // </editor-fold>
-    
-    
+
+
     /**
-     * Another way of dealing with the problem of the previous example could
-     * be to set the value to the empty string for the keys associated
-     * with null, without adding the missing "g" key. 
-     * Write a code that sets the value to the empty String for the key that
-     * are in the maps, and associated with null. 
+     * We need another way to deal with the problem of the previous example.
+     * Instead of removing entries whose value is the empty string, we want
+     * to replace the empty-string values with a value that's the key itself.
+     * Write the code to do that.
      */
     @Test
-    public void c9_mapWithNullValues() {
+    public void c10_mapReplaceEmptyValues() {
         List<String> keys = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "alfa");
-        map.put("b", "bravo");
-        map.put("c", "charlie");
-        map.put("d", "delta");
-        map.put("e", null);
-        map.put("f", null);
-        
+        Map<String, String> map = new HashMap<>(Map.of("a", "alfa",
+                                                       "b", "bravo",
+                                                       "c", "charlie",
+                                                       "d", "delta",
+                                                       "e", "",
+                                                       "f", "",
+                                                       "g", ""));
+
         //UNCOMMENT//// TODO write code to fix the map
         //BEGINREMOVE
-        keys.forEach(key -> map.replace(key, null, ""));
+        keys.forEach(key -> map.replace(key, "", key));
         //ENDREMOVE
-        
-        assertEquals(6, map.size());
-        assertEquals("alfa", map.get("a"));
-        assertEquals("bravo", map.get("b"));
-        assertEquals("charlie", map.get("c"));
-        assertEquals("delta", map.get("d"));
-        assertEquals("", map.get("e"));
-        assertEquals("", map.get("f"));
+
+        assertEquals(Map.of("a", "alfa",
+                            "b", "bravo",
+                            "c", "charlie",
+                            "d", "delta",
+                            "e", "e",
+                            "f", "f",
+                            "g", "g"),
+                map);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Check the Map.replace() default method that takes 3 arguments.
     // </editor-fold>
-    
-    
+
+
     /**
-     * We are still dealing with a map containing null value. This time, 
-     * we want to put the values in upper case, and replace the null
-     * values with empty Strings. 
+     * We are still dealing with a map with missing entries. For entries that
+     * are present, we want to convert the value to upper case; and for keys
+     * that are not present, we want to add an entry where the value is the
+     * same as the key.
      */
     @Test
-    public void c10_computeWithNullValues() {
+    public void c11_computeWithMissingEntries() {
         List<String> keys = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "alfa");
-        map.put("b", "bravo");
-        map.put("c", "charlie");
-        map.put("d", "delta");
-        map.put("e", null);
-        map.put("f", null);
-        
+        Map<String, String> map = new HashMap<>(Map.of("a", "alfa",
+                                                       "b", "bravo",
+                                                       "c", "charlie",
+                                                       "d", "delta"));
+
         //UNCOMMENT//// TODO write code transform the map
         //BEGINREMOVE
-        keys.forEach(key -> map.compute(key, (k, v) -> v == null ? "" : v.toUpperCase()));
+        keys.forEach(key -> map.compute(key, (k, v) -> v == null ? k : v.toUpperCase()));
         //ENDREMOVE
-        
-        assertEquals(7, map.size());
-        assertEquals("ALFA", map.get("a"));
-        assertEquals("BRAVO", map.get("b"));
-        assertEquals("CHARLIE", map.get("c"));
-        assertEquals("DELTA", map.get("d"));
-        assertEquals("", map.get("e"));
-        assertEquals("", map.get("f"));
-        assertEquals("", map.get("g"));
+
+        assertEquals(Map.of("a", "ALFA",
+                            "b", "BRAVO",
+                            "c", "CHARLIE",
+                            "d", "DELTA",
+                            "e", "e",
+                            "f", "f",
+                            "g", "g"),
+                map);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // Check the Map.compute() default method, and read the Javadoc carefully
+    // regarding the mappings that aren't present.
+    // </editor-fold>
+
+
+    /**
+     * The map now has several entries, some with valid values, and some
+     * with values that are the empty string. This time, we want to convert
+     * the non-empty values to upper case, but we want to remove the entries
+     * for which the values are the empty string.
+     */
+    @Test
+    public void c12_computeAndRemoveSomeEntries() {
+        List<String> keys = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
+        Map<String, String> map = new HashMap<>(Map.of("a", "alfa",
+                                                       "b", "bravo",
+                                                       "c", "charlie",
+                                                       "d", "delta",
+                                                       "e", "",
+                                                       "f", "",
+                                                       "g", ""));
+
+        //UNCOMMENT//// TODO write code transform the map
+        //BEGINREMOVE
+        keys.forEach(key -> map.compute(key, (k, v) -> v.isEmpty() ? null : v.toUpperCase()));
+        //ENDREMOVE
+
+        assertEquals(Map.of("a", "ALFA",
+                            "b", "BRAVO",
+                            "c", "CHARLIE",
+                            "d", "DELTA"),
+                map);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Check the Map.compute() default method, read the Javadoc carefully
-    // for the handling of null values. 
-    // </editor-fold>
-    
-    
-    /**
-     * We are still dealing with a map containing null value. This time, 
-     * we want to put the values in upper case, and leave the null values andd
-     * absent keys as they are. 
-     */
-    @Test
-    public void c11_computeWithNullValues() {
-        List<String> keys = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "alfa");
-        map.put("b", "bravo");
-        map.put("c", "charlie");
-        map.put("d", "delta");
-        map.put("e", null);
-        map.put("f", null);
-        
-        //UNCOMMENT//// TODO write code transform the map
-        //BEGINREMOVE
-        keys.forEach(key -> map.computeIfPresent(key, (k, v) -> v.toUpperCase()));
-        //ENDREMOVE
-        
-        assertEquals(6, map.size());
-        assertEquals("ALFA", map.get("a"));
-        assertEquals("BRAVO", map.get("b"));
-        assertEquals("CHARLIE", map.get("c"));
-        assertEquals("DELTA", map.get("d"));
-        assertEquals(null, map.get("e"));
-        assertEquals(null, map.get("f"));
-    }
-    // Hint:
-    // <editor-fold defaultstate="collapsed">
-    // Check the Map.computeIfPresent() default method, read the Javadoc carefully
-    // for the handling of null values. 
+    // for the handling of null values returned from the function.
     // </editor-fold>
 }
