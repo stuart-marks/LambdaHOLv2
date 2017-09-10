@@ -6,6 +6,7 @@ import java.util.function.IntBinaryOperator;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -27,13 +28,13 @@ public class B_Comparators {
     final Person jermaine = new Person("Jermaine", "Jackson", 61);
 
     /**
-     * Write a Comparator that compare intances of String using their length. 
+     * Write a Comparator that compare intances of String using their length.
      * For instance FOUR (4 letters) is greater than TWO (three letters)
      */
     @Test @Ignore
-    public void comparator0a() {
+    public void comparator01() {
         Comparator<String> compareByLength = null; // TODO
-        
+
         assertTrue(compareByLength.compare("FOUR", "TWO") > 0);
         assertTrue(compareByLength.compare("ONE", "SEVEN") < 0);
         assertTrue(compareByLength.compare("ONE", "TWO") == 0);
@@ -44,15 +45,15 @@ public class B_Comparators {
     // how you implemented functions in the previous exercises. Write it using
     // a method reference.
     // </editor-fold>
-    
+
     /**
-     * Write a Comparator that compare intances of String using their length. 
-     * If the lengths are the same, then use the alphabetical order.  
+     * Write a Comparator that compare intances of String using their length.
+     * If the lengths are the same, then use the alphabetical order.
      */
     @Test @Ignore
-    public void comparator0b() {
+    public void comparator02() {
         Comparator<String> compareByLengthThenAlphabetical = null; // TODO
-        
+
         assertTrue(compareByLengthThenAlphabetical.compare("FOUR", "TWO") > 0);
         assertTrue(compareByLengthThenAlphabetical.compare("ONE", "SEVEN") < 0);
         assertTrue(compareByLengthThenAlphabetical.compare("ONE", "TWO") < 0);
@@ -61,17 +62,17 @@ public class B_Comparators {
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // Use the previous comparator and check the default methods of the 
+    // Use the previous comparator and check the default methods of the
     // Comparator interface.
-    // Check also the factory methods of the Comparator interface, and remember 
-    // that String is comparable. 
+    // Check also the factory methods of the Comparator interface, and remember
+    // that String is comparable.
     // </editor-fold>
-    
+
     /**
      * Write a Comparator that compares instances of Person using their lastName.
      */
     @Test @Ignore
-    public void comparator1() {
+    public void comparator03() {
         Comparator<Person> comparebyLastName = null; // TODO
 
         assertTrue(comparebyLastName.compare(michael, rod) < 0);
@@ -90,7 +91,7 @@ public class B_Comparators {
      * lastName, and if their last name is the same, uses their first name.
      */
     @Test @Ignore
-    public void comparator2() {
+    public void comparator04() {
         Comparator<Person> comparebyLastNameThenFirstName = null; // TODO
 
         assertTrue(comparebyLastNameThenFirstName.compare(michael, rod) < 0);
@@ -103,11 +104,11 @@ public class B_Comparators {
     // </editor-fold>
 
     /**
-     * Write a Comparator that compares the people in the reversed order than
-     * the one you wrote in the comparator2() exercise.
+     * Write a Comparator that compares the people in the order reversed from
+     * the one you wrote in the comparator04() exercise.
      */
     @Test @Ignore
-    public void comparator3() {
+    public void comparator05() {
         Comparator<Person> comparebyLastNameThenFirstNameReversed = null; // TODO
 
         assertFalse(comparebyLastNameThenFirstNameReversed.compare(michael, rod) < 0);
@@ -121,11 +122,11 @@ public class B_Comparators {
 
     /**
      * Write a Comparator that compares the people in the same order than the
-     * one you wrote in comparator2(), but that supports null values. The null
+     * one you wrote in comparator04(), but that supports null values. The null
      * values should be considered greater than any non-null values.
      */
     @Test @Ignore
-    public void comparator4() {
+    public void comparator06() {
         Comparator<Person> comparebyLastNameThenFirstNameWithNull = null; // TODO
 
         assertTrue(comparebyLastNameThenFirstNameWithNull.compare(michael, rod) < 0);
@@ -144,7 +145,7 @@ public class B_Comparators {
      * Try to write the comparator so as to avoid boxing of primitives.
      */
     @Test @Ignore
-    public void comparator5() {
+    public void comparator07() {
         Comparator<Person> comparebyAge = null; // TODO
 
         assertTrue(comparebyAge.compare(michael, rod) < 0);
@@ -165,7 +166,7 @@ public class B_Comparators {
      * functional interface we use is IntBinaryOperator.
      */
     @Test @Ignore
-    public void comparator6() {
+    public void comparator08() {
         IntBinaryOperator intCompare = null; // TODO
 
         assertTrue(intCompare.applyAsInt(0, 1) < 0);
@@ -185,7 +186,7 @@ public class B_Comparators {
      * a comparator.
      */
     @Test @Ignore
-    public void comparator7() {
+    public void comparator09() {
         IntBinaryOperator intCompare = null; // TODO
 
         assertTrue(intCompare.applyAsInt(0, 1) < 0);
@@ -212,7 +213,7 @@ public class B_Comparators {
      * and greater than any non-NaN value.
      */
     @Test @Ignore
-    public void comparator8() {
+    public void comparator10() {
         DoubleToIntBiFunction doubleCompare = null; // TODO
 
         assertTrue(doubleCompare.applyAsInt(0.0, 1.0) < 0);
