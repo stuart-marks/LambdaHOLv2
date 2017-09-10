@@ -6,19 +6,23 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.AbstractCollection;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -260,6 +264,31 @@ public class E_IntermediateStreams {
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // Use Stream.reduce() and think about the order of the arguments.
+    // </editor-fold>
+
+    /**
+     * Create a list containing all the super classes of ArrayList.
+     */
+    @Test
+    public void e8_selectTheSuperClassesOfArrayList() {
+        Class<?> origin = ArrayList.class;
+
+        //TODO//List<String> result = null;
+        //BEGINREMOVE
+        Stream<Class<?>> stream = Stream.<Class<?>>iterate(origin, clazz -> clazz.getSuperclass());
+        List<Class<?>> result = stream.takeWhile(clazz -> clazz != null).collect(Collectors.toList());
+        //ENDREMOVE
+
+        assertEquals(
+                Arrays.asList(ArrayList.class, AbstractList.class, AbstractCollection.class, Object.class), 
+                result);
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // There is a getSuperClass() method on the Class class.
+    // Creating a stream of these classes can be made with Stream.iterate(). 
+    // Then you need to close that stream when the current class is null. 
+    // Java 9 added the takeWhile() method on the stream interface. 
     // </editor-fold>
 
 
