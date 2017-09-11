@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.RandomAccess;
 import java.util.Set;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -321,18 +321,20 @@ public class G_Challenges {
         Class<?> origin = ArrayList.class;
         Map<Boolean, Set<Class<?>>> result = null; // TODO
 
-        assertEquals(result.get(false), Set.of(ArrayList.class, Object.class));
-        assertEquals(result.get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
+        assertEquals(Map.of(false, Set.of(ArrayList.class, Object.class),
+                            true,  Set.of(List.class, RandomAccess.class, Cloneable.class,
+                                          Serializable.class, Collection.class)),
+                     result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // The beginning of this challenge begins with the same kind of pattern
     // as the E8 intermediate exercise.
     // The interfaces are returned in an array, so one can put them in a stream
-    // using Stream.of(). To add the class to that stream, you can also
+    // using Arrays.stream(). To add the class to that stream, you can also
     // use Stream.of() and flatMap the result to have the final stream.
     // Writing the filter step is just a matter of creating the right predicate.
-    // Then the partionningBy collector will build the map.
+    // Then the partioningBy collector will build the map.
     // </editor-fold>
 
     /**
@@ -348,17 +350,26 @@ public class G_Challenges {
         List<Class<?>> origin = List.of(ArrayList.class, HashSet.class, LinkedHashSet.class);
         Map<Class<?>, Map<Boolean, Set<Class<?>>>> result = null; // TODO
 
-        assertEquals(result.get(ArrayList.class).get(false), Set.of(ArrayList.class, Object.class));
-        assertEquals(result.get(ArrayList.class).get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
-        assertEquals(result.get(HashSet.class).get(false), Set.of(HashSet.class, Object.class));
-        assertEquals(result.get(HashSet.class).get(true), Set.of(Set.class, Cloneable.class, Serializable.class, Collection.class));
-        assertEquals(result.get(LinkedHashSet.class).get(false), Set.of(LinkedHashSet.class, HashSet.class, Object.class));
-        assertEquals(result.get(LinkedHashSet.class).get(true), Set.of(Set.class, Cloneable.class, Serializable.class, Collection.class));
+        assertEquals(
+            Map.of(
+                ArrayList.class,
+                    Map.of(false, Set.of(ArrayList.class, Object.class),
+                           true,  Set.of(List.class, RandomAccess.class, Cloneable.class,
+                                         Serializable.class, Collection.class)),
+                HashSet.class,
+                    Map.of(false, Set.of(HashSet.class, Object.class),
+                           true,  Set.of(Set.class, Cloneable.class,
+                                         Serializable.class, Collection.class)),
+                LinkedHashSet.class,
+                    Map.of(false, Set.of(LinkedHashSet.class, HashSet.class, Object.class),
+                           true,  Set.of(Set.class, Cloneable.class,
+                                         Serializable.class, Collection.class))),
+            result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // The trick here is to write the whole processing of the previous
-    // C81 challenge as a single collector. Once this is done, just pass
+    // G8 challenge as a single collector. Once this is done, just pass
     // this collector as the downstream collector of a groupingBy.
     // A filtering collector and a flatMapping collector have been added
     // to JDK9.

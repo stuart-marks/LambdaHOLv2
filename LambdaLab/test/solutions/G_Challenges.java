@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.RandomAccess;
 import java.util.Set;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -433,31 +433,34 @@ public class G_Challenges {
         Class<?> origin = ArrayList.class;
         //TODO//Map<Boolean, Set<Class<?>>> result = null;
         //BEGINREMOVE
-        Stream<Class<?>> stream = Stream.<Class<?>>iterate(ArrayList.class, c -> c.getSuperclass()).takeWhile(c -> c != null);
         Stream<Class<?>> classesAndInterfaces =
-            stream.map(c -> Stream.of(Stream.of(c), Stream.of(c.getInterfaces())))
-                  .flatMap(Function.identity())
+            Stream.<Class<?>>iterate(origin, Class::getSuperclass)
+                  .takeWhile(Objects::nonNull)
+                  .flatMap(c -> Stream.of(Stream.of(c), Arrays.stream(c.getInterfaces())))
                   .flatMap(Function.identity());
-        Predicate<Class<?>> isAbstract = c -> Modifier.isAbstract(c.getModifiers());
+
+        Predicate<Class<?>> isConcrete = c -> ! Modifier.isAbstract(c.getModifiers());
         Predicate<Class<?>> isInterface = Class::isInterface;
-        Stream<Class<?>> interfacesAndConcreteClasses =
-            classesAndInterfaces.filter(isInterface.or(isAbstract.and(isInterface.negate()).negate()));
+
         Map<Boolean, Set<Class<?>>> result =
-            interfacesAndConcreteClasses.collect(Collectors.partitioningBy(isInterface, Collectors.toSet()));
+            classesAndInterfaces.filter(isInterface.or(isConcrete))
+                                .collect(Collectors.partitioningBy(isInterface, Collectors.toSet()));
         //ENDREMOVE
 
-        assertEquals(result.get(false), Set.of(ArrayList.class, Object.class));
-        assertEquals(result.get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
+        assertEquals(Map.of(false, Set.of(ArrayList.class, Object.class),
+                            true,  Set.of(List.class, RandomAccess.class, Cloneable.class,
+                                          Serializable.class, Collection.class)),
+                     result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // The beginning of this challenge begins with the same kind of pattern
     // as the E8 intermediate exercise.
     // The interfaces are returned in an array, so one can put them in a stream
-    // using Stream.of(). To add the class to that stream, you can also
+    // using Arrays.stream(). To add the class to that stream, you can also
     // use Stream.of() and flatMap the result to have the final stream.
     // Writing the filter step is just a matter of creating the right predicate.
-    // Then the partionningBy collector will build the map.
+    // Then the partioningBy collector will build the map.
     // </editor-fold>
 
     /**
@@ -474,70 +477,64 @@ public class G_Challenges {
         //TODO//Map<Class<?>, Map<Boolean, Set<Class<?>>>> result = null;
         //BEGINREMOVE
         Function<Class<?>, Stream<Class<?>>> superClasses =
-                clazz -> Stream.<Class<?>>iterate(clazz, c -> c.getSuperclass()).takeWhile(c -> c != null);
+                clazz -> Stream.<Class<?>>iterate(clazz, Class::getSuperclass)
+                               .takeWhile(Objects::nonNull);
+
         Function<Stream<? extends Class<?>>, Stream<? extends Class<?>>> classAndInterfaces =
-                stream -> stream.map(clazz -> Stream.of(Stream.of(clazz), Stream.of(clazz.getInterfaces())))
-                                .flatMap(Function.identity())
+                stream -> stream.flatMap(clazz -> Stream.of(Stream.of(clazz), Arrays.stream(clazz.getInterfaces())))
                                 .flatMap(Function.identity());
 
         Function<Class<?>, Stream<? extends Class<?>>> superClassesAndInterfaces = superClasses.andThen(classAndInterfaces);
 
-        Predicate<Class<?>> isAbstract = c -> Modifier.isAbstract(c.getModifiers());
+        Predicate<Class<?>> isConcrete = c -> ! Modifier.isAbstract(c.getModifiers());
         Predicate<Class<?>> isInterface = Class::isInterface;
-        Predicate<Class<?>> isInterfaceOrConcreteClass = isInterface.or(isAbstract.and(isInterface.negate()).negate());
+        Predicate<Class<?>> isInterfaceOrConcreteClass = isInterface.or(isConcrete);
 
-        List<Class<?>> classes = List.of(ArrayList.class);
-
-        // 1) write the previous processing as a stream pattern
-        Map<Boolean, Set<Class<?>>> collect =
-        classes.stream()
-                .flatMap(superClassesAndInterfaces)
-                .filter(isInterfaceOrConcreteClass)
-                .collect(
-                        Collectors.partitioningBy(
-                                isInterface,
-                                Collectors.toSet()
-                        )
-                );
+        // 1) To understand the algorithm, write out the previous processing as a stream pattern.
+        //    This isn't used directly, but will be converted to a collector below.
+        Map<Boolean, Set<Class<?>>> unusedResult =
+            origin.stream()
+                  .flatMap(superClassesAndInterfaces)
+                  .filter(isInterfaceOrConcreteClass)
+                  .collect(Collectors.partitioningBy(isInterface,
+                                                     Collectors.toSet()));
 
         // 2) Convert the processing to a collector
         Collector<Class<?>, ?, Map<Boolean, Set<Class<?>>>> collector =
-                Collectors.flatMapping(
-                        superClassesAndInterfaces,
-                        Collectors.filtering(
-                                isInterfaceOrConcreteClass,
-                                Collectors.partitioningBy(
-                                    isInterface,
-                                    Collectors.toSet()
-                                )
-                        )
-                );
+            Collectors.flatMapping(superClassesAndInterfaces,
+                                   Collectors.filtering(isInterfaceOrConcreteClass,
+                                                        Collectors.partitioningBy(isInterface,
+                                                                                  Collectors.toSet())));
 
-        // 3) use it at a downstream collector
+        // 3) use it as a downstream collector
         Map<Class<?>, Map<Boolean, Set<Class<?>>>> result =
-        origin.stream()
-                .collect(
-                        Collectors.groupingBy(
-                                Function.identity(),
-                                collector
-                        )
-                );
-
+            origin.stream()
+                  .collect(Collectors.groupingBy(Function.identity(),
+                                                 collector));
 
         System.out.println("result = " + result);
         //ENDREMOVE
 
-        assertEquals(result.get(ArrayList.class).get(false), Set.of(ArrayList.class, Object.class));
-        assertEquals(result.get(ArrayList.class).get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
-        assertEquals(result.get(HashSet.class).get(false), Set.of(HashSet.class, Object.class));
-        assertEquals(result.get(HashSet.class).get(true), Set.of(Set.class, Cloneable.class, Serializable.class, Collection.class));
-        assertEquals(result.get(LinkedHashSet.class).get(false), Set.of(LinkedHashSet.class, HashSet.class, Object.class));
-        assertEquals(result.get(LinkedHashSet.class).get(true), Set.of(Set.class, Cloneable.class, Serializable.class, Collection.class));
+        assertEquals(
+            Map.of(
+                ArrayList.class,
+                    Map.of(false, Set.of(ArrayList.class, Object.class),
+                           true,  Set.of(List.class, RandomAccess.class, Cloneable.class,
+                                         Serializable.class, Collection.class)),
+                HashSet.class,
+                    Map.of(false, Set.of(HashSet.class, Object.class),
+                           true,  Set.of(Set.class, Cloneable.class,
+                                         Serializable.class, Collection.class)),
+                LinkedHashSet.class,
+                    Map.of(false, Set.of(LinkedHashSet.class, HashSet.class, Object.class),
+                           true,  Set.of(Set.class, Cloneable.class,
+                                         Serializable.class, Collection.class))),
+            result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // The trick here is to write the whole processing of the previous
-    // C81 challenge as a single collector. Once this is done, just pass
+    // G8 challenge as a single collector. Once this is done, just pass
     // this collector as the downstream collector of a groupingBy.
     // A filtering collector and a flatMapping collector have been added
     // to JDK9.

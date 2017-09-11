@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,12 +20,10 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -268,7 +267,7 @@ public class E_IntermediateStreams {
     // </editor-fold>
 
     /**
-     * Create a list containing all the super classes of ArrayList.
+     * Create a list containing ArrayList.class and all its super classes.
      */
     @Test
     public void e8_selectTheSuperClassesOfArrayList() {
@@ -276,13 +275,14 @@ public class E_IntermediateStreams {
 
         //TODO//List<String> result = null;
         //BEGINREMOVE
-        Stream<Class<?>> stream = Stream.<Class<?>>iterate(origin, clazz -> clazz.getSuperclass());
-        List<Class<?>> result = stream.takeWhile(clazz -> clazz != null).collect(Collectors.toList());
+        List<Class<?>> result = Stream.<Class<?>>iterate(origin, Class::getSuperclass)
+                                      .takeWhile(Objects::nonNull)
+                                      .collect(Collectors.toList());
         //ENDREMOVE
 
         assertEquals(
-                Arrays.asList(ArrayList.class, AbstractList.class, AbstractCollection.class, Object.class),
-                result);
+            List.of(ArrayList.class, AbstractList.class, AbstractCollection.class, Object.class),
+            result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -303,9 +303,10 @@ public class E_IntermediateStreams {
         Stream<String> stream = Stream.iterate(
                 "",
                 (String s) -> {
-                final int nextInt = rand.nextInt(10);
-                return (nextInt == 0 && !s.isEmpty()) ? s.substring(0, s.length() - 1) :
-                       (nextInt == 8 || nextInt == 9) ? s + "+" : s;
+                    final int nextInt = rand.nextInt(10);
+                    return (nextInt == 0 && !s.isEmpty()) ? s.substring(0, s.length() - 1) :
+                           (nextInt == 8 || nextInt == 9) ? s + "+"
+                                                          : s;
                 }).limit(100);
 
         //TODO//long count = 0L;
