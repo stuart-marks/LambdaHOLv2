@@ -23,11 +23,11 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -308,46 +308,46 @@ public class G_Challenges {
         assertEquals(new Shoe(13), shoe3);
         assertEquals(shoe3, shoe4);
     }
-   
+
     /**
      * Write a method that extracts all the superclasses of ArrayList and
-     * their implemented classes. Filter out the abstract classes, then 
+     * their implemented classes. Filter out the abstract classes, then
      * create a map with two boolean keys, true is associated to the interfaces
-     * and false with the concrete classes. 
+     * and false with the concrete classes.
      */
     @Test @Ignore
-    public void g81_mapOfClassesAndInterfaces() {
+    public void g8_mapOfClassesAndInterfaces() {
 
         Class<?> origin = ArrayList.class;
-        Map<Boolean, Set<Class<?>>> result = null; //TODO
-        
+        Map<Boolean, Set<Class<?>>> result = null; // TODO
+
         assertEquals(result.get(false), Set.of(ArrayList.class, Object.class));
         assertEquals(result.get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // The beginning of this challenge begins with the same kind of pattern
-    // as the E8 intermediate exercice. 
+    // as the E8 intermediate exercise.
     // The interfaces are returned in an array, so one can put them in a stream
     // using Stream.of(). To add the class to that stream, you can also
-    // use Stream.of() and flatMap the result to have the final stream. 
+    // use Stream.of() and flatMap the result to have the final stream.
     // Writing the filter step is just a matter of creating the right predicate.
-    // Then the partionningBy collector will build the map. 
+    // Then the partionningBy collector will build the map.
     // </editor-fold>
-    
+
     /**
      * Write a method that extracts all the superclasses and
-     * their implemented classes. Filter out the abstract classes, then 
+     * their implemented classes. Filter out the abstract classes, then
      * create a map with two boolean keys, true is associated to the interfaces
-     * and false with the concrete classes. Do that for the provided classes, and 
-     * arrange the result in a Map<Class, ...> with those classes as the keys. 
+     * and false with the concrete classes. Do that for the provided classes, and
+     * arrange the result in a Map<Class, ...> with those classes as the keys.
      */
     @Test @Ignore
-    public void g82_mapOfMapsOfClassesAndInterfaces() {
+    public void g9_mapOfMapsOfClassesAndInterfaces() {
 
         List<Class<?>> origin = List.of(ArrayList.class, HashSet.class, LinkedHashSet.class);
-        Map<Class<?>, Map<Boolean, Set<Class<?>>>> result = null; //TODO
-        
+        Map<Class<?>, Map<Boolean, Set<Class<?>>>> result = null; // TODO
+
         assertEquals(result.get(ArrayList.class).get(false), Set.of(ArrayList.class, Object.class));
         assertEquals(result.get(ArrayList.class).get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
         assertEquals(result.get(HashSet.class).get(false), Set.of(HashSet.class, Object.class));
@@ -357,9 +357,9 @@ public class G_Challenges {
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
-    // The trick here is to write the whole processing of the previous 
+    // The trick here is to write the whole processing of the previous
     // C81 challenge as a single collector. Once this is done, just pass
-    // this collector as the downstream collector of a groupingBy. 
+    // this collector as the downstream collector of a groupingBy.
     // A filtering collector and a flatMapping collector have been added
     // to JDK9.
     // </editor-fold>

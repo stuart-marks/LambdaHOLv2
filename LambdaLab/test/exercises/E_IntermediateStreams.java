@@ -223,15 +223,15 @@ public class E_IntermediateStreams {
         List<String> result = null; // TODO
 
         assertEquals(
-                Arrays.asList(ArrayList.class, AbstractList.class, AbstractCollection.class, Object.class), 
+                Arrays.asList(ArrayList.class, AbstractList.class, AbstractCollection.class, Object.class),
                 result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
     // There is a getSuperClass() method on the Class class.
-    // Creating a stream of these classes can be made with Stream.iterate(). 
-    // Then you need to close that stream when the current class is null. 
-    // Java 9 added the takeWhile() method on the stream interface. 
+    // Creating a stream of these classes can be made with Stream.iterate().
+    // Then you need to close that stream when the current class is null.
+    // Java 9 added the takeWhile() method on the stream interface.
     // </editor-fold>
 
 
@@ -243,7 +243,7 @@ public class E_IntermediateStreams {
 
         Random rand = new Random(314L);
         Stream<String> stream = Stream.iterate(
-                "", 
+                "",
                 (String s) -> {
                 final int nextInt = rand.nextInt(10);
                 return (nextInt == 0 && !s.isEmpty()) ? s.substring(0, s.length() - 1) :
@@ -251,14 +251,13 @@ public class E_IntermediateStreams {
                 }).limit(100);
 
         long count = 0L; // TODO
-        
+
         assertEquals(53, count);
     }
     // Hint:
-    // <editor-fold defaultstate="collapsed"> 
-    // Java 9 added the dropWhile() method on the stream interface. 
+    // <editor-fold defaultstate="collapsed">
+    // Java 9 added the dropWhile() method on the stream interface.
     // </editor-fold>
-
 
 
 // ========================================================
