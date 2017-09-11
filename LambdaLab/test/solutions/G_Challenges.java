@@ -1,5 +1,7 @@
 package solutions;
 
+import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.util.AbstractMap;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -7,11 +9,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
+import java.util.RandomAccess;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -414,4 +420,126 @@ public class G_Challenges {
         assertEquals(new Shoe(13), shoe3);
         assertEquals(shoe3, shoe4);
     }
+    
+    /**
+     * Write a method that extracts all the superclasses of ArrayList and
+     * their implemented classes. Filter out the abstract classes, then 
+     * create a map with two boolean keys, true is associated to the interfaces
+     * and false with the concrete classes. 
+     */
+    @Test
+    public void g81_mapOfClassesAndInterfaces() {
+
+        Class<?> origin = ArrayList.class;
+        //TODO//Map<Boolean, Set<Class<?>>> result = null;
+        //BEGINREMOVE
+        Stream<Class<?>> stream = Stream.<Class<?>>iterate(ArrayList.class, c -> c.getSuperclass()).takeWhile(c -> c != null);
+        Stream<Class<?>> classesAndInterfaces = 
+            stream.map(c -> Stream.of(Stream.of(c), Stream.of(c.getInterfaces())))
+                  .flatMap(Function.identity())
+                  .flatMap(Function.identity());
+        Predicate<Class<?>> isAbstract = c -> Modifier.isAbstract(c.getModifiers());
+        Predicate<Class<?>> isInterface = Class::isInterface;
+        Stream<Class<?>> interfacesAndConcreteClasses = 
+            classesAndInterfaces.filter(isInterface.or(isAbstract.and(isInterface.negate()).negate()));
+        Map<Boolean, Set<Class<?>>> result = 
+            interfacesAndConcreteClasses.collect(Collectors.partitioningBy(isInterface, Collectors.toSet()));
+        //ENDREMOVE
+        
+        assertEquals(result.get(false), Set.of(ArrayList.class, Object.class));
+        assertEquals(result.get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // The beginning of this challenge begins with the same kind of pattern
+    // as the E8 intermediate exercice. 
+    // The interfaces are returned in an array, so one can put them in a stream
+    // using Stream.of(). To add the class to that stream, you can also
+    // use Stream.of() and flatMap the result to have the final stream. 
+    // Writing the filter step is just a matter of creating the right predicate.
+    // Then the partionningBy collector will build the map. 
+    // </editor-fold>
+    
+    /**
+     * Write a method that extracts all the superclasses and
+     * their implemented classes. Filter out the abstract classes, then 
+     * create a map with two boolean keys, true is associated to the interfaces
+     * and false with the concrete classes. Do that for the provided classes, and 
+     * arrange the result in a Map<Class, ...> with those classes as the keys. 
+     */
+    @Test
+    public void g82_mapOfMapsOfClassesAndInterfaces() {
+
+        List<Class<?>> origin = List.of(ArrayList.class, HashSet.class, LinkedHashSet.class);
+        //TODO//Map<Class<?>, Map<Boolean, Set<Class<?>>>> result = null;
+        //BEGINREMOVE
+        Function<Class<?>, Stream<Class<?>>> superClasses = 
+                clazz -> Stream.<Class<?>>iterate(clazz, c -> c.getSuperclass()).takeWhile(c -> c != null);
+        Function<Stream<? extends Class<?>>, Stream<? extends Class<?>>> classAndInterfaces = 
+                stream -> stream.map(clazz -> Stream.of(Stream.of(clazz), Stream.of(clazz.getInterfaces())))
+                                .flatMap(Function.identity())
+                                .flatMap(Function.identity());
+        
+        Function<Class<?>, Stream<? extends Class<?>>> superClassesAndInterfaces = superClasses.andThen(classAndInterfaces);
+        
+        Predicate<Class<?>> isAbstract = c -> Modifier.isAbstract(c.getModifiers());
+        Predicate<Class<?>> isInterface = Class::isInterface;
+        Predicate<Class<?>> isInterfaceOrConcreteClass = isInterface.or(isAbstract.and(isInterface.negate()).negate());
+        
+        List<Class<?>> classes = List.of(ArrayList.class);
+        
+        // 1) write the previous processing as a stream pattern
+        Map<Boolean, Set<Class<?>>> collect = 
+        classes.stream()
+                .flatMap(superClassesAndInterfaces)
+                .filter(isInterfaceOrConcreteClass)
+                .collect(
+                        Collectors.partitioningBy(
+                                isInterface,
+                                Collectors.toSet()
+                        )
+                );
+        
+        // 2) Convert the processing to a collector
+        Collector<Class<?>, ?, Map<Boolean, Set<Class<?>>>> collector =
+                Collectors.flatMapping(
+                        superClassesAndInterfaces, 
+                        Collectors.filtering(
+                                isInterfaceOrConcreteClass, 
+                                Collectors.partitioningBy(
+                                    isInterface,
+                                    Collectors.toSet()
+                                )
+                        )
+                );
+        
+        // 3) use it at a downstream collector
+        Map<Class<?>, Map<Boolean, Set<Class<?>>>> result = 
+        origin.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Function.identity(), 
+                                collector
+                        )
+                );
+        
+        
+        System.out.println("result = " + result);
+        //ENDREMOVE
+        
+        assertEquals(result.get(ArrayList.class).get(false), Set.of(ArrayList.class, Object.class));
+        assertEquals(result.get(ArrayList.class).get(true), Set.of(List.class, RandomAccess.class, Cloneable.class, Serializable.class, Collection.class));
+        assertEquals(result.get(HashSet.class).get(false), Set.of(HashSet.class, Object.class));
+        assertEquals(result.get(HashSet.class).get(true), Set.of(Set.class, Cloneable.class, Serializable.class, Collection.class));
+        assertEquals(result.get(LinkedHashSet.class).get(false), Set.of(LinkedHashSet.class, HashSet.class, Object.class));
+        assertEquals(result.get(LinkedHashSet.class).get(true), Set.of(Set.class, Cloneable.class, Serializable.class, Collection.class));
+    }
+    // Hint:
+    // <editor-fold defaultstate="collapsed">
+    // The trick here is to write the whole processing of the previous 
+    // C81 challenge as a single collector. Once this is done, just pass
+    // this collector as the downstream collector of a groupingBy. 
+    // A filtering collector and a flatMapping collector have been added
+    // to JDK9.
+    // </editor-fold>
 }
