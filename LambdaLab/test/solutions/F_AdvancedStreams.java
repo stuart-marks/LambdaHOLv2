@@ -41,7 +41,7 @@ public class F_AdvancedStreams {
      * list of words of that length. Don't bother with uniqueness or lower-
      * casing the words. As before, use the BufferedReader variable named
      * "reader" that has been set up for you to read from the text file, and
-     * use WORD_PATTERN for splitting the line into words.
+     * use SPLIT_PATTERN for splitting the line into words.
      *
      * @throws IOException
      */
@@ -51,7 +51,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<Integer, List<String>> result =
             reader.lines()
-                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                  .flatMap(line -> SPLIT_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(String::length));
         //ENDREMOVE
 
@@ -83,7 +83,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<Integer, Long> result =
             reader.lines()
-                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                  .flatMap(line -> SPLIT_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(String::length, Collectors.counting()));
         //ENDREMOVE
 
@@ -128,7 +128,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<String, Long> result =
             reader.lines()
-                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                  .flatMap(line -> SPLIT_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
                       // or use word -> word instead of Function.identity()
 
@@ -183,7 +183,7 @@ public class F_AdvancedStreams {
         //BEGINREMOVE
         Map<String, Map<Integer, List<String>>> result =
             reader.lines()
-                  .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                  .flatMap(line -> SPLIT_PATTERN.splitAsStream(line))
                   .collect(Collectors.groupingBy(word -> word.substring(0,1),
                                                  Collectors.groupingBy(String::length)));
         //ENDREMOVE
@@ -339,7 +339,7 @@ public class F_AdvancedStreams {
     public void f7_countTotalAndDistinctWords() {
         List<String> allWords = reader.lines()
                                       .map(String::toLowerCase)
-                                      .flatMap(line -> WORD_PATTERN.splitAsStream(line))
+                                      .flatMap(line -> SPLIT_PATTERN.splitAsStream(line))
                                       .collect(Collectors.toList());
 
         TotalAndDistinct totalAndDistinct =
@@ -361,7 +361,7 @@ public class F_AdvancedStreams {
 
 
     // Pattern for splitting a string into words
-    static final Pattern WORD_PATTERN = Pattern.compile("[- .:,]+");
+    static final Pattern SPLIT_PATTERN = Pattern.compile("[- .:,]+");
 
     private BufferedReader reader;
 

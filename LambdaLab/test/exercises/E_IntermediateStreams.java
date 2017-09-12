@@ -58,9 +58,9 @@ public class E_IntermediateStreams {
 
     /**
      * Collect all the words from the text file into a list.
-     * Use the regular expression Pattern WORD_PATTERN to split
+     * Use the regular expression Pattern SPLIT_PATTERN to split
      * a string into words, and use Pattern.splitAsStream(String)
-     * to do the splitting. WORD_PATTERN is defined at the bottom
+     * to do the splitting. SPLIT_PATTERN is defined at the bottom
      * of this file. As before, use the BufferedReader variable
      * named "reader" that has been set up for you to read from
      * the text file.
@@ -269,7 +269,7 @@ public class E_IntermediateStreams {
 
 
     // Pattern for splitting a string into words
-    static final Pattern WORD_PATTERN = Pattern.compile("[- .:,]+");
+    static final Pattern SPLIT_PATTERN = Pattern.compile("[- .:,]+");
 
     private BufferedReader reader;
 
