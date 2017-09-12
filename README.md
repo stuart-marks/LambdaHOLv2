@@ -28,7 +28,8 @@ it can be located in $HOME/HOL5959/LambdaLab.
         D_SimpleStreams.java
         E_IntermediateStreams.java
         F_AdvancedStreams.java
-        G_Challenges.java
+        G_MatcherScanner.java
+        H_Challenges.java
 
 5. Each exercise is in the form of a single JUnit test method. Each
 test is marked with an @Ignore annotation so that JUnit will skip that
