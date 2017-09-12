@@ -512,8 +512,6 @@ public class G_Challenges {
             origin.stream()
                   .collect(Collectors.groupingBy(Function.identity(),
                                                  collector));
-
-        System.out.println("result = " + result);
         //ENDREMOVE
 
         assertEquals(
