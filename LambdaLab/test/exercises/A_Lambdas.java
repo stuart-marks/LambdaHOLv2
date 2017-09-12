@@ -191,7 +191,7 @@ public class A_Lambdas {
     public void c_consumer2() {
         Consumer<List<String>> cons = null; // TODO
 
-        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
         cons.accept(list);
         assertTrue(list.isEmpty());
     }
@@ -203,7 +203,7 @@ public class A_Lambdas {
     public void c_consumer3() {
         Consumer<List<String>> cons = null; // TODO
 
-        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
         cons.accept(list);
         assertTrue(list.isEmpty());
     }
@@ -219,9 +219,9 @@ public class A_Lambdas {
 
         Consumer<List<String>> consumer = null; // TODO
 
-        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
         consumer.accept(list);
-        assertEquals(Arrays.asList("a", "b", "c", "first", "second"), list);
+        assertEquals(List.of("a", "b", "c", "first", "second"), list);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">

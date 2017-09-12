@@ -39,7 +39,7 @@ public class E_IntermediateStreams {
      */
     @Test @Ignore
     public void e1_stringsToCharacters() {
-        List<String> input = Arrays.asList("alfa", "bravo", "charlie");
+        List<String> input = List.of("alfa", "bravo", "charlie");
 
         List<Character> result = null; // TODO
 
@@ -72,7 +72,7 @@ public class E_IntermediateStreams {
         List<String> output = null; // TODO
 
         assertEquals(
-            Arrays.asList(
+            List.of(
                 "From", "fairest", "creatures", "we", "desire", "increase",
                 "That", "thereby", "beauty's", "rose", "might", "never", "die",
                 "But", "as", "the", "riper", "should", "by", "time", "decease",
@@ -106,7 +106,7 @@ public class E_IntermediateStreams {
         List<String> output = null; // TODO
 
         assertEquals(
-            Arrays.asList(
+            List.of(
                 "abundance", "beauty's", "contracted", "creatures",
                 "increase", "niggarding", "ornament", "substantial"),
             output);
@@ -129,7 +129,7 @@ public class E_IntermediateStreams {
         List<String> result = null; // TODO
 
         assertEquals(
-            Arrays.asList(
+            List.of(
                 "substantial", "ornament", "niggarding", "increase",
                 "creatures", "contracted", "beauty's", "abundance"),
             result);
@@ -151,7 +151,7 @@ public class E_IntermediateStreams {
         List<String> result = null; // TODO
 
         assertEquals(
-            Arrays.asList(
+            List.of(
                 "a", "as", "be", "by", "in", "or", "to", "we",
                 "and", "art", "bud", "but", "die", "due", "eat", "foe",
                 "his", "now", "own", "the", "thy", "too", "bear", "else",

@@ -27,17 +27,17 @@ public class C_DefaultMethods {
      */
     @Test @Ignore
     public void c01_appendNew() {
-        List<StringBuilder> sbList = Arrays.asList(
+        List<StringBuilder> sbList = List.of(
             new StringBuilder("alfa"),
             new StringBuilder("bravo"),
             new StringBuilder("charlie"));
 
         // TODO write code to modify sbList
 
-        assertEquals(Arrays.asList("alfanew", "bravonew", "charlienew"),
-                sbList.stream()
-                      .map(StringBuilder::toString)
-                      .collect(Collectors.toList()));
+        assertEquals(List.of("alfanew", "bravonew", "charlienew"),
+                     sbList.stream()
+                           .map(StringBuilder::toString)
+                           .collect(Collectors.toList()));
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -55,7 +55,7 @@ public class C_DefaultMethods {
 
         // TODO write code to modify list
 
-        assertEquals(Arrays.asList("alfa", "echo"), list);
+        assertEquals(List.of("alfa", "echo"), list);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -73,7 +73,7 @@ public class C_DefaultMethods {
 
         // TODO code to modify list
 
-        assertEquals(Arrays.asList("ALFA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"),
+        assertEquals(List.of("ALFA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"),
                      list);
     }
     // Hint:
@@ -122,10 +122,10 @@ public class C_DefaultMethods {
 
         // TODO write code to modify map
 
-        assertEquals(3, map.size());
-        assertEquals("alfa1",    map.get(1));
-        assertEquals("bravo2",   map.get(2));
-        assertEquals("charlie3", map.get(3));
+        assertEquals(Map.of(1, "alfa1",
+                            2, "bravo2",
+                            3, "charlie3"),
+                     map);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -139,7 +139,7 @@ public class C_DefaultMethods {
      */
     @Test @Ignore
     public void c06_mapOfListOfStringsByLength() {
-        List<String> list = Arrays.asList(
+        List<String> list = List.of(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",
             "avocet", "bustard", "capuchin");
@@ -147,13 +147,13 @@ public class C_DefaultMethods {
 
         // TODO write code to populate result
 
-        assertEquals(Arrays.asList(5, 6, 7, 8, 9, 10), new ArrayList<>(result.keySet()));
-        assertEquals(Arrays.asList("bison"), result.get(5));
-        assertEquals(Arrays.asList("avocet"), result.get(6));
-        assertEquals(Arrays.asList("bustard"), result.get(7));
-        assertEquals(Arrays.asList("aardvark", "capybara", "bushbaby", "capuchin"), result.get(8));
-        assertEquals(Arrays.asList("alligator"), result.get(9));
-        assertEquals(Arrays.asList("chimpanzee"), result.get(10));
+        assertEquals(Map.of( 5, List.of("bison"),
+                             6, List.of("avocet"),
+                             7, List.of("bustard"),
+                             8, List.of("aardvark", "capybara", "bushbaby", "capuchin"),
+                             9, List.of("alligator"),
+                            10, List.of("chimpanzee")),
+                     result);
     }
     // <editor-fold defaultstate="collapsed">
     // Use Map.computeIfAbsent() within Iterable.forEach().
@@ -167,7 +167,7 @@ public class C_DefaultMethods {
      */
     @Test @Ignore
     public void c07_mapOfStringByInitialCharacter() {
-        List<String> list = Arrays.asList(
+        List<String> list = List.of(
             "aardvark", "bison", "capybara",
             "alligator", "bushbaby", "chimpanzee",
             "avocet", "bustard", "capuchin");
@@ -175,10 +175,10 @@ public class C_DefaultMethods {
 
         // TODO write code to populate result
 
-        assertEquals(Arrays.asList('a', 'b', 'c'), new ArrayList<>(result.keySet()));
-        assertEquals("aardvark:alligator:avocet",    result.get('a'));
-        assertEquals("bison:bushbaby:bustard",       result.get('b'));
-        assertEquals("capybara:chimpanzee:capuchin", result.get('c'));
+        assertEquals(Map.of('a', "aardvark:alligator:avocet",
+                            'b', "bison:bushbaby:bustard",
+                            'c', "capybara:chimpanzee:capuchin"),
+                     result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">

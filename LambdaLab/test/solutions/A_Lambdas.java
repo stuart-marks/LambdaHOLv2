@@ -226,7 +226,7 @@ public class A_Lambdas {
         Consumer<List<String>> cons = list -> list.clear();
         //ENDREMOVE
 
-        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
         cons.accept(list);
         assertTrue(list.isEmpty());
     }
@@ -241,7 +241,7 @@ public class A_Lambdas {
         Consumer<List<String>> cons = List::clear;
         //ENDREMOVE
 
-        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
         cons.accept(list);
         assertTrue(list.isEmpty());
     }
@@ -260,9 +260,9 @@ public class A_Lambdas {
         Consumer<List<String>> consumer = c1.andThen(c2);
         //ENDREMOVE
 
-        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
         consumer.accept(list);
-        assertEquals(Arrays.asList("a", "b", "c", "first", "second"), list);
+        assertEquals(List.of("a", "b", "c", "first", "second"), list);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">

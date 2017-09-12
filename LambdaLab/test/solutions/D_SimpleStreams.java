@@ -34,7 +34,7 @@ public class D_SimpleStreams {
      */
     @Test
     public void d1_upcaseOddLengthWords() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         //TODO//List<String> result = null;
@@ -49,7 +49,7 @@ public class D_SimpleStreams {
             // Instead of String::toUpperCase, use w -> w.toUpperCase()
         //ENDREMOVE
 
-        assertEquals(Arrays.asList("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
+        assertEquals(List.of("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
@@ -69,7 +69,7 @@ public class D_SimpleStreams {
      */
     @Test
     public void d2_joinStreamRange() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         //TODO//String result = "";
@@ -191,7 +191,7 @@ public class D_SimpleStreams {
      */
     @Test
     public void d6_selectLongestWords() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
         //TODO//List<String> result = null;
@@ -206,7 +206,7 @@ public class D_SimpleStreams {
                                    .collect(Collectors.toList());
         //ENDREMOVE
 
-        assertEquals(Arrays.asList("charlie", "foxtrot"), result);
+        assertEquals(List.of("charlie", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -219,7 +219,7 @@ public class D_SimpleStreams {
      */
     @Test
     public void d7_selectByLengthAndPosition() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
         //TODO//List<String> result = null;
@@ -231,7 +231,7 @@ public class D_SimpleStreams {
                      .collect(Collectors.toList());
         //ENDREMOVE
 
-        assertEquals(Arrays.asList("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
+        assertEquals(List.of("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">

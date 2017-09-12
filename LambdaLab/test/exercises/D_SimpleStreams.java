@@ -34,12 +34,12 @@ public class D_SimpleStreams {
      */
     @Test @Ignore
     public void d1_upcaseOddLengthWords() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         List<String> result = null; // TODO
 
-        assertEquals(Arrays.asList("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
+        assertEquals(List.of("BRAVO", "CHARLIE", "DELTA", "FOXTROT"), result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
@@ -59,7 +59,7 @@ public class D_SimpleStreams {
      */
     @Test @Ignore
     public void d2_joinStreamRange() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot");
 
         String result = ""; // TODO
@@ -152,12 +152,12 @@ public class D_SimpleStreams {
      */
     @Test @Ignore
     public void d6_selectLongestWords() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
         List<String> result = null; // TODO
 
-        assertEquals(Arrays.asList("charlie", "foxtrot"), result);
+        assertEquals(List.of("charlie", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
@@ -170,12 +170,12 @@ public class D_SimpleStreams {
      */
     @Test @Ignore
     public void d7_selectByLengthAndPosition() {
-        List<String> input = Arrays.asList(
+        List<String> input = List.of(
             "alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
 
         List<String> result = null; // TODO
 
-        assertEquals(Arrays.asList("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
+        assertEquals(List.of("alfa", "bravo", "charlie", "delta", "foxtrot"), result);
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">

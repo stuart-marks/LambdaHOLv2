@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static java.util.Map.entry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -50,10 +51,10 @@ public class F_AdvancedStreams {
         Map<Integer, List<String>> result = null; // TODO
 
         assertEquals(10, result.get(7).size());
-        assertEquals(new HashSet<>(Arrays.asList("beauty's", "increase", "ornament")), new HashSet<>(result.get(8)));
-        assertEquals(new HashSet<>(Arrays.asList("abundance", "creatures")), new HashSet<>(result.get(9)));
-        assertEquals(new HashSet<>(Arrays.asList("contracted", "niggarding")), new HashSet<>(result.get(10)));
-        assertEquals(Arrays.asList("substantial"), result.get(11));
+        assertEquals(Set.of("beauty's", "increase", "ornament"), new HashSet<>(result.get(8)));
+        assertEquals(Set.of("abundance", "creatures"), new HashSet<>(result.get(9)));
+        assertEquals(Set.of("contracted", "niggarding"), new HashSet<>(result.get(10)));
+        assertEquals(List.of("substantial"), result.get(11));
         assertFalse(result.containsKey(12));
     }
     // Hint:
@@ -75,21 +76,18 @@ public class F_AdvancedStreams {
     public void f2_mapLengthToWordCount() throws IOException {
         Map<Integer, Long> result = null; // TODO
 
-        assertEquals( 1L, (long)result.get(1));
-        assertEquals(11L, (long)result.get(2));
-        assertEquals(28L, (long)result.get(3));
-        assertEquals(21L, (long)result.get(4));
-        assertEquals(16L, (long)result.get(5));
-        assertEquals(12L, (long)result.get(6));
-        assertEquals(10L, (long)result.get(7));
-        assertEquals( 3L, (long)result.get(8));
-        assertEquals( 2L, (long)result.get(9));
-        assertEquals( 2L, (long)result.get(10));
-        assertEquals( 1L, (long)result.get(11));
-
-        IntSummaryStatistics stats = result.keySet().stream().mapToInt(i -> i).summaryStatistics();
-        assertEquals("min key",  1, stats.getMin());
-        assertEquals("max key", 11, stats.getMax());
+        assertEquals(Map.ofEntries(entry( 1,  1L),
+                                   entry( 2, 11L),
+                                   entry( 3, 28L),
+                                   entry( 4, 21L),
+                                   entry( 5, 16L),
+                                   entry( 6, 12L),
+                                   entry( 7, 10L),
+                                   entry( 8,  3L),
+                                   entry( 9,  2L),
+                                   entry(10,  2L),
+                                   entry(11,  1L)),
+                     result);
     }
     // Hint 1:
     // <editor-fold defaultstate="collapsed">
@@ -209,7 +207,7 @@ public class F_AdvancedStreams {
      */
     @Test @Ignore
     public void f6_insertBeginningAndEnd() {
-        Stream<String> input = Arrays.asList(
+        Stream<String> input = List.of(
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m", "n", "o", "p", "q", "r", "s", "t")
             .parallelStream();
