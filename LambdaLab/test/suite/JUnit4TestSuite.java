@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
     exercises.D_SimpleStreams.class,
     exercises.E_IntermediateStreams.class,
     exercises.F_AdvancedStreams.class,
-    exercises.G_Challenges.class
+    exercises.G_MatcherScanner.class,
+    exercises.H_Challenges.class
 })
 public class JUnit4TestSuite {
 }
