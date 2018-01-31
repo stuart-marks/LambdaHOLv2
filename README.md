@@ -1,8 +1,8 @@
-# JavaOne 2017 Lambda/Streams Programming Laboratory [HOL5959]
+# Jfokus 2018 Lambda Programming Laboratory
 
 ## Introduction
 
-Welcome to the Lambda/Streams Programming Laboratory! The goal of this
+Welcome to the Lambda Programming Laboratory! The goal of this
 lab is for you to learn about the lambda expressions, default methods,
 and APIs (particularly the Streams library) introduced in Java 8, plus
 a few API additions in Java 9.
@@ -13,10 +13,12 @@ lambda or new API that enables the test to pass.
 
 ## Lab Instructions
 
-1. Open the NetBeans dev build by clicking on the desktop icon.
+1. Open the NetBeans development build (or your favorite IDE).
 
-2. The LambdaLab project should already be open. If it isn't,
-it can be located in $HOME/HOL5959/LambdaLab.
+2. Open the LambdaLab project. If you don't have it, it can be cloned
+from github:
+
+    git clone https://github.com/stuart-marks/LambdaHOLv2
 
 3. Inside the LambdaLab project, open the Test Packages folder.
 
