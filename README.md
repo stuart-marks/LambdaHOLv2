@@ -1,11 +1,11 @@
-# Jfokus 2018 Lambda Programming Laboratory
+# Oracle Code One Lambda Programming Laboratory
 
 ## Introduction
 
 Welcome to the Lambda Programming Laboratory! The goal of this
 lab is for you to learn about the lambda expressions, default methods,
 and APIs (particularly the Streams library) introduced in Java 8, plus
-a few API additions in Java 9.
+a few API additions in Java 9 and 10.
 
 The lab is structured as a set of exercises in the form of JUnit
 tests. To complete each exercise, write some code that uses a
