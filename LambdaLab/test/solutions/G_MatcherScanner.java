@@ -94,7 +94,7 @@ public class G_MatcherScanner {
         //ENDREMOVE
 
         assertTrue(result.contains("b[EAU]ty's"));
-        assertEquals(614, result.length());
+        assertEquals(628, result.length());
     }
     // Hint:
     // <editor-fold defaultstate="collapsed">
